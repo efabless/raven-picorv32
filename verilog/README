@@ -1,0 +1,13 @@
+Raven --- a full implementation of the PicoRV32 PicoSoC.
+
+This directory contains the top-level module for the raven chip, with
+all components modeled in (standard or wreal) verilog.  No special flags
+to iverilog are required.
+
+Firmware is compiled from the .c files, one for each test.  Comments in
+the .c files specify what the tests are and how to interpret results.
+
+To run each testbench, compile the .c file into a hex target "firmware.hex",
+then run iverilog / vvp on "raven_tb.v".
+
+Documentation is in the doc/ directory of the raven project.

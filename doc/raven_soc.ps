@@ -1,0 +1,593 @@
+%!PS-Adobe-3.0
+%%Title: raven_soc.ps
+%%Creator: XCircuit v0.0 rev1425582949
+%%CreationDate: Mon Oct 15 07:49:50 2018
+%%Pages: 3
+%%BoundingBox: 0 0 612 792
+%%DocumentNeededResources: font Times-Roman 
+%%EndComments
+%%BeginProlog
+%
+%  PostScript prolog for output from xcircuit
+%  Version: 3.9
+%
+%  Electrical circuit (and otherwise general) drawing program
+%
+%  Written by Tim Edwards 8/5/93--4/12/16  (tim@opencircuitdesign.com)
+%  The Johns Hopkins University (1993-2004)
+%  MultiGiG, Inc. (2004-2012)
+%  Open Circuit Design (2012-2016)
+%
+%%BeginResource: procset XCIRCproc 3.9 1
+%
+% supporting definitions --- these are the primary xcircuit types.
+
+/XCIRCsave save def
+/topmat matrix currentmatrix def
+
+/fontslant { /slant exch def [1 0 slant 1 0 0] 
+    exch findfont exch makefont dup length dict /ndict exch def
+    { 1 index /FID ne { ndict 3 1 roll put } { pop pop } ifelse } forall
+    ndict definefont pop} def
+/ul { count 0 gt { dup type /stringtype eq showflag 1 eq and { gsave 
+   currentpoint topmat setmatrix 0 0 moveto 2 index stringwidth pop (_)
+   false charpath flattenpath pathbbox grestore exch pop 1 index
+   sub setlinewidth exch pop currentpoint 3 -1 roll add moveto 0
+   rlineto stroke moveto } if } if } def
+/ol { count 0 gt { dup type /stringtype eq showflag 1 eq and { gsave gsave
+   currentpoint topmat setmatrix 2 index stringwidth pop 3 index
+   true charpath flattenpath pathbbox grestore exch pop
+   exch pop topmat setmatrix (_) true charpath pathbbox grestore
+   exch pop 1 index sub setlinewidth exch pop currentpoint
+   exch 4 1 roll exch sub add moveto pop 0 rlineto stroke
+   moveto } if } if } def
+/stW { gsave currentpoint newpath moveto true charpath flattenpath
+	pathbbox pop exch pop sub grestore } def
+/Ts {mark Tabs aload pop counttomark 1 add array astore /Tabs exch def Tabs
+	0 currentpoint pop put} def
+/Tbn {mark Tabs aload pop counttomark dup 2 add 1 roll cleartomark 1 sub} def
+/Tb { 0 1 Tbn {Tabs exch get dup currentpoint pop lt
+	{currentpoint exch pop moveto exit} {pop} ifelse } for } def
+/Tf { Tbn -1 0 {Tabs exch get dup currentpoint pop gt
+	{currentpoint exch pop moveto exit} {pop} ifelse } for } def
+/qS { (aa) stW (a a) stW sub 4 div 0 Kn } def
+/hS { qS qS } def
+/pspc 0 def
+/cf0 { scalefont setfont } bind def
+/Kn { dup kY add /kY exch def rmoveto } bind def
+/ss { /fscale fscale 0.67 mul def currentfont 0.67 cf0 0 fscale0 fscale mul
+	0.33 mul neg Kn} def
+/Ss { /fscale fscale 0.67 mul def currentfont 0.67 cf0 0 fscale0 fscale mul
+	0.67 mul Kn } def
+/ns { 0 kY neg Kn /kY 0 def /fscale 1.0 def xfont0 1.0 cf0 } def
+/MR { /twidth exch def } def
+/CRx { } def
+/CR { ns 0 /Bline Bline fscale0 neg add def Bline moveto CRx } def
+/cf { dup type /realtype ne {1.0} if exch findfont exch kY 0 eq
+	{ 40 mul dup /fscale0 exch def cf0 /xfont0 currentfont def}
+	{fscale0 mul fscale mul cf0} ifelse } def
+/ctmk { counttomark dup 2 add -1 roll pop } bind def
+/label { gsave translate 0 0 moveto dup scale neg
+	/rotval exch def /twidth 100000 def /just exch def just 128 and
+	0 gt {/mshow {pop} def} {/mshow {show} def} ifelse just 16 and 0
+	gt {gsave rotval rotate 0 1 dtransform gsave pagemat setmatrix
+	idtransform exch grestore 1 0 dtransform gsave pagemat setmatrix
+	idtransform exch grestore dup abs 1e-9 lt {pop mul 0 gt} {3 1 roll
+	pop pop 0 lt} ifelse grestore {-1 /rotval rotval neg def /just just
+	dup 3 and 1 ne {3 xor} if def} {1} ifelse exch -1e-9 lt {-1 /rotval
+	rotval neg def /just just dup 12 and 4 ne {12 xor} if def} {1}
+	ifelse scale } if /showflag 0 def /fspc pspc def /Bline 0 def
+	/numlines 0 def /padding 0 array def /Tabs 0 array def
+	/fscale 1.0 def /kY 0 def gsave /CRx { linewid padding
+	aload pop numlines 1 add dup /numlines exch def array astore
+	/padding exch def /linewid 0 def } def dup 1 add copy dup 1 0
+	dtransform exch atan rotate {exch dup type /stringtype eq {gsave dup
+	gsave newpath 0 0 moveto true charpath flattenpath pathbbox pop exch
+	pop exch pop grestore currentpoint pop add dup /linewid exch def twidth
+	ge {grestore CR exch 1 add dup 2 add {CR} exch 1 roll exch} {grestore}
+	ifelse true charpath flattenpath} {dup type /arraytype eq {exec} {12
+	string cvs true charpath flattenpath} ifelse} ifelse} repeat
+	CRx /CRx {padding aload pop just 1280 and 0 gt {blockwid exch sub just
+	1024 and 0 gt {0.5 mul} if} {pop 0} ifelse 0 rmoveto numlines 1 sub
+	dup /numlines exch def array astore /padding exch def} def exch pop
+	pathbbox grestore 4 copy pop exch pop exch sub /blockwid exch def
+	3 -1 roll pop 3 1 roll just 1 and 0 gt {just 2 and
+	0 gt {exch pop neg fspc sub} {exch sub 0.5 mul neg} ifelse} {pop neg
+	fspc add} ifelse exch Bline exch just 4 and 0 gt {just 8 and 0 gt
+	{exch pop neg fspc sub} {add 0.5 mul neg} ifelse} {pop neg fspc add}
+	ifelse rotval rotate Kn currentpoint translate /showflag 1 def /Bline
+	0 def /Tabs 0 array def /fscale 1.0 def /kY 0 def CRx {dup type
+	/stringtype eq {mshow} {dup type /arraytype eq {exec} {12 string cvs
+	mshow} ifelse} ifelse} repeat grestore endclip} def
+/pinlabel { 4 index 32 and 0 ne hlevel 0 eq or { /pspc 10 def label
+	/pspc 0 def } { pop pop pop pop pop {pop} repeat } ifelse } def
+/pinglobal { pinlabel } def
+/infolabel { pinlabel } def
+/graphic { gsave 4 index cvx exec /DataSource get resetfile translate 0 0
+	moveto neg rotate dup scale cvx exec image grestore endclip} def
+
+/scb { setrgbcolor } bind def  /sce { defColor aload pop scb } bind def
+/cRedef {/defColor currentcolor 3 array astore def} def
+/begingate {dup type /dicttype ne {1 dict} if begin	% default params
+	dup type /dicttype ne {1 dict} if begin		% instanced params
+	/hlevel hlevel 1 add def /defColor currentcolor sce 3 array astore
+	def gsave sce translate 0 0 moveto neg rotate dup type /nametype
+	eq not { dup abs currentlinewidth exch div setlinewidth } { pop }
+	ifelse dup abs scale clipped 1 and 1 eq {/clipped clipped 1 add def}
+	if} bind def
+/endgate { /hlevel hlevel 1 sub def grestore defColor aload pop cRedef
+	scb end end endclip} bind def
+
+/hlevel 0 def
+/endclip {clipped 1 and 1 eq {grestore /clipped clipped 1 sub def} if} def
+/tmpa [1 0 0 1 0 0] def
+/gar {8 8 true tmpa {<c0 c0 00 00 0c 0c 00 00>} imagemask} bind
+{8 8 true tmpa {<30 70 60 02 03 07 06 20>} imagemask} bind
+{8 8 true tmpa {<0c 1e 1e 0c c0 e1 e1 c0>} imagemask} bind
+{8 8 true tmpa {<0f 0f 0f 0f f0 f0 f0 f0>} imagemask} bind
+{8 8 true tmpa {<3f f3 e1 e1 f3 3f 1e 1e>} imagemask} bind
+{8 8 true tmpa {<df cf 8f 9f fd fc f8 f9>} imagemask} bind
+{8 8 true tmpa {<ff 3f 3f ff ff f3 f3 ff>} imagemask} bind 7 array astore def
+/ppaint { gsave clip tmpa dup setmatrix pathbbox neg exch neg 4 2 roll
+  neg 4 -1 roll 2 copy gt {exch} if 8 div ceiling 8 mul 4 2 roll neg 2 copy
+  gt {exch} if 8 div ceiling 8 mul 3 -1 roll -8 5 -1 roll
+  { 3 index exch 5 exch put dup -8 3 index { 3 index
+  exch 4 exch put 3 index exec } for } for pop pop pop pop grestore } bind def
+/setstyles {
+  currentlinewidth mul setlinewidth /style exch def style 2048 and 0 gt
+  clipped 1 and 0 eq and {clip newpath /clipped clipped 1 add def} {
+  style 1 and 0 gt not {closepath} if
+  style 1024 and 0 gt {2 setlinecap 0 setlinejoin} if
+  style 2 and 0 gt {currentlinewidth 4 mul dup 2 array astore 0 setdash} if
+  style 4 and 0 gt {0.5 currentlinewidth 4 mul 2 array astore 0 setdash} if
+  gsave style 16 and 0 gt { style 224 and -5 bitshift style 256 and 0 gt {
+  7 exch sub 8 div dup 1 exch sub currentrgbcolor 3 array astore
+  {3 copy mul add 4 1 roll pop} forall pop pop setrgbcolor eofill}
+  {dup 7 lt {gar exch get ppaint} {pop eofill} ifelse} ifelse}
+  {style 256 and 0 gt {1 setgray eofill} if} ifelse grestore style 8 and 0 gt 
+  style 512 eq or {newpath} {stroke} ifelse grestore endclip} ifelse} def     
+
+/addtoy {exch dup dup 2 mul 3 add 1 roll -1 1 { 4 1 roll dup 4 1 roll add
+	4 -1 roll 2 mul 1 add index 2 mul 2 add 2 roll} for pop} def
+/addtoy1 {1 exch addtoy pop} def
+/addtoy3 {3 exch addtoy pop} def
+/addtoy4 {4 exch addtoy pop} def
+/addtox {exch dup dup 2 mul 3 add 1 roll -1 1 { 4 1 roll dup 4 1 roll 3 -1 roll
+	add exch 4 -1 roll 2 mul 1 add index 2 mul 2 add 2 roll} for pop} def
+/addtox1 {1 exch addtox pop} def
+/addtox3 {3 exch addtox pop} def
+/addtox4 {4 exch addtox pop} def
+/polygon { gsave /num exch def moveto num 1 sub {lineto} repeat setstyles } def
+/xcarc   { gsave newpath arc setstyles } def
+/elb { matrix currentmatrix 7 -1 roll 7 -1 roll translate 5 1 roll 4 -1 roll
+	3 index div 1 scale } def
+/ele { 0 4 1 roll 0 4 1 roll } bind def
+/ellipse { gsave elb newpath ele arc setmatrix setstyles } def
+/pellip  { elb ele arc setmatrix } def
+/nellip  { elb ele arcn setmatrix } def
+/spline  { gsave moveto curveto setstyles } def
+/polyc   { {lineto} repeat } bind def
+/beginpath { gsave moveto } bind def
+/endpath { setstyles } bind def
+/bop	 { 1 setlinecap 2 setlinejoin 6 setmiterlimit 0 0 0 scb cRedef
+	/clipped 0 def} def
+/psinsertion {/PSobj save def /showpage {} def /setpagedevice {pop} def bop
+	rotate translate dup scale} def
+/end_insert {PSobj restore} def
+/setpagemat {/pagemat matrix currentmatrix def} def
+/inchscale  {setpagemat 0.375 mul dup scale} def
+/cmscale    {setpagemat 0.35433071 mul dup scale} def
+
+%%EndResource
+%%EndProlog
+% XCircuit output starts here.
+
+%%BeginSetup
+
+
+%%EndSetup
+
+%%Page: raven_soc 1
+%%PageOrientation: Portrait
+%%PageBoundingBox: 0 0 612 792
+/pgsave save def bop
+0.8571 inchscale
+2.6000 setlinewidth 1288 1455 translate
+
+0.678 1.000 0.184 scb
+512 1.000 -1056 784 -1056 -1232 384 -1232 384 784 4 polygon
+sce
+(Raven SoC\320A PicoSoC ASIC hardware implementation) {/Times-Roman cf} 2 16 
+0.000 0.700 -1056 768 label
+1 1.000 -1056 752 384 752 2 polygon
+(Raven Memory Mapped I/O) {/Times-Roman cf} 2 16 0.000 0.700 -1056 704 label
+(0x02 00 00 00) {/Times-Roman cf} 2 16 0.000 0.700 -1056 448 label
+1 1.000 -864 672 -864 -1232 2 polygon
+(Address \(bytes\)) {/Times-Roman cf} 2 16 360.000 0.700 -1056 656 label
+1 1.000 -1056 640 384 640 2 polygon
+(Function) {/Times-Roman cf} 2 16 0.000 0.700 -832 656 label
+(UART clock divider select \(system clock freq. / baud rate\)) 
+{/Times-Roman cf} 2 16 0.000 0.700 -832 112 label
+(0x02 00 00 04) {/Times-Roman cf} 2 16 0.000 0.700 -1056 112 label
+(UART data \(returns 0xffffffff if receiver buffer is empty\)) 
+{/Times-Roman cf} 2 16 360.000 0.700 -832 80 label
+(0x02 00 00 08) {/Times-Roman cf} 2 16 0.000 0.700 -1056 80 label
+(SPI master config) {/Times-Roman cf} 2 16 0.000 0.700 -832 448 label
+(0x00 00 00 00) {/Times-Roman cf} 2 16 0.000 0.700 -1056 592 label
+(Flash SPI / overlaid SRAM \(1k words\)  start of memory block) 
+{/Times-Roman cf} 2 16 0.000 0.700 -832 592 label
+(0x00 10 00 00) {/Times-Roman cf} 2 16 0.000 0.700 -1056 544 label
+(Reset vector) {/Times-Roman cf} 2 16 0.000 0.700 -832 544 label
+(0x01 00 00 00) {/Times-Roman cf} 2 16 0.000 0.700 -1056 496 label
+(Flash SPI start of memory block) {/Times-Roman cf} 2 16 0.000 0.700 -832 496 
+label
+(0x03 00 00 00) {/Times-Roman cf} 2 16 0.000 0.700 -1056 0 label
+(bits 3-0 Data bits \(bit bang mode\)) {CR} 
+(bit  4  Serial clock line \(bit bang mode\)) {CR} 
+(bit  5  Chip select line \(bit bang mode\)) {CR} 
+(bits  11-8   I/O output enable bits \(bit bang mode\)) {CR} 
+(bits 19-16  Read latency cycles) {CR} (bit  20  CRM enable) {CR} 
+(bit  21  QSPI enable) {CR} (bit  22  DDR enable) {CR} 
+(bit  31  MEMIO enable \(reset = 1\)  0 = bit-bang mode) {/Times-Roman cf} 18 
+16 0.000 0.700 -784 176 label
+(GPIO input/output \(lower 16 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 -832 0 
+label
+(0x03 00 00 04) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -48 label
+(GPIO output enable \(1 = output, 0 = input\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -832 -48 label
+(0x03 00 00 08) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -96 label
+(GPIO pullup enable \(1 = pullup, 0 = none\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -832 -96 label
+(0x03 00 00 0c) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -144 label
+(GPIO pulldown enable \(1 = pulldown, 0 = none\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -832 -144 label
+(0x03 00 00 10) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -192 label
+(ADC0 enable \(low bit 1 = enabled, 0 = disabled\)) {/Times-Roman cf} 2 16 
+0.000 0.700 -832 -192 label
+(0x03 00 00 14) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -240 label
+(ADC0 data \(10 bits\) read-only) {/Times-Roman cf} 2 16 0.000 0.700 -832 -240 
+label
+(0x03 00 00 18) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -272 label
+(ADC0 done \(low bit 1 = done, 0 = busy\) read-only) {/Times-Roman cf} 2 16 
+0.000 0.700 -832 -272 label
+(0x03 00 00 1c) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -304 label
+(ADC0 start conversion \(low bit 1 = convert, 0 = reset\)) {/Times-Roman cf} 2 
+16 0.000 0.700 -832 -304 label
+(0x03 00 00 20) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -336 label
+(ADC0 clock source \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 -832 -336 
+label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -384 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -416 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -448 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -480 label
+(0x03 00 00 24) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -528 label
+(ADC0 input source \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 -832 -528 
+label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -576 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -608 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -640 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -672 label
+(0x03 00 00 30) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -736 label
+(ADC1 enable \(low bit 1 = enabled, 0 = disabled\)) {/Times-Roman cf} 2 16 
+0.000 0.700 -832 -736 label
+(0x03 00 00 34) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -784 label
+(ADC1 data \(10 bits\) read-only) {/Times-Roman cf} 2 16 0.000 0.700 -832 -784 
+label
+(0x03 00 00 38) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -816 label
+(ADC1 done \(low bit 1 = done, 0 = busy\) read-only) {/Times-Roman cf} 2 16 
+0.000 0.700 -832 -816 label
+(0x03 00 00 3c) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -848 label
+(ADC1 start conversion \(low bit 1 = convert, 0 = reset\)) {/Times-Roman cf} 2 
+16 0.000 0.700 -832 -848 label
+(0x03 00 00 40) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -880 label
+(ADC1 clock source \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 -832 -880 
+label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -928 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -960 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -992 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -1024 label
+(0x03 00 00 44) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -1072 label
+(ADC1 input source \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 -832 
+-1072 label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -1120 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -1152 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -1184 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -704 -1216 label
+(external pin) {/Times-Roman cf} 2 16 0.000 0.700 -640 -576 label
+(VDD1V8) {/Times-Roman cf} 2 16 0.000 0.700 -640 -608 label
+(DAC) {/Times-Roman cf} 2 16 0.000 0.700 -640 -640 label
+(comparator P input) {/Times-Roman cf} 2 16 0.000 0.700 -640 -672 label
+(external pin) {/Times-Roman cf} 2 16 0.000 0.700 -640 -1120 label
+(VDD3V3) {/Times-Roman cf} 2 16 0.000 0.700 -640 -1184 label
+(VSS) {/Times-Roman cf} 2 16 0.000 0.700 -640 -1216 label
+(bandgap) {/Times-Roman cf} 2 16 0.000 0.700 -640 -1152 label
+(RC osc) {/Times-Roman cf} 2 16 0.000 0.700 -640 -384 label
+(SPI SCK) {/Times-Roman cf} 2 16 0.000 0.700 -640 -416 label
+(Xtal clock) {/Times-Roman cf} 2 16 0.000 0.700 -640 -448 label
+(XCLK pin) {/Times-Roman cf} 2 16 0.000 0.700 -640 -480 label
+(RC osc) {/Times-Roman cf} 2 16 0.000 0.700 -640 -928 label
+(SPI SCK) {/Times-Roman cf} 2 16 0.000 0.700 -640 -960 label
+(Xtal clock) {/Times-Roman cf} 2 16 0.000 0.700 -640 -992 label
+(XCLK pin) {/Times-Roman cf} 2 16 0.000 0.700 -640 -1024 label
+(Program to run starts here.) {/Times-Roman cf} 2 16 0.000 0.700 -64 496 label
+(16 bits of general-purpose digital) {/Times-Roman cf} 2 16 0.000 0.700 -64 0 
+label
+(the crystal or the RC oscillator.) {CR} (automatically clocked at the rate of) 
+{CR} (via the SPI SCK or XCLK pins, or) {CR} (ADC can be manually clocked) 
+{/Times-Roman cf} 8 16 0.000 0.700 -96 -432 label
+(P input pin.) {CR} (power supply, DAC, or the comparator) {CR} 
+(to read the internal values of the core) {CR} 
+(external pin, but for testing can be set) {CR} 
+(ADC normally reads the value of an) {/Times-Roman cf} 10 16 0.000 0.700 -96 
+-640 label
+(can be used to read the bandgap voltage.) {CR} 
+(the 3.3V power supply and ground, and) {CR} 
+(ADC can be calibrated by setting input to) {/Times-Roman cf} 6 16 0.000 0.700 
+-96 -1120 label
+pgsave restore showpage
+
+%%Page: raven_soc 2
+%%PageOrientation: Portrait
+%%PageBoundingBox: 0 0 612 792
+/pgsave save def bop
+0.8571 inchscale
+2.6000 setlinewidth 1160 1343 translate
+
+0.678 1.000 0.184 scb
+512 1.000 -928 896 -928 -1120 512 -1120 512 896 4 polygon
+sce
+1 1.000 -736 784 -736 -1120 2 polygon
+(Address \(bytes\)) {/Times-Roman cf} 2 16 360.000 0.700 -928 768 label
+(Function) {/Times-Roman cf} 2 16 0.000 0.700 -704 768 label
+1 1.000 -928 752 512 752 2 polygon
+(0x03 00 00 54) {/Times-Roman cf} 2 16 0.000 0.700 -928 656 label
+(DAC value \(10 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 -704 656 label
+(0x03 00 00 50) {/Times-Roman cf} 2 16 0.000 0.700 -928 704 label
+(DAC enable \(low bit  1 = enabled, 0 = disabled\)) {/Times-Roman cf} 2 16 
+0.000 0.700 -704 704 label
+(0x03 00 00 60) {/Times-Roman cf} 2 16 0.000 0.700 -928 592 label
+(Comparator enable \(low bit  1 = enabled, 0 = disabled\)) {/Times-Roman cf} 2 
+16 0.000 0.700 -704 592 label
+(0x03 00 00 64) {/Times-Roman cf} 2 16 0.000 0.700 -928 544 label
+(Comparator N input source \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 
+-704 544 label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 496 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 464 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 432 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 400 label
+(0x03 00 00 68) {/Times-Roman cf} 2 16 0.000 0.700 -928 336 label
+(Comparator P input source \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 
+-704 336 label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 288 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 256 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 224 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 192 label
+(0x03 00 00 6c) {/Times-Roman cf} 2 16 0.000 0.700 -928 144 label
+(Comparator output destination \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -704 144 label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 96 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 64 label
+(0x03 00 00 70) {/Times-Roman cf} 2 16 0.000 0.700 -928 -48 label
+(RC oscillator enable \(low bit,  1 = enabled, 0 = disabled\)) 
+{/Times-Roman cf} 2 16 0.000 0.700 -704 -48 label
+(0x03 00 00 74) {/Times-Roman cf} 2 16 0.000 0.700 -928 -96 label
+(RC oscillator output destination \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -704 -96 label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 -144 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 -176 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 -208 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 -240 label
+(0x03 00 00 80) {/Times-Roman cf} 2 16 0.000 0.700 -928 -288 label
+(SPI configuration byte \(low 8 bits\) \(read-only\)) {/Times-Roman cf} 2 16 
+0.000 0.700 -704 -288 label
+(Value currently fixed at zero) {/Times-Roman cf} 2 16 0.000 0.700 -528 -336 
+label
+(0x03 00 00 84) {/Times-Roman cf} 2 16 360.000 0.700 -928 -384 label
+(SPI master enables \(low 2 bits\) \(read-only\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -704 -384 label
+(bit 0 = 1.8V regulator enable) {/Times-Roman cf} 2 16 0.000 0.700 -544 -432 
+label
+(bit 1 = Crystal oscillator enable) {/Times-Roman cf} 2 16 0.000 0.700 -544 
+-464 label
+(0x03 00 00 88) {/Times-Roman cf} 2 16 360.000 0.700 -928 -512 label
+(SPI PLL config \(low 7 bits\) \(read-only\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -704 -512 label
+(bit 0 = PLL current bias enable) {/Times-Roman cf} 2 16 0.000 0.700 -544 -560 
+label
+(bit 1 = PLL VCO enable) {/Times-Roman cf} 2 16 0.000 0.700 -544 -592 label
+(bit 2 = PLL CP enable) {/Times-Roman cf} 2 16 0.000 0.700 -544 -624 label
+(bits 3-6 = PLL frequency trim) {/Times-Roman cf} 2 16 0.000 0.700 -544 -656 
+label
+(0x03 00 00 8c) {/Times-Roman cf} 2 16 360.000 0.700 -928 -704 label
+(SPI manufacturer ID \(low 12 bits\) \( = 0x0456\) \(read-only\)) 
+{/Times-Roman cf} 2 16 0.000 0.700 -704 -704 label
+(0x03 00 00 90) {/Times-Roman cf} 2 16 360.000 0.700 -928 -736 label
+(SPI product ID \(low 8 bits\) \( = 0x02\) \(read-only\)) {/Times-Roman cf} 2 
+16 0.000 0.700 -704 -736 label
+(0x03 00 00 94) {/Times-Roman cf} 2 16 360.000 0.700 -928 -768 label
+(SPI mask revision \(low 4 bits\) \( = 0x00\) \(read-only\)) {/Times-Roman cf} 
+2 16 0.000 0.700 -704 -768 label
+(0x03 00 00 a0) {/Times-Roman cf} 2 16 360.000 0.700 -928 -864 label
+(Crystal output destination \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 
+-704 -864 label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 -896 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 -928 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 -960 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 -992 label
+(0x03 00 00 98) {/Times-Roman cf} 2 16 360.000 0.700 -928 -800 label
+(SPI PLL bypass mode \(low bit\) \(read-only\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -704 -800 label
+(external pin) {/Times-Roman cf} 2 16 0.000 0.700 -464 496 label
+(DAC) {/Times-Roman cf} 2 16 0.000 0.700 -464 464 label
+(bandgap) {/Times-Roman cf} 2 16 0.000 0.700 -464 432 label
+(VDD1V8) {/Times-Roman cf} 2 16 0.000 0.700 -464 400 label
+(external pin) {/Times-Roman cf} 2 16 0.000 0.700 -464 288 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 32 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -528 0 label
+(GPIO\(0\)) {/Times-Roman cf} 2 16 0.000 0.700 -464 64 label
+(GPIO\(1\)) {/Times-Roman cf} 2 16 0.000 0.700 -464 32 label
+(IRQ\(9\)) {/Times-Roman cf} 2 16 0.000 0.700 -464 0 label
+(none) {/Times-Roman cf} 2 16 0.000 0.700 -464 96 label
+(GPIO\(2\)) {/Times-Roman cf} 2 16 0.000 0.700 -464 -176 label
+(GPIO\(3\)) {/Times-Roman cf} 2 16 0.000 0.700 -464 -208 label
+(none) {/Times-Roman cf} 2 16 0.000 0.700 -464 -144 label
+(GPIO\(4\)) {/Times-Roman cf} 2 16 0.000 0.700 -464 -240 label
+(GPIO\(5\)) {/Times-Roman cf} 2 16 0.000 0.700 -464 -928 label
+(GPIO\(6\)) {/Times-Roman cf} 2 16 0.000 0.700 -464 -960 label
+(GPIO\(7\)) {/Times-Roman cf} 2 16 0.000 0.700 -464 -992 label
+(none) {/Times-Roman cf} 2 16 0.000 0.700 -464 -896 label
+(DAC) {/Times-Roman cf} 2 16 0.000 0.700 -464 256 label
+(bandgap) {/Times-Roman cf} 2 16 0.000 0.700 -464 224 label
+(VDD1V8) {/Times-Roman cf} 2 16 0.000 0.700 -464 192 label
+(Raven SoC\320A PicoSoC ASIC hardware implementation) {/Times-Roman cf} 2 16 
+0.000 0.700 -928 880 label
+1 1.000 -928 864 512 864 2 polygon
+(Raven Memory Mapped I/O \(continued\)) {/Times-Roman cf} 2 16 0.000 0.700 -928 
+816 label
+(supply voltage.) {CR} (output, the bandgap voltage, or the core) {CR} 
+(known internal value, either the DAC) {CR} 
+(Comparator can have one input set to a) {/Times-Roman cf} 8 28 0.000 0.700 0 
+512 label
+(for comparator output.) {CR} (used for general-purpose I/O when selected) {CR} 
+(interrupt IRQ 9.  GPIOs 0 and 1 cannot be) {CR} 
+(on GPIO 0 or 1, or used to trigger CPU) {CR} 
+(Comparator output can be seen directly) {/Times-Roman cf} 10 28 0.000 0.700 0 
+160 label
+(selected for RC oscillator output.) {CR} (be used as general-purpose I/O when) 
+{CR} (directly to GPIO 2, 3, or 4.  These cannot) {CR} 
+(RC oscillator output can be passed) {/Times-Roman cf} 8 28 0.000 0.700 0 -96 
+label
+(and cannot be modified.) {CR} (read by the CPU.  These bits are read-only) 
+{CR} (mirrored to memory locations and can be) {CR} 
+(Most bits of the SPI register map are) {/Times-Roman cf} 8 28 0.000 0.700 0 
+-272 label
+(oscillator clock output.) {CR} (purpose I/O when selected for crystal) {CR} 
+(7.  These GPIOs cannot be used as general-) {CR} 
+(can be coupled to any of GPIO pins 5, 6, or) {CR} 
+(The crystal oscillator clock \(before the PLL\)) {/Times-Roman cf} 10 28 0.000 
+0.700 0 -848 label
+pgsave restore showpage
+
+%%Page: raven_soc 3
+%%PageOrientation: Portrait
+%%PageBoundingBox: 0 0 612 792
+/pgsave save def bop
+0.8571 inchscale
+2.6000 setlinewidth 1096 1327 translate
+
+0.678 1.000 0.184 scb
+512 1.000 -864 912 -864 -1104 576 -1104 576 912 4 polygon
+sce
+1 1.000 -672 800 -672 -1104 2 polygon
+(Address \(bytes\)) {/Times-Roman cf} 2 16 360.000 0.700 -864 784 label
+(Function) {/Times-Roman cf} 2 16 0.000 0.700 -640 784 label
+1 1.000 -864 768 576 768 2 polygon
+(0x03 00 00 a4) {/Times-Roman cf} 2 16 360.000 0.700 -864 720 label
+(PLL clock output destination \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -640 720 label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 688 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 656 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 624 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 592 label
+(0x03 00 00 a8) {/Times-Roman cf} 2 16 360.000 0.700 -864 512 label
+(Trap output destination \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 
+-640 512 label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 480 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 448 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 416 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 384 label
+(0x03 00 00 b0) {/Times-Roman cf} 2 16 360.000 0.700 -864 320 label
+(IRQ 7 input source \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 -640 320 
+label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 288 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 256 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 224 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 192 label
+(0x03 00 00 b4) {/Times-Roman cf} 2 16 360.000 0.700 -864 144 label
+(IRQ 8 input source \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 -640 144 
+label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 112 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 80 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 48 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 16 label
+(0x03 00 00 c0) {/Times-Roman cf} 2 16 360.000 0.700 -864 -32 label
+(Analog output select \(low bit\)) {/Times-Roman cf} 2 16 0.000 0.700 -640 -32 
+label
+(0 =  DAC) {/Times-Roman cf} 2 16 0.000 0.700 -464 -64 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -96 label
+(0x03 00 00 c4) {/Times-Roman cf} 2 16 360.000 0.700 -864 -160 label
+(Analog output enable \(low bit,  1 = enabled,  0 = disabled\)) 
+{/Times-Roman cf} 2 16 0.000 0.700 -640 -208 label
+(0x03 00 00 c8) {/Times-Roman cf} 2 16 360.000 0.700 -864 -208 label
+(Analog output bias enable \(low bit,  1 = enabled,  0 = disabled\)) 
+{/Times-Roman cf} 2 16 0.000 0.700 -640 -160 label
+(0x03 00 00 d0) {/Times-Roman cf} 2 16 360.000 0.700 -864 -256 label
+(Over-temperature alarm enable \(low bit, 1 = enabled, 0 = disabled\)) 
+{/Times-Roman cf} 2 16 0.000 0.700 -640 -256 label
+(0x03 00 00 d4) {/Times-Roman cf} 2 16 360.000 0.700 -864 -304 label
+(Over-temperature value \(low bit, read-only\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -640 -304 label
+(0x03 00 00 d8) {/Times-Roman cf} 2 16 360.000 0.700 -864 -352 label
+(Over-temperature destination \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -640 -352 label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -400 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -432 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -464 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -496 label
+(bandgap) {/Times-Roman cf} 2 16 0.000 0.700 -416 -96 label
+(none) {/Times-Roman cf} 2 16 0.000 0.700 -400 688 label
+(GPIO\(8\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 656 label
+(GPIO\(9\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 624 label
+(GPIO\(10\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 592 label
+(none) {/Times-Roman cf} 2 16 0.000 0.700 -400 480 label
+(GPIO\(11\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 448 label
+(GPIO\(12\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 416 label
+(GPIO\(13\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 384 label
+(none) {/Times-Roman cf} 2 16 0.000 0.700 -400 -400 label
+(GPIO\(14\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 -432 label
+(GPIO\(15\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 -464 label
+(IRQ\(10\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 -496 label
+(GPIO\(0\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 256 label
+(none) {/Times-Roman cf} 2 16 0.000 0.700 -400 288 label
+(none) {/Times-Roman cf} 2 16 0.000 0.700 -400 112 label
+(GPIO\(1\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 224 label
+(GPIO\(2\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 192 label
+(GPIO\(3\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 80 label
+(GPIO\(4\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 48 label
+(GPIO\(5\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 16 label
+(Raven SoC\320A PicoSoC ASIC hardware implementation) {/Times-Roman cf} 2 16 
+0.000 0.700 -864 896 label
+1 1.000 -864 880 576 880 2 polygon
+(Raven Memory Mapped I/O \(continued\)) {/Times-Roman cf} 2 16 0.000 0.700 -864 
+832 label
+(should have a proper output.) {CR} 
+(clock \(5 MHz crystal / 40 MHz core clock\)) {CR} 
+(toggle the GPIO at full swing, but a slower) {CR} 
+(full-speed \(100MHz\) clock will be able to) {CR} 
+(for PLL clock output.  It is unlikely that a) {CR} 
+(be used as general-purpose I/O when selected) {CR} 
+(any of GPIO 8, 9, or 10.  These GPIOs cannot) {CR} 
+(multiplied up by 8 times\) can be viewed on) {CR} 
+(The PLL clock \(crystal oscillator clock) {/Times-Roman cf} 18 28 0.000 0.700 
+32 736 label
+(CPU trap externally.) {CR} (GPIO 11, 12, or 13, as a way to monitor the) {CR} 
+(The CPU fault state \(trap\) can be viewed at) {/Times-Roman cf} 6 28 0.000 
+0.700 32 448 label
+(first configured as an input.) {CR} (the corresponding GPIO channel must be) 
+{CR} (channels 7 and 8.  When used as IRQ sources,) {CR} 
+(sources and passed to the CPU through IRQ) {CR} 
+(The GPIO inputs can be used as IRQ event) {/Times-Roman cf} 10 28 0.000 0.700 
+32 336 label
+(DAC output or the bandgap output.) {CR} 
+(buffer can be selected to mirror the analog) {CR} 
+(A single op-amp configured as an analog) {/Times-Roman cf} 6 28 0.000 0.700 32 
+-16 label
+(CPU.) {CR} (14 or 15, or used as an IRQ source to the) {CR} 
+(133 degrees C.  It can be viewed at GPIO) {CR} 
+(The over-temperature sensor triggers at) {/Times-Roman cf} 8 28 0.000 0.700 32 
+-336 label
+pgsave restore showpage
+
+%%Trailer
+XCIRCsave restore
+%%EOF

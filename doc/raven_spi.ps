@@ -1,0 +1,400 @@
+%!PS-Adobe-3.0
+%%Title: raven_spi.ps
+%%Creator: XCircuit v3.9 rev70
+%%CreationDate: Thu Jan  4 14:54:10 2018
+%%Pages: 2
+%%BoundingBox: 0 0 612 792
+%%DocumentNeededResources: font Times-Roman 
+%%EndComments
+%%BeginProlog
+%
+%  PostScript prolog for output from xcircuit
+%  Version: 3.9
+%
+%  Electrical circuit (and otherwise general) drawing program
+%
+%  Written by Tim Edwards 8/5/93--4/12/16  (tim@opencircuitdesign.com)
+%  The Johns Hopkins University (1993-2004)
+%  MultiGiG, Inc. (2004-2012)
+%  Open Circuit Design (2012-2016)
+%
+%%BeginResource: procset XCIRCproc 3.9 1
+%
+% supporting definitions --- these are the primary xcircuit types.
+
+/XCIRCsave save def
+/topmat matrix currentmatrix def
+
+/fontslant { /slant exch def [1 0 slant 1 0 0] 
+    exch findfont exch makefont dup length dict /ndict exch def
+    { 1 index /FID ne { ndict 3 1 roll put } { pop pop } ifelse } forall
+    ndict definefont pop} def
+/ul { count 0 gt { dup type /stringtype eq showflag 1 eq and { gsave 
+   currentpoint topmat setmatrix 0 0 moveto 2 index stringwidth pop (_)
+   false charpath flattenpath pathbbox grestore exch pop 1 index
+   sub setlinewidth exch pop currentpoint 3 -1 roll add moveto 0
+   rlineto stroke moveto } if } if } def
+/ol { count 0 gt { dup type /stringtype eq showflag 1 eq and { gsave gsave
+   currentpoint topmat setmatrix 2 index stringwidth pop 3 index
+   true charpath flattenpath pathbbox grestore exch pop
+   exch pop topmat setmatrix (_) true charpath pathbbox grestore
+   exch pop 1 index sub setlinewidth exch pop currentpoint
+   exch 4 1 roll exch sub add moveto pop 0 rlineto stroke
+   moveto } if } if } def
+/stW { gsave currentpoint newpath moveto true charpath flattenpath
+	pathbbox pop exch pop sub grestore } def
+/Ts {mark Tabs aload pop counttomark 1 add array astore /Tabs exch def Tabs
+	0 currentpoint pop put} def
+/Tbn {mark Tabs aload pop counttomark dup 2 add 1 roll cleartomark 1 sub} def
+/Tb { 0 1 Tbn {Tabs exch get dup currentpoint pop lt
+	{currentpoint exch pop moveto exit} {pop} ifelse } for } def
+/Tf { Tbn -1 0 {Tabs exch get dup currentpoint pop gt
+	{currentpoint exch pop moveto exit} {pop} ifelse } for } def
+/qS { (aa) stW (a a) stW sub 4 div 0 Kn } def
+/hS { qS qS } def
+/pspc 0 def
+/cf0 { scalefont setfont } bind def
+/Kn { dup kY add /kY exch def rmoveto } bind def
+/ss { /fscale fscale 0.67 mul def currentfont 0.67 cf0 0 fscale0 fscale mul
+	0.33 mul neg Kn} def
+/Ss { /fscale fscale 0.67 mul def currentfont 0.67 cf0 0 fscale0 fscale mul
+	0.67 mul Kn } def
+/ns { 0 kY neg Kn /kY 0 def /fscale 1.0 def xfont0 1.0 cf0 } def
+/MR { /twidth exch def } def
+/CRx { } def
+/CR { ns 0 /Bline Bline fscale0 neg add def Bline moveto CRx } def
+/cf { dup type /realtype ne {1.0} if exch findfont exch kY 0 eq
+	{ 40 mul dup /fscale0 exch def cf0 /xfont0 currentfont def}
+	{fscale0 mul fscale mul cf0} ifelse } def
+/ctmk { counttomark dup 2 add -1 roll pop } bind def
+/label { gsave translate 0 0 moveto dup scale neg
+	/rotval exch def /twidth 100000 def /just exch def just 128 and
+	0 gt {/mshow {pop} def} {/mshow {show} def} ifelse just 16 and 0
+	gt {gsave rotval rotate 0 1 dtransform gsave pagemat setmatrix
+	idtransform exch grestore 1 0 dtransform gsave pagemat setmatrix
+	idtransform exch grestore dup abs 1e-9 lt {pop mul 0 gt} {3 1 roll
+	pop pop 0 lt} ifelse grestore {-1 /rotval rotval neg def /just just
+	dup 3 and 1 ne {3 xor} if def} {1} ifelse exch -1e-9 lt {-1 /rotval
+	rotval neg def /just just dup 12 and 4 ne {12 xor} if def} {1}
+	ifelse scale } if /showflag 0 def /fspc pspc def /Bline 0 def
+	/numlines 0 def /padding 0 array def /Tabs 0 array def
+	/fscale 1.0 def /kY 0 def gsave /CRx { linewid padding
+	aload pop numlines 1 add dup /numlines exch def array astore
+	/padding exch def /linewid 0 def } def dup 1 add copy dup 1 0
+	dtransform exch atan rotate {exch dup type /stringtype eq {gsave dup
+	gsave newpath 0 0 moveto true charpath flattenpath pathbbox pop exch
+	pop exch pop grestore currentpoint pop add dup /linewid exch def twidth
+	ge {grestore CR exch 1 add dup 2 add {CR} exch 1 roll exch} {grestore}
+	ifelse true charpath flattenpath} {dup type /arraytype eq {exec} {12
+	string cvs true charpath flattenpath} ifelse} ifelse} repeat
+	CRx /CRx {padding aload pop just 1280 and 0 gt {blockwid exch sub just
+	1024 and 0 gt {0.5 mul} if} {pop 0} ifelse 0 rmoveto numlines 1 sub
+	dup /numlines exch def array astore /padding exch def} def exch pop
+	pathbbox grestore 4 copy pop exch pop exch sub /blockwid exch def
+	3 -1 roll pop 3 1 roll just 1 and 0 gt {just 2 and
+	0 gt {exch pop neg fspc sub} {exch sub 0.5 mul neg} ifelse} {pop neg
+	fspc add} ifelse exch Bline exch just 4 and 0 gt {just 8 and 0 gt
+	{exch pop neg fspc sub} {add 0.5 mul neg} ifelse} {pop neg fspc add}
+	ifelse rotval rotate Kn currentpoint translate /showflag 1 def /Bline
+	0 def /Tabs 0 array def /fscale 1.0 def /kY 0 def CRx {dup type
+	/stringtype eq {mshow} {dup type /arraytype eq {exec} {12 string cvs
+	mshow} ifelse} ifelse} repeat grestore endclip} def
+/pinlabel { 4 index 32 and 0 ne hlevel 0 eq or { /pspc 10 def label
+	/pspc 0 def } { pop pop pop pop pop {pop} repeat } ifelse } def
+/pinglobal { pinlabel } def
+/infolabel { pinlabel } def
+/graphic { gsave 4 index cvx exec /DataSource get resetfile translate 0 0
+	moveto neg rotate dup scale cvx exec image grestore endclip} def
+
+/scb { setrgbcolor } bind def  /sce { defColor aload pop scb } bind def
+/cRedef {/defColor currentcolor 3 array astore def} def
+/begingate {dup type /dicttype ne {1 dict} if begin	% default params
+	dup type /dicttype ne {1 dict} if begin		% instanced params
+	/hlevel hlevel 1 add def /defColor currentcolor sce 3 array astore
+	def gsave sce translate 0 0 moveto neg rotate dup type /nametype
+	eq not { dup abs currentlinewidth exch div setlinewidth } { pop }
+	ifelse dup abs scale clipped 1 and 1 eq {/clipped clipped 1 add def}
+	if} bind def
+/endgate { /hlevel hlevel 1 sub def grestore defColor aload pop cRedef
+	scb end end endclip} bind def
+
+/hlevel 0 def
+/endclip {clipped 1 and 1 eq {grestore /clipped clipped 1 sub def} if} def
+/tmpa [1 0 0 1 0 0] def
+/gar {8 8 true tmpa {<c0 c0 00 00 0c 0c 00 00>} imagemask} bind
+{8 8 true tmpa {<30 70 60 02 03 07 06 20>} imagemask} bind
+{8 8 true tmpa {<0c 1e 1e 0c c0 e1 e1 c0>} imagemask} bind
+{8 8 true tmpa {<0f 0f 0f 0f f0 f0 f0 f0>} imagemask} bind
+{8 8 true tmpa {<3f f3 e1 e1 f3 3f 1e 1e>} imagemask} bind
+{8 8 true tmpa {<df cf 8f 9f fd fc f8 f9>} imagemask} bind
+{8 8 true tmpa {<ff 3f 3f ff ff f3 f3 ff>} imagemask} bind 7 array astore def
+/ppaint { gsave clip tmpa dup setmatrix pathbbox neg exch neg 4 2 roll
+  neg 4 -1 roll 2 copy gt {exch} if 8 div ceiling 8 mul 4 2 roll neg 2 copy
+  gt {exch} if 8 div ceiling 8 mul 3 -1 roll -8 5 -1 roll
+  { 3 index exch 5 exch put dup -8 3 index { 3 index
+  exch 4 exch put 3 index exec } for } for pop pop pop pop grestore } bind def
+/setstyles {
+  currentlinewidth mul setlinewidth /style exch def style 2048 and 0 gt
+  clipped 1 and 0 eq and {clip newpath /clipped clipped 1 add def} {
+  style 1 and 0 gt not {closepath} if
+  style 1024 and 0 gt {2 setlinecap 0 setlinejoin} if
+  style 2 and 0 gt {currentlinewidth 4 mul dup 2 array astore 0 setdash} if
+  style 4 and 0 gt {0.5 currentlinewidth 4 mul 2 array astore 0 setdash} if
+  gsave style 16 and 0 gt { style 224 and -5 bitshift style 256 and 0 gt {
+  7 exch sub 8 div dup 1 exch sub currentrgbcolor 3 array astore
+  {3 copy mul add 4 1 roll pop} forall pop pop setrgbcolor eofill}
+  {dup 7 lt {gar exch get ppaint} {pop eofill} ifelse} ifelse}
+  {style 256 and 0 gt {1 setgray eofill} if} ifelse grestore style 8 and 0 gt 
+  style 512 eq or {newpath} {stroke} ifelse grestore endclip} ifelse} def     
+
+/addtoy {exch dup dup 2 mul 3 add 1 roll -1 1 { 4 1 roll dup 4 1 roll add
+	4 -1 roll 2 mul 1 add index 2 mul 2 add 2 roll} for pop} def
+/addtoy1 {1 exch addtoy pop} def
+/addtoy3 {3 exch addtoy pop} def
+/addtoy4 {4 exch addtoy pop} def
+/addtox {exch dup dup 2 mul 3 add 1 roll -1 1 { 4 1 roll dup 4 1 roll 3 -1 roll
+	add exch 4 -1 roll 2 mul 1 add index 2 mul 2 add 2 roll} for pop} def
+/addtox1 {1 exch addtox pop} def
+/addtox3 {3 exch addtox pop} def
+/addtox4 {4 exch addtox pop} def
+/polygon { gsave /num exch def moveto num 1 sub {lineto} repeat setstyles } def
+/xcarc   { gsave newpath arc setstyles } def
+/elb { matrix currentmatrix 7 -1 roll 7 -1 roll translate 5 1 roll 4 -1 roll
+	3 index div 1 scale } def
+/ele { 0 4 1 roll 0 4 1 roll } bind def
+/ellipse { gsave elb newpath ele arc setmatrix setstyles } def
+/pellip  { elb ele arc setmatrix } def
+/nellip  { elb ele arcn setmatrix } def
+/spline  { gsave moveto curveto setstyles } def
+/polyc   { {lineto} repeat } bind def
+/beginpath { gsave moveto } bind def
+/endpath { setstyles } bind def
+/bop	 { 1 setlinecap 2 setlinejoin 6 setmiterlimit 0 0 0 scb cRedef
+	/clipped 0 def} def
+/psinsertion {/PSobj save def /showpage {} def /setpagedevice {pop} def bop
+	rotate translate dup scale} def
+/end_insert {PSobj restore} def
+/setpagemat {/pagemat matrix currentmatrix def} def
+/inchscale  {setpagemat 0.375 mul dup scale} def
+/cmscale    {setpagemat 0.35433071 mul dup scale} def
+
+%%EndResource
+%%EndProlog
+% XCircuit output starts here.
+
+%%BeginSetup
+
+
+%%EndSetup
+
+%%Page: raven_spi_registers 1
+%%PageOrientation: Portrait
+%%PageBoundingBox: 0 0 612 792
+/pgsave save def bop
+0.6842 inchscale
+2.6000 setlinewidth 1080 1999 translate
+
+0.898 0.898 0.898 scb
+496 1.000 -608 -192 -608 192 512 192 512 -192 4 polygon
+0.679 1.000 0.184 scb
+512 1.000 -800 -1712 -800 800 1024 800 1024 -1712 4 polygon
+sce
+1 1.000 -800 576 1024 576 2 polygon
+(msb) {/Times-Roman cf} 2 17 0.000 0.700 -544 720 label
+(lsb) {/Times-Roman cf} 2 17 0.000 0.700 576 720 label
+(manufacturer_ID[7:0] \(currently undefined, = 0x56\)) {/Times-Roman cf} 2 21 
+0.000 0.700 32 432 label
+1 1.000 -800 384 1024 384 2 polygon
+1 1.000 -800 704 -800 -384 2 polygon
+(Address) {CR} (Register) {/Times-Roman cf} 4 17 0.000 0.700 -704 688 label
+1 1.000 -800 672 1024 672 2 polygon
+1 1.000 -800 288 1024 288 2 polygon
+(product_ID \(= 0x02\)) {/Times-Roman cf} 2 21 0.000 0.700 16 336 label
+(0x00) {/Times-Roman cf} 2 17 0.000 0.700 -704 608 label
+(0x01) {/Times-Roman cf} 2 17 0.000 0.700 -704 512 label
+1 1.000 -800 0 1024 0 2 polygon
+1 1.000 -448 704 -448 672 2 polygon
+1 1.000 -288 704 -288 672 2 polygon
+1 1.000 -128 704 -128 672 2 polygon
+1 1.000 32 704 32 672 2 polygon
+1 1.000 192 704 192 672 2 polygon
+1 1.000 352 704 352 672 2 polygon
+1 1.000 512 704 512 672 2 polygon
+1 1.000 672 704 672 -384 2 polygon
+(7) {/Times-Roman cf} 2 16 0.000 0.700 -528 688 label
+(6) {/Times-Roman cf} 2 16 0.000 0.700 -368 688 label
+(5) {/Times-Roman cf} 2 16 0.000 0.700 -208 688 label
+(4) {/Times-Roman cf} 2 16 0.000 0.700 -64 688 label
+(3) {/Times-Roman cf} 2 16 0.000 0.700 112 688 label
+(2) {/Times-Roman cf} 2 16 0.000 0.700 272 688 label
+(1) {/Times-Roman cf} 2 16 0.000 0.700 432 688 label
+(0) {/Times-Roman cf} 2 16 0.000 0.700 576 688 label
+(comments) {/Times-Roman cf} 2 17 0.000 0.700 832 688 label
+1 1.000 1024 704 1024 -384 2 polygon
+1 1.000 -800 -96 1024 -96 2 polygon
+1 1.000 -800 -192 1024 -192 2 polygon
+1 1.000 -800 -288 1024 -288 2 polygon
+(Raven rev 0 SPI register definition:) {/Times-Roman cf} 2 28 0.000 0.700 -800 
+800 label
+1 1.000 -800 -384 1024 -384 2 polygon
+1 1.000 -800 96 1024 96 2 polygon
+1 1.000 -800 192 1024 192 2 polygon
+1 1.000 -800 480 1024 480 2 polygon
+(0x02) {/Times-Roman cf} 2 17 0.000 0.700 -704 416 label
+(mask revision \(= 0x0\)) {/Times-Roman cf} 2 21 0.000 0.700 -288 528 label
+1 1.000 32 576 32 480 2 polygon
+(manufacturer_ID[11:8] \(= 0x4\)) {/Times-Roman cf} 2 21 0.000 0.700 336 528 
+label
+(0x03) {/Times-Roman cf} 2 17 0.000 0.700 -704 320 label
+(0x04) {/Times-Roman cf} 2 17 0.000 0.700 -704 224 label
+(0x05) {/Times-Roman cf} 2 17 0.000 0.700 -704 128 label
+(0x06) {/Times-Roman cf} 2 17 0.000 0.700 -704 32 label
+(0x07) {/Times-Roman cf} 2 17 0.000 0.700 -704 -64 label
+(0x08) {/Times-Roman cf} 2 17 0.000 0.700 -704 -160 label
+(0x09) {/Times-Roman cf} 2 17 0.000 0.700 -704 -256 label
+(SPI status and control) {/Times-Roman cf} 2 21 0.000 0.700 32 624 label
+(read-only) {/Times-Roman cf} 2 21 0.000 0.700 832 528 label
+(read-only) {/Times-Roman cf} 2 21 0.000 0.700 832 432 label
+(read-only) {/Times-Roman cf} 2 21 0.000 0.700 832 336 label
+(for now.) {CR} (unused/undefined) {/Times-Roman cf} 4 1045 0.000 0.700 832 624 
+label
+(PLL trim[3:0]) {/Times-Roman cf} 2 21 0.000 0.700 352 240 label
+(enable) {CR} (xtal osc.) {/Times-Roman cf} 4 1045 0.000 0.700 -512 240 label
+1 1.000 -608 704 -608 -384 2 polygon
+(read-only) {/Times-Roman cf} 2 21 0.000 0.700 832 -144 label
+(undefined, use TBD) {/Times-Roman cf} 2 21 0.000 0.700 64 -240 label
+(January 4, 2018) {/Times-Roman cf} 2 31 0.000 0.700 1024 800 label
+(unused) {/Times-Roman cf} 2 21 0.000 0.700 -96 -144 label
+(registers read 0x00) {CR} (all undefined) {/Times-Roman cf} 4 1045 0.000 0.700 
+832 -240 label
+1 1.000 32 288 32 192 2 polygon
+1 1.000 -448 288 -448 192 2 polygon
+1 1.000 -288 288 -288 192 2 polygon
+1 1.000 -128 288 -128 192 2 polygon
+(enable) {CR} (regulator) {CR} (1.8V) {/Times-Roman cf} 6 21 0.000 0.700 -368 
+240 label
+(enable) {CR} (PLL VCO) {/Times-Roman cf} 4 21 0.000 0.700 -208 240 label
+(enable) {CR} (PLL CP) {/Times-Roman cf} 4 21 0.000 0.700 -48 240 label
+(default 0xf0) {/Times-Roman cf} 2 21 0.000 0.700 832 240 label
+1 1.000 512 192 512 96 2 polygon
+(bypass) {CR} (PLL) {/Times-Roman cf} 4 21 0.000 0.700 592 144 label
+(default 0x00) {/Times-Roman cf} 2 21 0.000 0.700 832 144 label
+1 1.000 512 96 512 0 2 polygon
+1 1.000 512 0 512 -96 2 polygon
+1 1.000 512 -96 512 -192 2 polygon
+(IRQ) {CR} (CPU) {/Times-Roman cf} 4 21 0.000 0.700 592 48 label
+(reset) {CR} (CPU) {/Times-Roman cf} 4 21 0.000 0.700 592 -48 label
+(trap) {CR} (CPU) {/Times-Roman cf} 4 21 0.000 0.700 592 -144 label
+(unused) {/Times-Roman cf} 2 21 0.000 0.700 -96 -48 label
+(unused) {/Times-Roman cf} 2 21 0.000 0.700 -96 48 label
+(unused) {/Times-Roman cf} 2 21 0.000 0.700 -96 144 label
+(default 0x00) {/Times-Roman cf} 2 21 0.000 0.700 832 48 label
+(default 0x00) {/Times-Roman cf} 2 21 0.000 0.700 832 -48 label
+
+(\(3\) The PLL generates the high-speed clock from the low-speed crystal, acting as an 8x clock multiplier.  By default it is enabled, and has zero trim.) 
+{CR} 
+(\(2\) The 1.8V regulator supplies power to the CPU, so it cannot be disabled from the CPU.  By default it is enabled.) 
+{CR} 
+(\(1\) The crystal oscillator drives the CPU clock, so it cannot be turned on and off from inside the CPU.  By default it is enabled.) 
+{CR} 
+(NOTES:  These registers access values that are impossible to reach using the CPU.) 
+{/Times-Roman cf} 8 16 0.000 0.700 -800 -544 label
+
+(\(7\) CPU trap is the fault signal from the CPU.  If raised, then the CPU has encountered a bad instruction and has stopped.) 
+{CR} 
+(\(6\) CPU reset allows the CPU to be reset independently of the power-on-reset circuit.) 
+{CR} 
+(\(5\) CPU IRQ is a dedicated interrupt that can be applied to the CPU from the SPI for test purposes.) 
+{CR} 
+(\(4\) PLL bypass allows the CPU to completely bypass the crystal and PLL and be driven directly by a signal on the XCLK pin.) 
+{/Times-Roman cf} 8 28 0.000 0.700 -800 -560 label
+(test and debug.) {CR} 
+(Under normal working conditions, the SPI should not need to be accessed unless it is to adjust the clock speed of the CPU.  All other functions are purely for) 
+{/Times-Roman cf} 4 28 0.000 0.700 -800 -736 label
+
+(All values in the SPI registers are exported to the CPU and can be viewed \(read-only\) in memory-mapped space \(see the memory map documentation\).) 
+{/Times-Roman cf} 2 28 0.000 0.700 -800 -832 label
+pgsave restore showpage
+
+%%Page: raven_spi_protocol 2
+%%PageOrientation: Portrait
+%%PageBoundingBox: 0 0 612 792
+/pgsave save def bop
+0.6341 inchscale
+2.6000 setlinewidth 1230 2401 translate
+
+(SPI protocol definition) {/Times-Roman cf} 2 16 0.000 0.900 -928 528 label
+1 1.000 -928 496 1040 496 2 polygon
+(Table 1:  Command words) {/Times-Roman cf} 2 16 0.000 0.900 -928 -320 label
+1 1.000 -928 -336 1040 -336 2 polygon
+(00000000) {/Times-Roman cf} 2 16 0.000 0.900 -800 -384 label
+(No operation) {/Times-Roman cf} 2 16 0.000 0.900 -512 -384 label
+(10000000) {/Times-Roman cf} 2 16 0.000 0.900 -800 -432 label
+(01000000) {/Times-Roman cf} 2 16 0.000 0.900 -800 -480 label
+(Write in streaming mode) {/Times-Roman cf} 2 16 0.000 0.900 -512 -432 label
+(Read in streaming mode) {/Times-Roman cf} 2 16 0.000 0.900 -512 -480 label
+(Simultaneous Read/Write in streaming mode) {/Times-Roman cf} 2 16 0.000 0.900 
+-512 -528 label
+(11000000) {/Times-Roman cf} 2 16 0.000 0.900 -800 -528 label
+(10nnn000) {/Times-Roman cf} 2 16 0.000 0.900 -800 -576 label
+1 1.000 -928 -704 1040 -704 2 polygon
+{/Times-Roman cf} 1 16 0.000 0.900 -368 -304 label
+(All input is in groups of 8 bits.  Each byte is input msb first.) 
+{/Times-Roman cf} 2 16 0.000 0.900 -928 432 label
+
+(The first transferred byte is the command word, interpreted according to Table 1 below.) 
+{/Times-Roman cf} 2 16 0.000 0.900 -928 -240 label
+(rising edge.) {CR} 
+(on a read command.  SDO outputs become active on the falling edge of SCK, such that data are written and read on the same SCK) 
+{CR} 
+(data are received on the SDO line.  SDO is held high-impedance when CSB is high and at all times other than the transfer of data bits) 
+{CR} 
+(CSB pin must be low to enable an SPI transmission.  Data are clocked by pin SCK, with data valid on the rising edge of SCK.  Output) 
+{/Times-Roman cf} 8 28 0.000 0.900 -928 16 label
+
+(After CSB is set low, the SPI is always in the "command" state, awaiting a new command.) 
+{/Times-Roman cf} 2 28 0.000 0.900 -928 -160 label
+0.679 1.000 0.184 scb
+512 1.000 -928 -2096 -928 624 1040 624 1040 -2096 4 polygon
+sce
+(Addresses are read in sequence from lower values to higher values.) 
+{/Times-Roman cf} 2 28 0.000 0.900 -928 272 label
+(8-bit boundary should be at the lowest address.) {CR} 
+(Therefore groups of bits larger than 8 should be grouped such that the lowest bits are at the highest address.  Any bits additional to an) 
+{/Times-Roman cf} 4 28 0.000 0.900 -928 208 label
+(should ensure that data do not change between byte reads. ) {CR} 
+(Data are captured from the register map in bytes on the falling edge of the last SCK before a data byte transfer.  Multi-byte transfers) 
+{/Times-Roman cf} 4 28 0.000 0.900 -928 112 label
+(01nnn000) {/Times-Roman cf} 2 16 0.000 0.900 -800 -624 label
+(11nnn000) {/Times-Roman cf} 2 16 0.000 0.900 -800 -672 label
+(Write in n-byte mode \(up to 7 bytes\).) {/Times-Roman cf} 2 16 0.000 0.900 
+-512 -576 label
+(Read in n-byte mode \(up to 7 bytes\).) {/Times-Roman cf} 2 16 0.000 0.900 
+-512 -624 label
+(Simultaneous Read/Write in n-byte mode \(up to 7 bytes\).) {/Times-Roman cf} 2 
+16 0.000 0.900 -512 -672 label
+
+(All other words are reserved and act as no-operation if not defined by the SPI slave module.) 
+{/Times-Roman cf} 2 16 0.000 0.900 -928 -784 label
+(is raised to end the transfer. ) {CR} 
+(continuously, one byte at a time, with the internal address incrementing for each byte.  Streaming mode operation continues until CSB) 
+{CR} 
+(The two basic modes of operation are "streaming mode" and "n-byte mode".  In "streaming mode" operation, data are sent or received) 
+{/Times-Roman cf} 6 28 0.000 0.900 -928 -832 label
+(words \(8 bits each\), according to the data transfer modes defined below.) 
+{CR} 
+(Every command sequence requires one command word \(8 bits\) followed by one address word \(8 bits\) followed by one or more data) 
+{/Times-Roman cf} 4 28 0.000 0.900 -928 368 label
+
+(for the next command.  No toggling of CSB is required to end the command or to initiate the following command.) 
+{CR} 
+(from 1 to 7 \(note that a value of zero implies streaming mode\).  After n bytes have been read and/or written, the SPI returns to waiting) 
+{CR} 
+(In "n-byte mode" operation, the number of bytes to be read and/or written is encoded in the command word, and may have a value) 
+{/Times-Roman cf} 6 28 0.000 0.900 -928 -976 label
+(Raven rev0  efabless, inc.) {/Times-Roman cf} 2 28 0.000 1.000 -928 624 label
+pgsave restore showpage
+
+%%Trailer
+XCIRCsave restore
+%%EOF
