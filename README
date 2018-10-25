@@ -6,7 +6,7 @@ San Jose, CA
 The purpose of this repository is to provide a completely free
 and open-source simulation environment for the Raven chip.  The
 Raven chip itself can be found in the efabless IP catalog.  See
-http://efabless.com (registration is required to view the IP
+https://efabless.com (registration is required to view the IP
 catalog.  Regitration is free and validation is not required to
 view the catalog contents.  However, validation is required to
 use the efabless design environments; e.g., to view the layout
