@@ -4,9 +4,6 @@
 
 PATTERN = raven_uart
 
-RISCV_GNU_TOOLCHAIN_INSTALL_PREFIX = /ef/apps
-TOOLCHAIN_PREFIX = $(RISCV_GNU_TOOLCHAIN_INSTALL_PREFIX)/bin/riscv32-unknown-elf-
-
 all:  ${PATTERN:=.vcd}
 
 hex:  ${PATTERN:=.hex}
@@ -18,13 +15,13 @@ hex:  ${PATTERN:=.hex}
 	vvp $<
 
 %.elf: %.c ../sections.lds ../start.s
-	$(TOOLCHAIN_PREFIX)gcc -march=rv32imc -Wl,-Bstatic,-T,../sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../start.s $<
+	/ef/apps/bin/riscv32-unknown-elf-gcc -march=rv32imc -Wl,-Bstatic,-T,../sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../start.s $<
 
 %.hex: %.elf
-	$(TOOLCHAIN_PREFIX)objcopy -O verilog $< /dev/stdout | sed -e '1 s/@00000000/@00100000/; 2,65537 d;' > $@
+	/ef/apps/bin/riscv32-unknown-elf-objcopy -O verilog $< /dev/stdout | sed -e '1 s/@00000000/@00100000/; 2,65537 d;' > $@
 
 %.bin: %.elf
-	$(TOOLCHAIN_PREFIX)objcopy -O binary $< /dev/stdout | tail -c +1048577 > $@
+	/ef/apps/bin/riscv32-unknown-elf-objcopy -O binary $< /dev/stdout | tail -c +1048577 > $@
 
 # ---- Clean ----
 

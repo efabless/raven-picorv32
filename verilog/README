@@ -1,4 +1,4 @@
-Raven --- a full implementation of the PicoRV32 PicoSoC.
+Raven --- a full implementation of the PicoRV32 PicoSoC in X-Fab XH018.
 
 This directory contains the top-level module for the raven chip, with
 all components modeled in (standard or wreal) verilog.  No special flags

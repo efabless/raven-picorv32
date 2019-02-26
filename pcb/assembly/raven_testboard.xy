@@ -1,0 +1,100 @@
+# PcbXY Version 1.0
+# Date: Fri Jan  4 14:19:14 2019 UTC
+# Author: 
+# Title: (unknown) - PCB X-Y
+# RefDes, Description, Value, X, Y, rotation, top/bottom
+# X,Y in mil.  rotation in degrees.
+# --------------------------------------------
+J7,"Power jack","2.5mm",1252.89,2630.80,90,top
+U6,"AP2125N","SOT23-3",893.57,2582.65,90,top
+U5,"AP7333-33SAG-7","SOT23-3",888.57,2847.65,90,top
+J8,"USB Male Connector","conn_usb",439.57,2560.31,90,top
+J1,"Header connector","HEADER 4x2, 0.1 inch spacing",409.57,2145.31,270,top
+X1,"12MHz crystal","(unknown)",1225.41,2295.31,0,top
+D0,"SMT LED green","0805",1899.57,2495.31,180,top
+D1,"SMT LED green","0805",1899.57,2395.31,180,top
+D3,"SMT LED green","0805",1899.57,2195.31,180,top
+D4,"SMT LED green","0805",1899.57,2095.31,180,top
+D5,"SMT LED green","0805",1899.57,1995.31,180,top
+D6,"SMT LED green","0805",1899.57,1895.31,180,top
+D7,"SMT LED green","0805",1899.57,1795.31,180,top
+D8,"SMT LED green","0805",1899.57,1695.31,180,top
+D9,"SMT LED green","0805",1899.57,1595.31,180,top
+R10,"62 ohm SMT resistor","0603",2039.57,2495.31,0,top
+R11,"62 ohm SMT resistor","0603",2039.57,2395.31,0,top
+R12,"62 ohm SMT resistor","0603",2039.57,2295.31,0,top
+R13,"62 ohm SMT resistor","0603",2039.57,2195.31,0,top
+R14,"62 ohm SMT resistor","0603",2039.57,2095.31,0,top
+R15,"62 ohm SMT resistor","0603",2039.57,1995.31,0,top
+R16,"62 ohm SMT resistor","0603",2039.57,1895.31,0,top
+R17,"62 ohm SMT resistor","0603",2039.57,1795.31,0,top
+R18,"62 ohm SMT resistor","0603",2039.57,1695.31,0,top
+R19,"62 ohm SMT resistor","0603",2039.57,1595.31,0,top
+J9,"Header connector, DIP pin numbering","HEADER34_1",1709.57,1595.31,0,top
+U2,"FT2232H LQFP","(unknown)",925.45,1761.64,270,top
+spare,"SMA","edge mount",435.76,130.75,270,top
+comp inp,"SMA","edge mount",908.20,130.75,270,top
+comp inn,"SMA","edge mount",1380.65,130.75,270,top
+analog out,"SMA","edge mount",1853.09,130.75,270,top
+X2,"12.5MHz crystal","(unknown)",1488.60,605.43,180,top
+D12,"SMT LED green","0805",1899.57,1295.31,180,top
+D13,"SMT LED green","0805",1899.57,1195.31,180,top
+D14,"SMT LED green","0805",1899.57,1095.31,180,top
+D15,"SMT LED green","0805",1899.57,995.31,180,top
+D16,"SMT LED green","0805",1899.57,895.31,180,top
+D17,"SMT LED green","0805",1899.57,795.31,180,top
+D18,"SMT LED green","0805",1899.57,695.31,180,top
+R22,"62 ohm SMT resistor","0603",2039.57,1290.31,0,top
+R23,"62 ohm SMT resistor","0603",2039.57,1195.31,0,top
+R24,"62 ohm SMT resistor","0603",2039.57,1095.31,0,top
+R25,"62 ohm SMT resistor","0603",2039.57,995.31,0,top
+R26,"62 ohm SMT resistor","0603",2039.57,895.31,0,top
+R27,"62 ohm SMT resistor","0603",2039.57,795.31,0,top
+R28,"62 ohm SMT resistor","0603",2039.57,695.31,0,top
+U1,"Raven QFN48 DUT","QFN48",891.30,862.05,270,top
+U3,"93C46","TSSOP8",1334.57,1910.31,90,top
+U4,"S25FL128","SO8",459.57,1100.31,90,top
+D11,"SMT LED green","0805",1899.57,1395.31,0,top
+D10,"SMT LED green","0805",1894.57,1495.31,0,top
+R20,"Standard SMT resistor","0603",2044.57,1495.31,0,top
+R21,"Standard SMT resistor","0603",2039.57,1395.31,0,top
+R7,"SMT resistor 10k","0603",1449.57,2045.31,0,top
+R8,"SMT resistor 10k","0603",1449.57,1985.31,0,top
+R9,"SMT resistor 2.2k","0603",1449.57,1925.31,0,top
+C1,"22uF SMT capacitor","1210",2484.57,2895.31,90,top
+D2,"SMT LED green","0805",1899.57,2295.31,180,top
+R3,"SMT resistor 4.7k","0805",239.57,1690.31,180,top
+R4,"SMT resistor 10k","0805",239.57,1600.31,180,top
+C13,"SMT capacitor 3.3uF","0805",554.09,1501.10,180,top
+X3,"CMOS 8MHz clock","(unknown)",192.74,566.28,0,top
+ADC1 in,"SMA","edge mount",2694.86,1015.99,0,top
+ADC0 in,"SMA","edge mount",2694.86,1488.43,0,top
+J10,"40-pin header","HEADER40_2",2284.57,1540.31,180,top
+C3,"SMT capacitor 4.7uF","1210",1659.57,2800.31,90,top
+J6,"Power header","SIP4",2104.57,2970.31,270,top
+C2,"SMT capacitor 4.7uF","1210",1804.57,2800.31,90,top
+Vref H,"SMA","edge mount",2322.72,129.69,270,top
+Vref L,"SMA","edge mount",2694.86,545.87,0,top
+J4,"3-pin Jumper","JUMPER3",439.57,385.31,270,top
+J5,"3-pin Jumper","JUMPER3",2699.57,2670.31,180,top
+C0,"4.7uF capacitor radial","RADIAL_CAN 200",2199.57,2705.31,180,top
+C4,"SMT capacitor 100nF","0603",1248.98,831.81,0,top
+C5,"SMT capacitor 100nF","0603",1248.98,764.88,0,top
+C6,"SMT capacitor 100nF","0603",359.21,1373.15,0,top
+J2,"3-pin Jumper","JUMPER3",227.60,1085.31,0,top
+J11,"3-pin Jumper","JUMPER3",75.75,1103.86,0,top
+R1,"SMT resistor 12k","0603",788.35,2304.25,90,top
+C8,"SMT capacitor 27pF","0603",878.90,2406.61,180,top
+C9,"SMT capacitor 27pF","0603",878.90,2337.72,180,top
+R6,"SMT resistor 10k","0603",1215.39,2116.46,180,top
+C10,"SMT capacitor 27pF","0603",1845.31,614.49,180,top
+C11,"SMT capacitor 27pF","0603",1845.31,547.56,180,top
+R2,"SMT resistor 1k","0603",663.54,2083.90,90,top
+C7,"SMT capacitor 100nF","0603",235.20,1453.86,0,top
+C12,"SMT capacitor 100nF","0603",522.60,1772.76,0,top
+J3,"3-pin Jumper","JUMPER3",458.03,566.06,270,top
+J12,"3-pin Jumper","JUMPER3",316.30,715.67,270,top
+(unknown),"header 5V tap","(unknown)",2233.23,323.94,0,top
+(unknown),"spare SMA tap","(unknown)",105.28,284.57,0,top
+(unknown),"TX tap","(unknown)",160.39,1898.74,0,top
+(unknown),"RX tap","(unknown)",160.39,1999.13,0,top

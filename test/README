@@ -1,0 +1,42 @@
+Raven functional validation
+----------------------------------------------
+This test system uses tclftdi 1.0
+(http://opencircuitdesign.com/tclftdi/)
+
+------------------------------------------------------------
+To program the SPI flash chip:
+
+  1. Configure the board for flash programming.
+
+      For test board v1.1:
+      A. Move jumper J1 2nd position (DUT 3.3V) to 4th position (FTDI 1.8V)
+      B. Move jumper J2 bottom position (pins 2-3) to top position (pins 1-2)
+      C. Preferably remove the data connection to the display.
+
+  2. In this directory, run (as root)
+
+      tclftdi startup_flash.tcl
+
+  3. At the prompt, do:
+
+      write_flash ftdi0 raven_demo_full_test.hex
+
+  4. Configure the board for processor operation
+
+      A. Move jumper J1 4th position (FTDI 1.8V) to 2nd position (DUT 3.3)
+      B. Move jumper J2 position (pins 1-2) to bottom position (pins 2-3)
+      C. Reconnect data connection to the display, if removed.
+
+To communicate with the Raven housekeeping SPI:
+
+  1. Configure the board for processor operation (see above)
+
+  2. In this directory, run (as root)
+
+      tclftdi startup_raven.tcl
+
+  3. The tool will show the various commands that can be used
+     to access and manipulate the Raven processor through the
+     SPI interface.
+
+

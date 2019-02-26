@@ -1,0 +1,173 @@
+eFabless Raven PicoRV32 development/demonstration board
+---------------------------------------------------------
+U1	efabless Raven PicoRV32
+	QFN48
+	(custom ASIC, provided)
+
+U2	FT2232H		Dual USB/serial interface driver
+	FTDI
+	64 LQFP package
+	Digi-key 768-1024-1-ND		$6.71 (total $6.71)
+
+U3	93LC46 SPI EEPROM
+	MicroChip Technology
+	8 TSSOP
+	Digi-key 93LC46B-I/ST-ND	$0.27	(total $0.27)
+
+U4	S25FL128
+	128M SPI Flash SRAM
+	Cypress Semiconductor
+	8 SOIC
+	Digi-key 428-4051-ND		$2.46	(total $2.46)
+
+U5	AP7333-33SAG-7	3.3V LDO, 0.3A
+	Diodes, Inc. 
+	SOT23-3
+	Digi-key AP7333-33SAG-7DICT-ND	$0.48	(total $0.48)
+
+U6	AP7333-18SAG-7	1.8V LDO, 0.3A
+	Diodes, Inc. 
+	SOT23-3
+	Digi-key AP2125N-1.8TRG1DICT-ND  $0.49	(total $0.49)
+	NOTE:  This part is optional.
+
+X1	Crystal, 12MHz, 18pF
+	ECS, Inc.
+	SMD HC-49USX CSM-7X ECS-120-18-5PX-TR
+	Digi-key XC1289CT-ND	 	$0.21	(total $0.21)
+
+X2	Crystal 12.5MHz, 18pF
+	TXC Corp.
+	Crystal 12.5MHz 18pF SMD
+	Digi-key 887-2416-1-ND		$0.43	(total $0.43)
+
+X3	CMOS Crystal oscillator, 8MHz
+	Abrocon LLC ASCO-8.000MHZ-EK-T3
+	Digi-key 535-12077-1-ND		$1.86	(total $1.86)
+
+J1	4x2 header, 0.1" spacing
+	(see below *)
+
+J2-J5	3-pin headers, 0.1" spacing (4x)
+	(see below *)
+
+J6	4-pin connector
+	Molex, Inc. 0022232041  4 position 0.1" spacing header
+	Digi-key WM4202-ND		$0.37	(total $0.37)
+	
+J7	2.5mm power jack
+	CUI, Inc.  PJ002B
+	Digi-key CP-002B-ND	 	$0.92	(total $0.92)
+
+J8	USB type B 4-position connector
+	TE Connectivity 292304-1
+	Digi-key A31725-ND	 	$1.92	(total $1.92)
+
+J9	17x2 test header, 0.1" spacing, unpopulated
+	(no component installed)
+
+J10	20x2 header, 0.1" spacing
+	(see below *)
+
+J11-J12	3-pin headers, 0.1" spacing (2x)
+
+*	All headers from one break-off header 2x36 position (gold)
+	3M 961272-6404-AR
+	Digi-key 3M9466-72-ND		$4.60	(total $4.60)
+
+	(assembly pin count: 2x20 (1), 2x4 (1), 1x3 (6) 1x2 (1) 1x1 (2))
+
+D2-D17	LEDs, 0805 SMT, green
+	Lite-On Inc.
+	Digi-key 160-1423-1-ND (Green)  $0.05	(total $0.80)
+
+D1	LEDs, 0805 SMT, red
+	Lite-On Inc.
+	Digi-key 160-1415-1-ND (Red)  $0.05	(total $0.05)
+
+D0,D18	LEDs, 0805 SMT, yellow
+	Lite-On Inc.
+	Digi-key 160-1416-1-ND (Yellow)	$0.05	(total $0.10)
+	
+C0	4.7uF electrolytic radial capacitor
+	## (Note:  the part below was unavailable in small quantities)
+	## Panasonic ECA-1HM4R7I Digi-key  P10424TB-ND
+	UPS1H4R7MDD1TD
+	Digi-key 493-11322-1-ND		$0.28	(total $0.28)
+
+C1	22uF 1210 SMT capacitor
+	AVX NOJB226M006RWJ
+	Digi-key 478-1823-1-ND		$0.16	(total $0.16)
+
+C2-C3	4.7uF 1210 SMT capacitor
+	Kemet C1210C485K3PACTU
+	Digi-key 399-3146-1-ND		$0.81	(total $1.62)
+
+C4-C7	100nF 0603 SMT capacitor (corrected---was listed as 0805)
+	Kemet C0603C104K3RACTU  (corrected)
+	Digi-key 399-1281-1-ND		$0.16	(total $0.80)
+
+C8-C11	18pF 0603 SMT capacitor		
+	Kemet C0603C180K3GACTU	(corrected)
+	Digi-key 399-9019-1-ND		$0.31	(total $1.24)
+
+C12	100nF 0805 SMT capacitor
+	Kemet C0805C104K3RACTU
+	Digi-key 399-1168-1-ND		$0.10	(total $0.10)
+
+C13	3.3uF 0805 SMT capacitor
+	Kemet C0805C335K9PACTU
+	Digi-key 399-3130-1-ND		$0.60	(total $0.60)
+
+R1	12kOhm 0603 SMT resistor
+	Panasonic
+	Digi-key P12KGCT-ND		$0.10	(total $0.10)
+
+R2	1kOhm 0603 SMT resistor
+	Panasonic
+	Digi-key P1.0KGCT-ND		$0.10	(total $0.10)
+
+R3	4.7kOhm 0603 SMT resistor
+	Panasonic
+	Digi-key P4.7KGCT-ND		$0.10	(total $0.10)
+
+R4	10kOhm 0603 SMT resistor
+	Panasonic
+	Digi-key P10KGCT-ND		$0.10	(total $0.10)
+
+R6-R8	10kOhm 0603 SMT resistor
+	Panasonic
+	Digi-key P10KGCT-ND		$0.10	(total $0.30)
+
+R9	2.2kOhm 0603 SMT resistor
+	Panasonic
+	Digi-key P2.2KGCT-ND		$0.10	(total $0.10)
+
+R10-R28 62Ohm 0603 SMT resistor
+	Panasonic
+	Digi-key P62GCT-ND		$0.10	(total $1.90)
+
+(J11)	Serial LCD 16x4 character
+	SparkFun Electronics LCD-14074
+	Digi-key 1568-1905-ND		$25.00	(total $25.00)
+	(Soldered to J11 posts)
+	Not part of assembly.
+
+--	SMA side-mount (8x)
+	Emerson 142-0701-801
+	Digi-key J502-ND   		$5.10 (total $40.80)
+	Not part of assembly.
+
+--	Shunts 0.1" (10x) (optional)
+	3M Corp. QPC02SXGN-RC
+	Digi-key S9337-ND		$0.10 each (total $1.00)
+	Not part of assembly.
+
+Assorted other parts:  Screws, standoffs:
+	Not part of assembly.
+
+	Board component purchase total: $94.61
+
+Board price:				$?  	(with 5 boards ordered)
+					-------
+					$?

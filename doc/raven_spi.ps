@@ -1,7 +1,7 @@
 %!PS-Adobe-3.0
 %%Title: raven_spi.ps
-%%Creator: XCircuit v3.9 rev70
-%%CreationDate: Thu Jan  4 14:54:10 2018
+%%Creator: XCircuit v0.0 rev435147365
+%%CreationDate: Mon Feb 25 20:55:47 2019
 %%Pages: 2
 %%BoundingBox: 0 0 612 792
 %%DocumentNeededResources: font Times-Roman 
@@ -314,6 +314,15 @@ label
 
 (All values in the SPI registers are exported to the CPU and can be viewed \(read-only\) in memory-mapped space \(see the memory map documentation\).) 
 {/Times-Roman cf} 2 28 0.000 0.700 -800 -832 label
+1.000 0.000 0.000 scb
+(Errata \(updated February 2019\):) {/Times-Roman cf} 2 16 0.000 0.700 -800 
+-1056 label
+
+(1.  The bits of register 0x04 read as shown above but must be written in the reverse order of bits.) 
+{/Times-Roman cf} 2 16 0.000 0.700 -800 -1120 label
+
+(2.  The PLL CP enable is nonfunctional as the corresponding output bit in the SPI block is hard-coded to force logic 1 always.) 
+{/Times-Roman cf} 2 16 0.000 0.700 -800 -1184 label
 pgsave restore showpage
 
 %%Page: raven_spi_protocol 2

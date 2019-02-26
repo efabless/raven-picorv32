@@ -1,0 +1,42 @@
+# PcbBOM Version 1.0
+# Date: Fri Jan  4 14:19:14 2019 UTC
+# Author: 
+# Title: (unknown) - PCB BOM
+# Quantity, Description, Value, RefDes
+# --------------------------------------------
+1,"Power jack","2.5mm",J7 
+1,"AP7333-18SAG-7","SOT23-3",U6 
+1,"AP7333-33SAG-7","SOT23-3",U5 
+1,"USB Male Connector","conn_usb",J8 
+1,"Header connector","HEADER 4x2, 0.1 inch spacing",J1 
+1,"12MHz crystal","(unknown)",X1 
+19,"SMT LED green","0805",D0 D1 D3 D4 D5 D6 D7 D8 D9 D12 D13 D14 D15 D16 D17 D18 D11 D10 D2 
+17,"62 ohm SMT resistor","0603",R10 R11 R12 R13 R14 R15 R16 R17 R18 R19 R22 R23 R24 R25 R26 R27 R28 
+1,"Header connector, DIP pin numbering","HEADER34_1",J9 
+1,"FT2232H LQFP","(unknown)",U2 
+8,"SMA","edge mount",spare comp inp comp inn analog out ADC1 in ADC0 in Vref H Vref L 
+1,"12.5MHz crystal","(unknown)",X2 
+1,"Raven QFN48 DUT","QFN48",U1 
+1,"93C46","TSSOP8",U3 
+1,"S25FL128","SO8",U4 
+2,"Standard SMT resistor","0603",R20 R21 
+3,"SMT resistor 10k","0603",R7 R8 R6 
+1,"SMT resistor 2.2k","0603",R9 
+1,"22uF SMT capacitor","1210",C1 
+1,"SMT resistor 4.7k","0805",R3 
+1,"SMT resistor 10k","0805",R4 
+1,"SMT capacitor 3.3uF","0805",C13 
+1,"CMOS 8MHz clock","(unknown)",X3 
+1,"40-pin header","HEADER40_2",J10 
+2,"SMT capacitor 4.7uF","1210",C3 C2 
+1,"Power header","SIP4",J6 
+6,"3-pin Jumper","JUMPER3",J4 J5 J2 J11 J3 J12 
+1,"4.7uF capacitor radial","RADIAL_CAN 200",C0 
+5,"SMT capacitor 100nF","0603",C4 C5 C6 C7 C12 
+1,"SMT resistor 12k","0603",R1 
+4,"SMT capacitor 27pF","0603",C8 C9 C10 C11 
+1,"SMT resistor 1k","0603",R2 
+1,"header 5V tap","(unknown)",(unknown) 
+1,"spare SMA tap","(unknown)",(unknown) 
+1,"TX tap","(unknown)",(unknown) 
+1,"RX tap","(unknown)",(unknown) 

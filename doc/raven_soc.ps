@@ -1,7 +1,7 @@
 %!PS-Adobe-3.0
 %%Title: raven_soc.ps
-%%Creator: XCircuit v0.0 rev1425582949
-%%CreationDate: Mon Oct 15 07:49:50 2018
+%%Creator: XCircuit v0.0 rev-1503018395
+%%CreationDate: Mon Feb 25 21:00:03 2019
 %%Pages: 3
 %%BoundingBox: 0 0 612 792
 %%DocumentNeededResources: font Times-Roman 
@@ -194,10 +194,10 @@
 0.8571 inchscale
 2.6000 setlinewidth 1288 1455 translate
 
-0.678 1.000 0.184 scb
+0.679 1.000 0.184 scb
 512 1.000 -1056 784 -1056 -1232 384 -1232 384 784 4 polygon
 sce
-(Raven SoC\320A PicoSoC ASIC hardware implementation) {/Times-Roman cf} 2 16 
+(Raven SoC\320A PicoSoC implementation in X-Fab XH018) {/Times-Roman cf} 2 16 
 0.000 0.700 -1056 768 label
 1 1.000 -1056 752 384 752 2 polygon
 (Raven Memory Mapped I/O) {/Times-Roman cf} 2 16 0.000 0.700 -1056 704 label
@@ -230,10 +230,10 @@ label
 (bit  21  QSPI enable) {CR} (bit  22  DDR enable) {CR} 
 (bit  31  MEMIO enable \(reset = 1\)  0 = bit-bang mode) {/Times-Roman cf} 18 
 16 0.000 0.700 -784 176 label
-(GPIO input/output \(lower 16 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 -832 0 
-label
+(GPIO input/output data \(lower 16 bits\)) {/Times-Roman cf} 2 16 0.000 0.700 
+-832 0 label
 (0x03 00 00 04) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -48 label
-(GPIO output enable \(1 = output, 0 = input\)) {/Times-Roman cf} 2 16 0.000 
+(GPIO input enable \(1 = input, 0 = output\)) {/Times-Roman cf} 2 16 0.000 
 0.700 -832 -48 label
 (0x03 00 00 08) {/Times-Roman cf} 2 16 0.000 0.700 -1056 -96 label
 (GPIO pullup enable \(1 = pullup, 0 = none\)) {/Times-Roman cf} 2 16 0.000 
@@ -333,7 +333,7 @@ pgsave restore showpage
 0.8571 inchscale
 2.6000 setlinewidth 1160 1343 translate
 
-0.678 1.000 0.184 scb
+0.679 1.000 0.184 scb
 512 1.000 -928 896 -928 -1120 512 -1120 512 896 4 polygon
 sce
 1 1.000 -736 784 -736 -1120 2 polygon
@@ -439,7 +439,7 @@ label
 (DAC) {/Times-Roman cf} 2 16 0.000 0.700 -464 256 label
 (bandgap) {/Times-Roman cf} 2 16 0.000 0.700 -464 224 label
 (VDD1V8) {/Times-Roman cf} 2 16 0.000 0.700 -464 192 label
-(Raven SoC\320A PicoSoC ASIC hardware implementation) {/Times-Roman cf} 2 16 
+(Raven SoC\320A PicoSoC implementation in X-Fab XH018) {/Times-Roman cf} 2 16 
 0.000 0.700 -928 880 label
 1 1.000 -928 864 512 864 2 polygon
 (Raven Memory Mapped I/O \(continued\)) {/Times-Roman cf} 2 16 0.000 0.700 -928 
@@ -475,7 +475,7 @@ pgsave restore showpage
 0.8571 inchscale
 2.6000 setlinewidth 1096 1327 translate
 
-0.678 1.000 0.184 scb
+0.679 1.000 0.184 scb
 512 1.000 -864 912 -864 -1104 576 -1104 576 912 4 polygon
 sce
 1 1.000 -672 800 -672 -1104 2 polygon
@@ -522,18 +522,8 @@ label
 (Analog output bias enable \(low bit,  1 = enabled,  0 = disabled\)) 
 {/Times-Roman cf} 2 16 0.000 0.700 -640 -160 label
 (0x03 00 00 d0) {/Times-Roman cf} 2 16 360.000 0.700 -864 -256 label
-(Over-temperature alarm enable \(low bit, 1 = enabled, 0 = disabled\)) 
-{/Times-Roman cf} 2 16 0.000 0.700 -640 -256 label
-(0x03 00 00 d4) {/Times-Roman cf} 2 16 360.000 0.700 -864 -304 label
-(Over-temperature value \(low bit, read-only\)) {/Times-Roman cf} 2 16 0.000 
-0.700 -640 -304 label
-(0x03 00 00 d8) {/Times-Roman cf} 2 16 360.000 0.700 -864 -352 label
-(Over-temperature destination \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 
-0.700 -640 -352 label
-(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -400 label
-(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -432 label
-(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -464 label
-(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -496 label
+(Bandgap enable \(low bit, 1 = enabled, 0 = disabled\)) {/Times-Roman cf} 2 16 
+0.000 0.700 -640 -256 label
 (bandgap) {/Times-Roman cf} 2 16 0.000 0.700 -416 -96 label
 (none) {/Times-Roman cf} 2 16 0.000 0.700 -400 688 label
 (GPIO\(8\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 656 label
@@ -543,10 +533,6 @@ label
 (GPIO\(11\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 448 label
 (GPIO\(12\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 416 label
 (GPIO\(13\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 384 label
-(none) {/Times-Roman cf} 2 16 0.000 0.700 -400 -400 label
-(GPIO\(14\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 -432 label
-(GPIO\(15\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 -464 label
-(IRQ\(10\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 -496 label
 (GPIO\(0\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 256 label
 (none) {/Times-Roman cf} 2 16 0.000 0.700 -400 288 label
 (none) {/Times-Roman cf} 2 16 0.000 0.700 -400 112 label
@@ -555,7 +541,7 @@ label
 (GPIO\(3\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 80 label
 (GPIO\(4\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 48 label
 (GPIO\(5\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 16 label
-(Raven SoC\320A PicoSoC ASIC hardware implementation) {/Times-Roman cf} 2 16 
+(Raven SoC\320A PicoSoC implementation in X-Fab XH018) {/Times-Roman cf} 2 16 
 0.000 0.700 -864 896 label
 1 1.000 -864 880 576 880 2 polygon
 (Raven Memory Mapped I/O \(continued\)) {/Times-Roman cf} 2 16 0.000 0.700 -864 
@@ -582,10 +568,27 @@ label
 (buffer can be selected to mirror the analog) {CR} 
 (A single op-amp configured as an analog) {/Times-Roman cf} 6 28 0.000 0.700 32 
 -16 label
+(0x03 00 00 e0) {/Times-Roman cf} 2 16 360.000 0.700 -864 -304 label
+(Over-temperature alarm enable \(low bit, 1 = enabled, 0 = disabled\)) 
+{/Times-Roman cf} 2 16 0.000 0.700 -640 -304 label
+(0x03 00 00 e4) {/Times-Roman cf} 2 16 360.000 0.700 -864 -352 label
+(Over-temperature value \(low bit, read-only\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -640 -352 label
+(0x03 00 00 e8) {/Times-Roman cf} 2 16 360.000 0.700 -864 -400 label
+(Over-temperature destination \(low 2 bits\)) {/Times-Roman cf} 2 16 0.000 
+0.700 -640 -400 label
+(0 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -448 label
+(1 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -480 label
+(2 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -512 label
+(3 =) {/Times-Roman cf} 2 16 0.000 0.700 -464 -544 label
+(none) {/Times-Roman cf} 2 16 0.000 0.700 -400 -448 label
+(GPIO\(14\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 -480 label
+(GPIO\(15\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 -512 label
+(IRQ\(10\)) {/Times-Roman cf} 2 16 0.000 0.700 -400 -544 label
 (CPU.) {CR} (14 or 15, or used as an IRQ source to the) {CR} 
 (133 degrees C.  It can be viewed at GPIO) {CR} 
 (The over-temperature sensor triggers at) {/Times-Roman cf} 8 28 0.000 0.700 32 
--336 label
+-384 label
 pgsave restore showpage
 
 %%Trailer

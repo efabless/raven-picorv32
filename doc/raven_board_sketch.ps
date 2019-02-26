@@ -1,0 +1,997 @@
+%!PS-Adobe-3.0
+%%Title: raven_board_sketch.ps
+%%Creator: XCircuit v0.0 rev80056933
+%%CreationDate: Mon Feb 25 21:18:08 2019
+%%Pages: 3
+%%BoundingBox: 0 0 612 792
+%%DocumentNeededResources: font Times-Roman 
+%%EndComments
+%%BeginProlog
+%
+%  PostScript prolog for output from xcircuit
+%  Version: 3.9
+%
+%  Electrical circuit (and otherwise general) drawing program
+%
+%  Written by Tim Edwards 8/5/93--4/12/16  (tim@opencircuitdesign.com)
+%  The Johns Hopkins University (1993-2004)
+%  MultiGiG, Inc. (2004-2012)
+%  Open Circuit Design (2012-2016)
+%
+%%BeginResource: procset XCIRCproc 3.9 1
+%
+% supporting definitions --- these are the primary xcircuit types.
+
+/XCIRCsave save def
+/topmat matrix currentmatrix def
+
+/fontslant { /slant exch def [1 0 slant 1 0 0] 
+    exch findfont exch makefont dup length dict /ndict exch def
+    { 1 index /FID ne { ndict 3 1 roll put } { pop pop } ifelse } forall
+    ndict definefont pop} def
+/ul { count 0 gt { dup type /stringtype eq showflag 1 eq and { gsave 
+   currentpoint topmat setmatrix 0 0 moveto 2 index stringwidth pop (_)
+   false charpath flattenpath pathbbox grestore exch pop 1 index
+   sub setlinewidth exch pop currentpoint 3 -1 roll add moveto 0
+   rlineto stroke moveto } if } if } def
+/ol { count 0 gt { dup type /stringtype eq showflag 1 eq and { gsave gsave
+   currentpoint topmat setmatrix 2 index stringwidth pop 3 index
+   true charpath flattenpath pathbbox grestore exch pop
+   exch pop topmat setmatrix (_) true charpath pathbbox grestore
+   exch pop 1 index sub setlinewidth exch pop currentpoint
+   exch 4 1 roll exch sub add moveto pop 0 rlineto stroke
+   moveto } if } if } def
+/stW { gsave currentpoint newpath moveto true charpath flattenpath
+	pathbbox pop exch pop sub grestore } def
+/Ts {mark Tabs aload pop counttomark 1 add array astore /Tabs exch def Tabs
+	0 currentpoint pop put} def
+/Tbn {mark Tabs aload pop counttomark dup 2 add 1 roll cleartomark 1 sub} def
+/Tb { 0 1 Tbn {Tabs exch get dup currentpoint pop lt
+	{currentpoint exch pop moveto exit} {pop} ifelse } for } def
+/Tf { Tbn -1 0 {Tabs exch get dup currentpoint pop gt
+	{currentpoint exch pop moveto exit} {pop} ifelse } for } def
+/qS { (aa) stW (a a) stW sub 4 div 0 Kn } def
+/hS { qS qS } def
+/pspc 0 def
+/cf0 { scalefont setfont } bind def
+/Kn { dup kY add /kY exch def rmoveto } bind def
+/ss { /fscale fscale 0.67 mul def currentfont 0.67 cf0 0 fscale0 fscale mul
+	0.33 mul neg Kn} def
+/Ss { /fscale fscale 0.67 mul def currentfont 0.67 cf0 0 fscale0 fscale mul
+	0.67 mul Kn } def
+/ns { 0 kY neg Kn /kY 0 def /fscale 1.0 def xfont0 1.0 cf0 } def
+/MR { /twidth exch def } def
+/CRx { } def
+/CR { ns 0 /Bline Bline fscale0 neg add def Bline moveto CRx } def
+/cf { dup type /realtype ne {1.0} if exch findfont exch kY 0 eq
+	{ 40 mul dup /fscale0 exch def cf0 /xfont0 currentfont def}
+	{fscale0 mul fscale mul cf0} ifelse } def
+/ctmk { counttomark dup 2 add -1 roll pop } bind def
+/label { gsave translate 0 0 moveto dup scale neg
+	/rotval exch def /twidth 100000 def /just exch def just 128 and
+	0 gt {/mshow {pop} def} {/mshow {show} def} ifelse just 16 and 0
+	gt {gsave rotval rotate 0 1 dtransform gsave pagemat setmatrix
+	idtransform exch grestore 1 0 dtransform gsave pagemat setmatrix
+	idtransform exch grestore dup abs 1e-9 lt {pop mul 0 gt} {3 1 roll
+	pop pop 0 lt} ifelse grestore {-1 /rotval rotval neg def /just just
+	dup 3 and 1 ne {3 xor} if def} {1} ifelse exch -1e-9 lt {-1 /rotval
+	rotval neg def /just just dup 12 and 4 ne {12 xor} if def} {1}
+	ifelse scale } if /showflag 0 def /fspc pspc def /Bline 0 def
+	/numlines 0 def /padding 0 array def /Tabs 0 array def
+	/fscale 1.0 def /kY 0 def gsave /CRx { linewid padding
+	aload pop numlines 1 add dup /numlines exch def array astore
+	/padding exch def /linewid 0 def } def dup 1 add copy dup 1 0
+	dtransform exch atan rotate {exch dup type /stringtype eq {gsave dup
+	gsave newpath 0 0 moveto true charpath flattenpath pathbbox pop exch
+	pop exch pop grestore currentpoint pop add dup /linewid exch def twidth
+	ge {grestore CR exch 1 add dup 2 add {CR} exch 1 roll exch} {grestore}
+	ifelse true charpath flattenpath} {dup type /arraytype eq {exec} {12
+	string cvs true charpath flattenpath} ifelse} ifelse} repeat
+	CRx /CRx {padding aload pop just 1280 and 0 gt {blockwid exch sub just
+	1024 and 0 gt {0.5 mul} if} {pop 0} ifelse 0 rmoveto numlines 1 sub
+	dup /numlines exch def array astore /padding exch def} def exch pop
+	pathbbox grestore 4 copy pop exch pop exch sub /blockwid exch def
+	3 -1 roll pop 3 1 roll just 1 and 0 gt {just 2 and
+	0 gt {exch pop neg fspc sub} {exch sub 0.5 mul neg} ifelse} {pop neg
+	fspc add} ifelse exch Bline exch just 4 and 0 gt {just 8 and 0 gt
+	{exch pop neg fspc sub} {add 0.5 mul neg} ifelse} {pop neg fspc add}
+	ifelse rotval rotate Kn currentpoint translate /showflag 1 def /Bline
+	0 def /Tabs 0 array def /fscale 1.0 def /kY 0 def CRx {dup type
+	/stringtype eq {mshow} {dup type /arraytype eq {exec} {12 string cvs
+	mshow} ifelse} ifelse} repeat grestore endclip} def
+/pinlabel { 4 index 32 and 0 ne hlevel 0 eq or { /pspc 10 def label
+	/pspc 0 def } { pop pop pop pop pop {pop} repeat } ifelse } def
+/pinglobal { pinlabel } def
+/infolabel { pinlabel } def
+/graphic { gsave 4 index cvx exec /DataSource get resetfile translate 0 0
+	moveto neg rotate dup scale cvx exec image grestore endclip} def
+
+/scb { setrgbcolor } bind def  /sce { defColor aload pop scb } bind def
+/cRedef {/defColor currentcolor 3 array astore def} def
+/begingate {dup type /dicttype ne {1 dict} if begin	% default params
+	dup type /dicttype ne {1 dict} if begin		% instanced params
+	/hlevel hlevel 1 add def /defColor currentcolor sce 3 array astore
+	def gsave sce translate 0 0 moveto neg rotate dup type /nametype
+	eq not { dup abs currentlinewidth exch div setlinewidth } { pop }
+	ifelse dup abs scale clipped 1 and 1 eq {/clipped clipped 1 add def}
+	if} bind def
+/endgate { /hlevel hlevel 1 sub def grestore defColor aload pop cRedef
+	scb end end endclip} bind def
+
+/hlevel 0 def
+/endclip {clipped 1 and 1 eq {grestore /clipped clipped 1 sub def} if} def
+/tmpa [1 0 0 1 0 0] def
+/gar {8 8 true tmpa {<c0 c0 00 00 0c 0c 00 00>} imagemask} bind
+{8 8 true tmpa {<30 70 60 02 03 07 06 20>} imagemask} bind
+{8 8 true tmpa {<0c 1e 1e 0c c0 e1 e1 c0>} imagemask} bind
+{8 8 true tmpa {<0f 0f 0f 0f f0 f0 f0 f0>} imagemask} bind
+{8 8 true tmpa {<3f f3 e1 e1 f3 3f 1e 1e>} imagemask} bind
+{8 8 true tmpa {<df cf 8f 9f fd fc f8 f9>} imagemask} bind
+{8 8 true tmpa {<ff 3f 3f ff ff f3 f3 ff>} imagemask} bind 7 array astore def
+/ppaint { gsave clip tmpa dup setmatrix pathbbox neg exch neg 4 2 roll
+  neg 4 -1 roll 2 copy gt {exch} if 8 div ceiling 8 mul 4 2 roll neg 2 copy
+  gt {exch} if 8 div ceiling 8 mul 3 -1 roll -8 5 -1 roll
+  { 3 index exch 5 exch put dup -8 3 index { 3 index
+  exch 4 exch put 3 index exec } for } for pop pop pop pop grestore } bind def
+/setstyles {
+  currentlinewidth mul setlinewidth /style exch def style 2048 and 0 gt
+  clipped 1 and 0 eq and {clip newpath /clipped clipped 1 add def} {
+  style 1 and 0 gt not {closepath} if
+  style 1024 and 0 gt {2 setlinecap 0 setlinejoin} if
+  style 2 and 0 gt {currentlinewidth 4 mul dup 2 array astore 0 setdash} if
+  style 4 and 0 gt {0.5 currentlinewidth 4 mul 2 array astore 0 setdash} if
+  gsave style 16 and 0 gt { style 224 and -5 bitshift style 256 and 0 gt {
+  7 exch sub 8 div dup 1 exch sub currentrgbcolor 3 array astore
+  {3 copy mul add 4 1 roll pop} forall pop pop setrgbcolor eofill}
+  {dup 7 lt {gar exch get ppaint} {pop eofill} ifelse} ifelse}
+  {style 256 and 0 gt {1 setgray eofill} if} ifelse grestore style 8 and 0 gt 
+  style 512 eq or {newpath} {stroke} ifelse grestore endclip} ifelse} def     
+
+/addtoy {exch dup dup 2 mul 3 add 1 roll -1 1 { 4 1 roll dup 4 1 roll add
+	4 -1 roll 2 mul 1 add index 2 mul 2 add 2 roll} for pop} def
+/addtoy1 {1 exch addtoy pop} def
+/addtoy3 {3 exch addtoy pop} def
+/addtoy4 {4 exch addtoy pop} def
+/addtox {exch dup dup 2 mul 3 add 1 roll -1 1 { 4 1 roll dup 4 1 roll 3 -1 roll
+	add exch 4 -1 roll 2 mul 1 add index 2 mul 2 add 2 roll} for pop} def
+/addtox1 {1 exch addtox pop} def
+/addtox3 {3 exch addtox pop} def
+/addtox4 {4 exch addtox pop} def
+/polygon { gsave /num exch def moveto num 1 sub {lineto} repeat setstyles } def
+/xcarc   { gsave newpath arc setstyles } def
+/elb { matrix currentmatrix 7 -1 roll 7 -1 roll translate 5 1 roll 4 -1 roll
+	3 index div 1 scale } def
+/ele { 0 4 1 roll 0 4 1 roll } bind def
+/ellipse { gsave elb newpath ele arc setmatrix setstyles } def
+/pellip  { elb ele arc setmatrix } def
+/nellip  { elb ele arcn setmatrix } def
+/spline  { gsave moveto curveto setstyles } def
+/polyc   { {lineto} repeat } bind def
+/beginpath { gsave moveto } bind def
+/endpath { setstyles } bind def
+/bop	 { 1 setlinecap 2 setlinejoin 6 setmiterlimit 0 0 0 scb cRedef
+	/clipped 0 def} def
+/psinsertion {/PSobj save def /showpage {} def /setpagedevice {pop} def bop
+	rotate translate dup scale} def
+/end_insert {PSobj restore} def
+/setpagemat {/pagemat matrix currentmatrix def} def
+/inchscale  {setpagemat 0.375 mul dup scale} def
+/cmscale    {setpagemat 0.35433071 mul dup scale} def
+
+%%EndResource
+%%EndProlog
+% XCircuit output starts here.
+
+%%BeginSetup
+
+/::raven_48qfn {
+begingate
+0 1.000 -232 -232 -232 232 232 232 232 -232 4 polygon
+0 1.000 -232 -184 -232 -168 -200 -168 -200 -184 4 polygon
+0 1.000 -232 -152 -232 -136 -200 -136 -200 -152 4 polygon
+0 1.000 -232 -120 -232 -104 -200 -104 -200 -120 4 polygon
+0 1.000 -232 -88 -232 -72 -200 -72 -200 -88 4 polygon
+0 1.000 -232 -56 -232 -40 -200 -40 -200 -56 4 polygon
+0 1.000 -232 -24 -232 -8 -200 -8 -200 -24 4 polygon
+0 1.000 -232 8 -232 24 -200 24 -200 8 4 polygon
+0 1.000 -232 40 -232 56 -200 56 -200 40 4 polygon
+0 1.000 -232 72 -232 88 -200 88 -200 72 4 polygon
+0 1.000 -232 104 -232 120 -200 120 -200 104 4 polygon
+0 1.000 -232 136 -232 152 -200 152 -200 136 4 polygon
+0 1.000 -232 168 -232 184 -200 184 -200 168 4 polygon
+0 1.000 -184 -232 -184 -200 -168 -200 -168 -232 4 polygon
+0 1.000 200 -184 200 -168 232 -168 232 -184 4 polygon
+0 1.000 200 -152 200 -136 232 -136 232 -152 4 polygon
+0 1.000 200 -120 200 -104 232 -104 232 -120 4 polygon
+0 1.000 200 -88 200 -72 232 -72 232 -88 4 polygon
+0 1.000 200 -56 200 -40 232 -40 232 -56 4 polygon
+0 1.000 200 -24 200 -8 232 -8 232 -24 4 polygon
+0 1.000 200 8 200 24 232 24 232 8 4 polygon
+0 1.000 200 40 200 56 232 56 232 40 4 polygon
+0 1.000 200 72 200 88 232 88 232 72 4 polygon
+0 1.000 200 104 200 120 232 120 232 104 4 polygon
+0 1.000 200 136 200 152 232 152 232 136 4 polygon
+0 1.000 200 168 200 184 232 184 232 168 4 polygon
+0 1.000 -152 -232 -152 -200 -136 -200 -136 -232 4 polygon
+0 1.000 -120 -232 -120 -200 -104 -200 -104 -232 4 polygon
+0 1.000 -88 -232 -88 -200 -72 -200 -72 -232 4 polygon
+0 1.000 -56 -232 -56 -200 -40 -200 -40 -232 4 polygon
+0 1.000 -24 -232 -24 -200 -8 -200 -8 -232 4 polygon
+0 1.000 8 -232 8 -200 24 -200 24 -232 4 polygon
+0 1.000 40 -232 40 -200 56 -200 56 -232 4 polygon
+0 1.000 72 -232 72 -200 88 -200 88 -232 4 polygon
+0 1.000 104 -232 104 -200 120 -200 120 -232 4 polygon
+0 1.000 136 -232 136 -200 152 -200 152 -232 4 polygon
+0 1.000 -184 200 -184 232 -168 232 -168 200 4 polygon
+0 1.000 -152 200 -152 232 -136 232 -136 200 4 polygon
+0 1.000 -120 200 -120 232 -104 232 -104 200 4 polygon
+0 1.000 -88 200 -88 232 -72 232 -72 200 4 polygon
+0 1.000 -56 200 -56 232 -40 232 -40 200 4 polygon
+0 1.000 -24 200 -24 232 -8 232 -8 200 4 polygon
+0 1.000 8 200 8 232 24 232 24 200 4 polygon
+0 1.000 40 200 40 232 56 232 56 200 4 polygon
+0 1.000 72 200 72 232 88 232 88 200 4 polygon
+0 1.000 104 200 104 232 120 232 120 200 4 polygon
+0 1.000 136 200 136 232 152 232 152 200 4 polygon
+0 1.000 168 -232 168 -200 184 -200 184 -232 4 polygon
+0 1.000 168 200 168 232 184 232 184 200 4 polygon
+1 1.000 -152 136 -152 -152 152 -152 152 152 -136 152 -168 184 -184 168 -152 136 
+8 polygon
+(48 QFN) {CR} (Raven) {/Times-Roman cf} 4 1045 0.000 0.700 -8 8 label
+(GPIO15) {/Times-Roman cf} 2 23 270.000 0.500 -176 -248 label
+(SDI) {/Times-Roman cf} 2 23 270.000 0.500 -144 -248 label
+(CSB) {/Times-Roman cf} 2 23 270.000 0.500 -112 -248 label
+(SCK) {/Times-Roman cf} 2 23 270.000 0.500 -80 -248 label
+(SDO) {/Times-Roman cf} 2 23 270.000 0.500 -48 -248 label
+(FLASH_IO3) {/Times-Roman cf} 2 23 270.000 0.500 -16 -248 label
+(FLASH_IO2) {/Times-Roman cf} 2 23 270.000 0.500 16 -248 label
+(FLASH_IO1) {/Times-Roman cf} 2 23 270.000 0.500 48 -248 label
+(FLASH_IO0) {/Times-Roman cf} 2 23 270.000 0.500 80 -248 label
+(FLASH_CSB) {/Times-Roman cf} 2 23 270.000 0.500 112 -248 label
+(FLASH_CLK) {/Times-Roman cf} 2 23 270.000 0.500 144 -248 label
+(XCLK) {/Times-Roman cf} 2 23 270.000 0.500 176 -248 label
+(VDD3V3) {/Times-Roman cf} 2 20 360.000 0.500 248 -176 label
+(SER_RX) {/Times-Roman cf} 2 20 360.000 0.500 248 -144 label
+(SER_TX) {/Times-Roman cf} 2 20 360.000 0.500 248 -112 label
+(IRQ) {/Times-Roman cf} 2 20 360.000 0.500 248 -80 label
+(COMP_INP) {/Times-Roman cf} 2 20 360.000 0.500 248 -48 label
+(COMP_INN) {/Times-Roman cf} 2 20 360.000 0.500 248 -16 label
+(VSS) {/Times-Roman cf} 2 20 360.000 0.500 248 16 label
+(VDD3V3) {/Times-Roman cf} 2 20 360.000 0.500 248 48 label
+(VDD1V8) {/Times-Roman cf} 2 20 360.000 0.500 248 80 label
+(VSS) {/Times-Roman cf} 2 20 360.000 0.500 248 112 label
+(VDD1V8) {/Times-Roman cf} 2 20 360.000 0.500 248 144 label
+(VDD3V3) {/Times-Roman cf} 2 20 360.000 0.500 248 176 label
+(GPIO2) {/Times-Roman cf} 2 20 270.000 0.500 -176 248 label
+(GPIO1) {/Times-Roman cf} 2 20 270.000 0.500 -144 248 label
+(GPIO0) {/Times-Roman cf} 2 20 270.000 0.500 -112 248 label
+(XO) {/Times-Roman cf} 2 20 270.000 0.500 -80 248 label
+(XI) {/Times-Roman cf} 2 20 270.000 0.500 -48 248 label
+(VDD1V8) {/Times-Roman cf} 2 20 270.000 0.500 -16 248 label
+(VDD3V3) {/Times-Roman cf} 2 20 270.000 0.500 16 248 label
+(ADC0_IN) {/Times-Roman cf} 2 20 270.000 0.500 48 248 label
+(ADC1_IN) {/Times-Roman cf} 2 20 270.000 0.500 80 248 label
+(VREF_L) {/Times-Roman cf} 2 20 270.000 0.500 112 248 label
+(VREF_H) {/Times-Roman cf} 2 20 270.000 0.500 144 248 label
+(ANALOG_OUT) {/Times-Roman cf} 2 20 270.000 0.500 176 248 label
+(GPIO3) {/Times-Roman cf} 2 23 360.000 0.500 -248 176 label
+(GPIO4) {/Times-Roman cf} 2 23 360.000 0.500 -248 144 label
+(GPIO5) {/Times-Roman cf} 2 23 360.000 0.500 -248 112 label
+(GPIO6) {/Times-Roman cf} 2 23 360.000 0.500 -248 80 label
+(GPIO7) {/Times-Roman cf} 2 23 360.000 0.500 -248 48 label
+(GPIO8) {/Times-Roman cf} 2 23 360.000 0.500 -248 16 label
+(GPIO9) {/Times-Roman cf} 2 23 360.000 0.500 -248 -16 label
+(GPIO10) {/Times-Roman cf} 2 23 360.000 0.500 -248 -48 label
+(GPIO11) {/Times-Roman cf} 2 23 360.000 0.500 -248 -80 label
+(GPIO12) {/Times-Roman cf} 2 23 360.000 0.500 -248 -112 label
+(GPIO13) {/Times-Roman cf} 2 23 360.000 0.500 -248 -144 label
+(GPIO14) {/Times-Roman cf} 2 23 360.000 0.500 -248 -176 label
+endgate
+} def
+
+/::header20pin {
+begingate
+1 1.000 -80 -880 48 0.000 360.000 xcarc
+1 1.000 -80 -720 48 0.000 360.000 xcarc
+1 1.000 80 -880 48 0.000 360.000 xcarc
+1 1.000 80 -720 48 0.000 360.000 xcarc
+1 1.000 80 -880 32 0.000 360.000 xcarc
+1 1.000 80 -720 32 0.000 360.000 xcarc
+1 1.000 -80 -720 32 0.000 360.000 xcarc
+1 1.000 -80 -880 32 0.000 360.000 xcarc
+1 1.000 -80 -560 48 0.000 360.000 xcarc
+1 1.000 -80 -400 48 0.000 360.000 xcarc
+1 1.000 80 -560 48 0.000 360.000 xcarc
+1 1.000 80 -400 48 0.000 360.000 xcarc
+1 1.000 80 -560 32 0.000 360.000 xcarc
+1 1.000 80 -400 32 0.000 360.000 xcarc
+1 1.000 -80 -400 32 0.000 360.000 xcarc
+1 1.000 -80 -560 32 0.000 360.000 xcarc
+1 1.000 -80 -240 48 0.000 360.000 xcarc
+1 1.000 -80 -80 48 0.000 360.000 xcarc
+1 1.000 80 -240 48 0.000 360.000 xcarc
+1 1.000 80 -80 48 0.000 360.000 xcarc
+1 1.000 80 -240 32 0.000 360.000 xcarc
+1 1.000 80 -80 32 0.000 360.000 xcarc
+1 1.000 -80 -80 32 0.000 360.000 xcarc
+1 1.000 -80 -240 32 0.000 360.000 xcarc
+1 1.000 -80 -1200 48 0.000 360.000 xcarc
+1 1.000 -80 -1040 48 0.000 360.000 xcarc
+1 1.000 80 -1200 48 0.000 360.000 xcarc
+1 1.000 80 -1040 48 0.000 360.000 xcarc
+1 1.000 80 -1200 32 0.000 360.000 xcarc
+1 1.000 80 -1040 32 0.000 360.000 xcarc
+1 1.000 -80 -1040 32 0.000 360.000 xcarc
+1 1.000 -80 -1200 32 0.000 360.000 xcarc
+1 1.000 -80 -1520 48 0.000 360.000 xcarc
+1 1.000 -80 -1360 48 0.000 360.000 xcarc
+1 1.000 80 -1520 48 0.000 360.000 xcarc
+1 1.000 80 -1360 48 0.000 360.000 xcarc
+1 1.000 80 -1520 32 0.000 360.000 xcarc
+1 1.000 80 -1360 32 0.000 360.000 xcarc
+1 1.000 -80 -1360 32 0.000 360.000 xcarc
+1 1.000 -80 -1520 32 0.000 360.000 xcarc
+1 1.000 -80 720 48 0.000 360.000 xcarc
+1 1.000 -80 880 48 0.000 360.000 xcarc
+1 1.000 80 720 48 0.000 360.000 xcarc
+1 1.000 80 880 48 0.000 360.000 xcarc
+1 1.000 80 720 32 0.000 360.000 xcarc
+1 1.000 80 880 32 0.000 360.000 xcarc
+1 1.000 -80 880 32 0.000 360.000 xcarc
+1 1.000 -80 720 32 0.000 360.000 xcarc
+1 1.000 -80 1040 48 0.000 360.000 xcarc
+1 1.000 -80 1200 48 0.000 360.000 xcarc
+1 1.000 80 1040 48 0.000 360.000 xcarc
+1 1.000 80 1200 48 0.000 360.000 xcarc
+1 1.000 80 1040 32 0.000 360.000 xcarc
+1 1.000 80 1200 32 0.000 360.000 xcarc
+1 1.000 -80 1200 32 0.000 360.000 xcarc
+1 1.000 -80 1040 32 0.000 360.000 xcarc
+1 1.000 -80 1360 48 0.000 360.000 xcarc
+1 1.000 -80 1520 48 0.000 360.000 xcarc
+1 1.000 80 1360 48 0.000 360.000 xcarc
+1 1.000 80 1520 48 0.000 360.000 xcarc
+1 1.000 80 1360 32 0.000 360.000 xcarc
+1 1.000 80 1520 32 0.000 360.000 xcarc
+1 1.000 -80 1520 32 0.000 360.000 xcarc
+1 1.000 -80 1360 32 0.000 360.000 xcarc
+1 1.000 -80 400 48 0.000 360.000 xcarc
+1 1.000 -80 560 48 0.000 360.000 xcarc
+1 1.000 80 400 48 0.000 360.000 xcarc
+1 1.000 80 560 48 0.000 360.000 xcarc
+1 1.000 80 400 32 0.000 360.000 xcarc
+1 1.000 80 560 32 0.000 360.000 xcarc
+1 1.000 -80 560 32 0.000 360.000 xcarc
+1 1.000 -80 400 32 0.000 360.000 xcarc
+1 1.000 -80 80 48 0.000 360.000 xcarc
+1 1.000 -80 240 48 0.000 360.000 xcarc
+1 1.000 80 80 48 0.000 360.000 xcarc
+1 1.000 80 240 48 0.000 360.000 xcarc
+1 1.000 80 80 32 0.000 360.000 xcarc
+1 1.000 80 240 32 0.000 360.000 xcarc
+1 1.000 -80 240 32 0.000 360.000 xcarc
+1 1.000 -80 80 32 0.000 360.000 xcarc
+(VDD3V3) {/Times-Roman cf} 2 23 0.000 1.000 -160 1512 label
+(EXTCLK) {/Times-Roman cf} 2 23 0.000 1.000 -160 1032 label
+(Ground) {/Times-Roman cf} 2 23 0.000 1.000 -160 872 label
+(GPIO0) {/Times-Roman cf} 2 23 0.000 1.000 -160 712 label
+(GPIO2) {/Times-Roman cf} 2 23 0.000 1.000 -160 552 label
+(GPIO3) {/Times-Roman cf} 2 23 0.000 1.000 -160 392 label
+(VDD3V3) {/Times-Roman cf} 2 23 0.000 1.000 -160 232 label
+(SDI) {/Times-Roman cf} 2 23 0.000 1.000 -160 72 label
+(SDO) {/Times-Roman cf} 2 23 0.000 1.000 -160 -88 label
+(SCK) {/Times-Roman cf} 2 23 0.000 1.000 -160 -248 label
+(Ground) {/Times-Roman cf} 2 23 0.000 1.000 -160 -408 label
+(Ground) {/Times-Roman cf} 2 23 0.000 1.000 -160 -1528 label
+(GPIO7) {/Times-Roman cf} 2 23 0.000 1.000 -160 -728 label
+(GPIO8) {/Times-Roman cf} 2 23 0.000 1.000 -160 -888 label
+(GPIO9) {/Times-Roman cf} 2 23 0.000 1.000 -160 -1048 label
+(GPIO10) {/Times-Roman cf} 2 23 0.000 1.000 -160 -1208 label
+(GPIO11) {/Times-Roman cf} 2 23 0.000 1.000 -160 -1368 label
+(5V) {/Times-Roman cf} 2 20 0.000 1.000 160 1528 label
+(5V) {/Times-Roman cf} 2 20 0.000 1.000 160 1368 label
+(Ground) {/Times-Roman cf} 2 20 0.000 1.000 160 1208 label
+(TX) {/Times-Roman cf} 2 20 0.000 1.000 160 1048 label
+(RX) {/Times-Roman cf} 2 20 0.000 1.000 160 888 label
+(GPIO1) {/Times-Roman cf} 2 20 0.000 1.000 160 728 label
+(CSB \(Raven\)) {/Times-Roman cf} 2 20 0.000 1.000 160 -232 label
+(Ground) {/Times-Roman cf} 2 20 0.000 1.000 160 -712 label
+(Ground) {/Times-Roman cf} 2 20 0.000 1.000 160 -1032 label
+(Ground) {/Times-Roman cf} 2 20 0.000 1.000 160 568 label
+(Ground) {/Times-Roman cf} 2 20 0.000 1.000 160 88 label
+(GPIO4) {/Times-Roman cf} 2 20 0.000 1.000 160 408 label
+(GPIO5) {/Times-Roman cf} 2 20 0.000 1.000 160 248 label
+(GPIO6) {/Times-Roman cf} 2 20 0.000 1.000 160 -72 label
+(GPIO13) {/Times-Roman cf} 2 20 0.000 1.000 160 -1192 label
+(GPIO14) {/Times-Roman cf} 2 20 0.000 1.000 160 -1352 label
+(GPIO15) {/Times-Roman cf} 2 20 0.000 1.000 160 -1528 label
+(GPIO12) {/Times-Roman cf} 2 20 0.000 1.000 160 -872 label
+endgate
+} def
+
+/::ft2232h_64qfn {
+begingate
+0 1.000 -232 -232 -232 360 360 360 360 -232 4 polygon
+0 1.000 -232 -184 -232 -168 -200 -168 -200 -184 4 polygon
+0 1.000 -232 -152 -232 -136 -200 -136 -200 -152 4 polygon
+0 1.000 -232 -120 -232 -104 -200 -104 -200 -120 4 polygon
+0 1.000 -232 -88 -232 -72 -200 -72 -200 -88 4 polygon
+0 1.000 -232 -56 -232 -40 -200 -40 -200 -56 4 polygon
+0 1.000 -232 -24 -232 -8 -200 -8 -200 -24 4 polygon
+0 1.000 -232 8 -232 24 -200 24 -200 8 4 polygon
+0 1.000 -232 40 -232 56 -200 56 -200 40 4 polygon
+0 1.000 -232 72 -232 88 -200 88 -200 72 4 polygon
+0 1.000 -232 104 -232 120 -200 120 -200 104 4 polygon
+0 1.000 -232 136 -232 152 -200 152 -200 136 4 polygon
+0 1.000 -232 168 -232 184 -200 184 -200 168 4 polygon
+0 1.000 -184 -232 -184 -200 -168 -200 -168 -232 4 polygon
+0 1.000 328 -184 328 -168 360 -168 360 -184 4 polygon
+0 1.000 328 -152 328 -136 360 -136 360 -152 4 polygon
+0 1.000 328 -120 328 -104 360 -104 360 -120 4 polygon
+0 1.000 328 -88 328 -72 360 -72 360 -88 4 polygon
+0 1.000 328 -56 328 -40 360 -40 360 -56 4 polygon
+0 1.000 328 -24 328 -8 360 -8 360 -24 4 polygon
+0 1.000 328 8 328 24 360 24 360 8 4 polygon
+0 1.000 328 40 328 56 360 56 360 40 4 polygon
+0 1.000 328 72 328 88 360 88 360 72 4 polygon
+0 1.000 328 104 328 120 360 120 360 104 4 polygon
+0 1.000 328 136 328 152 360 152 360 136 4 polygon
+0 1.000 328 168 328 184 360 184 360 168 4 polygon
+0 1.000 -152 -232 -152 -200 -136 -200 -136 -232 4 polygon
+0 1.000 -120 -232 -120 -200 -104 -200 -104 -232 4 polygon
+0 1.000 -88 -232 -88 -200 -72 -200 -72 -232 4 polygon
+0 1.000 -56 -232 -56 -200 -40 -200 -40 -232 4 polygon
+0 1.000 -24 -232 -24 -200 -8 -200 -8 -232 4 polygon
+0 1.000 8 -232 8 -200 24 -200 24 -232 4 polygon
+0 1.000 40 -232 40 -200 56 -200 56 -232 4 polygon
+0 1.000 72 -232 72 -200 88 -200 88 -232 4 polygon
+0 1.000 104 -232 104 -200 120 -200 120 -232 4 polygon
+0 1.000 136 -232 136 -200 152 -200 152 -232 4 polygon
+0 1.000 -184 328 -184 360 -168 360 -168 328 4 polygon
+0 1.000 -152 328 -152 360 -136 360 -136 328 4 polygon
+0 1.000 -120 328 -120 360 -104 360 -104 328 4 polygon
+0 1.000 -88 328 -88 360 -72 360 -72 328 4 polygon
+0 1.000 -56 328 -56 360 -40 360 -40 328 4 polygon
+0 1.000 -24 328 -24 360 -8 360 -8 328 4 polygon
+0 1.000 8 328 8 360 24 360 24 328 4 polygon
+0 1.000 40 328 40 360 56 360 56 328 4 polygon
+0 1.000 72 328 72 360 88 360 88 328 4 polygon
+0 1.000 104 328 104 360 120 360 120 328 4 polygon
+0 1.000 136 328 136 360 152 360 152 328 4 polygon
+0 1.000 168 -232 168 -200 184 -200 184 -232 4 polygon
+0 1.000 168 328 168 360 184 360 184 328 4 polygon
+1 1.000 -152 264 -152 -160 272 -160 272 280 -136 280 -168 312 -184 296 -152 264 
+8 polygon
+(64 QFN) {CR} (FT2232H) {/Times-Roman cf} 4 1045 0.000 0.700 56 72 label
+0 1.000 200 -232 200 -200 216 -200 216 -232 4 polygon
+0 1.000 232 -232 232 -200 248 -200 248 -232 4 polygon
+0 1.000 264 -232 264 -200 280 -200 280 -232 4 polygon
+0 1.000 296 -232 296 -200 312 -200 312 -232 4 polygon
+0 1.000 200 328 200 360 216 360 216 328 4 polygon
+0 1.000 232 328 232 360 248 360 248 328 4 polygon
+0 1.000 264 328 264 360 280 360 280 328 4 polygon
+0 1.000 296 328 296 360 312 360 312 328 4 polygon
+0 1.000 -232 200 -232 216 -200 216 -200 200 4 polygon
+0 1.000 -232 232 -232 248 -200 248 -200 232 4 polygon
+0 1.000 -232 264 -232 280 -200 280 -200 264 4 polygon
+0 1.000 -232 296 -232 312 -200 312 -200 296 4 polygon
+0 1.000 328 200 328 216 360 216 360 200 4 polygon
+0 1.000 328 232 328 248 360 248 360 232 4 polygon
+0 1.000 328 264 328 280 360 280 360 264 4 polygon
+0 1.000 328 296 328 312 360 312 360 296 4 polygon
+(1) {/Times-Roman cf} 2 21 0.000 0.700 -192 304 label
+(GND) {/Times-Roman cf} 2 23 0.000 0.700 -248 304 label
+(16) {/Times-Roman cf} 2 20 0.000 0.700 -192 -176 label
+(33) {/Times-Roman cf} 2 23 0.000 0.700 320 -176 label
+(48) {/Times-Roman cf} 2 23 0.000 0.700 320 304 label
+(GND) {/Times-Roman cf} 2 23 0.000 0.700 -248 176 label
+(GND) {/Times-Roman cf} 2 23 0.000 0.700 -248 -16 label
+(GND) {/Times-Roman cf} 2 23 0.000 0.700 -248 -144 label
+(GND) {/Times-Roman cf} 2 23 270.000 0.700 80 -248 label
+(GND) {/Times-Roman cf} 2 20 0.000 0.700 376 -112 label
+(GND) {/Times-Roman cf} 2 20 0.000 0.700 376 272 label
+(GND) {/Times-Roman cf} 2 20 270.000 0.700 240 376 label
+(VCC) {/Times-Roman cf} 2 23 270.000 0.700 -48 -248 label
+(VCC) {/Times-Roman cf} 2 23 270.000 0.700 272 -248 label
+(VCC) {/Times-Roman cf} 2 20 0.000 0.700 376 112 label
+(VCC) {/Times-Roman cf} 2 20 270.000 0.700 80 376 label
+(XI) {/Times-Roman cf} 2 23 0.000 0.700 -248 272 label
+(XO) {/Times-Roman cf} 2 23 0.000 0.700 -248 240 label
+(AGND) {/Times-Roman cf} 2 23 0.000 0.700 -248 16 label
+(Vcore) {/Times-Roman cf} 2 23 0.000 0.700 -248 -48 label
+(Vcore) {/Times-Roman cf} 2 20 0.000 0.700 376 -48 label
+(Vcore) {/Times-Roman cf} 2 20 270.000 0.700 -176 376 label
+(Reset) {ol} {/Times-Roman cf} 3 23 0.000 0.700 -248 -112 label
+(EECS) {/Times-Roman cf} 2 20 270.000 0.700 -144 376 label
+(EECLK) {/Times-Roman cf} 2 20 270.000 0.700 -112 376 label
+(EEDATA) {/Times-Roman cf} 2 20 270.000 0.700 -80 376 label
+(PWREN) {ol} {/Times-Roman cf} 3 20 270.000 0.700 -48 376 label
+(Suspend) {ol} {/Times-Roman cf} 3 20 0.000 0.700 376 -80 label
+(SCK1) {/Times-Roman cf} 2 23 0.000 0.700 -248 -176 label
+(SDI1) {/Times-Roman cf} 2 23 270.000 0.700 -176 -248 label
+(SDO1) {/Times-Roman cf} 2 23 270.000 0.700 -144 -248 label
+(CSB1) {/Times-Roman cf} 2 23 270.000 0.700 -112 -248 label
+(SCK2) {/Times-Roman cf} 2 20 0.000 0.700 376 -16 label
+(SDI2) {/Times-Roman cf} 2 20 0.000 0.700 376 16 label
+(SDO2) {/Times-Roman cf} 2 20 0.000 0.700 376 48 label
+(CSB2) {/Times-Roman cf} 2 20 0.000 0.700 376 80 label
+(USB_DM) {/Times-Roman cf} 2 23 0.000 0.700 -248 112 label
+(USB_DP) {/Times-Roman cf} 2 23 0.000 0.700 -248 80 label
+endgate
+} def
+
+/::S25FL128 {
+begingate
+0 1.000 -144 160 -144 256 -112 256 -112 160 4 polygon
+0 1.000 -144 -256 -144 -160 -112 -160 -112 -256 4 polygon
+0 1.000 -64 160 -64 256 -32 256 -32 160 4 polygon
+0 1.000 16 160 16 256 48 256 48 160 4 polygon
+0 1.000 96 160 96 256 128 256 128 160 4 polygon
+0 1.000 -64 -256 -64 -160 -32 -160 -32 -256 4 polygon
+0 1.000 16 -256 16 -160 48 -160 48 -256 4 polygon
+0 1.000 96 -256 96 -160 128 -160 128 -256 4 polygon
+0 1.000 -176 -144 -176 144 160 144 160 -144 4 polygon
+(8 SOIC) {CR} (S25FL128) {/Times-Roman cf} 4 1045 0.000 0.700 -16 0 label
+(1) {/Times-Roman cf} 2 17 0.000 0.700 -128 -192 label
+(CS) {ol} {/Times-Roman cf} 3 17 0.000 0.700 -128 -128 label
+(IO1) {/Times-Roman cf} 2 17 0.000 0.700 -48 -128 label
+(IO2) {/Times-Roman cf} 2 17 0.000 0.700 32 -128 label
+(IO0) {/Times-Roman cf} 2 29 0.000 0.700 112 128 label
+(IO3) {/Times-Roman cf} 2 29 0.000 0.700 -48 128 label
+(VCC) {/Times-Roman cf} 2 29 0.000 0.700 -128 128 label
+(SCK) {/Times-Roman cf} 2 29 0.000 0.700 32 128 label
+(VSS) {/Times-Roman cf} 2 17 0.000 0.700 112 -128 label
+endgate
+} def
+
+/::JST3_SerLCD {
+begingate
+1 1.000 0 -128 32 0.000 360.000 xcarc
+1 1.000 0 0 32 0.000 360.000 xcarc
+1 1.000 0 128 32 0.000 360.000 xcarc
+1 1.000 0 128 48 0.000 360.000 xcarc
+1 1.000 0 0 48 0.000 360.000 xcarc
+1 1.000 0 -128 48 0.000 360.000 xcarc
+(3.3V) {/Times-Roman cf} 2 16 0.000 1.000 96 128 label
+(Ground) {/Times-Roman cf} 2 16 0.000 1.000 96 0 label
+(RX) {/Times-Roman cf} 2 20 0.000 1.000 96 -128 label
+endgate
+} def
+
+/::USBconn {
+begingate
+0 1.000 -288 -368 -288 368 288 368 288 -368 4 polygon
+1 1.000 -96 240 32 0.000 360.000 xcarc
+1 1.000 64 240 32 0.000 360.000 xcarc
+1 1.000 288 80 32 0.000 360.000 xcarc
+1 1.000 -288 80 32 0.000 360.000 xcarc
+endgate
+} def
+
+/::gpio16_header {
+begingate
+1 1.000 0 -560 48 0.000 360.000 xcarc
+1 1.000 0 -400 48 0.000 360.000 xcarc
+1 1.000 0 -400 32 0.000 360.000 xcarc
+1 1.000 0 -560 32 0.000 360.000 xcarc
+1 1.000 0 -240 48 0.000 360.000 xcarc
+1 1.000 0 -80 48 0.000 360.000 xcarc
+1 1.000 0 -80 32 0.000 360.000 xcarc
+1 1.000 0 -240 32 0.000 360.000 xcarc
+1 1.000 0 -880 48 0.000 360.000 xcarc
+1 1.000 0 -720 48 0.000 360.000 xcarc
+1 1.000 0 -720 32 0.000 360.000 xcarc
+1 1.000 0 -880 32 0.000 360.000 xcarc
+1 1.000 0 -1200 48 0.000 360.000 xcarc
+1 1.000 0 -1040 48 0.000 360.000 xcarc
+1 1.000 0 -1040 32 0.000 360.000 xcarc
+1 1.000 0 -1200 32 0.000 360.000 xcarc
+1 1.000 0 720 48 0.000 360.000 xcarc
+1 1.000 0 880 48 0.000 360.000 xcarc
+1 1.000 0 880 32 0.000 360.000 xcarc
+1 1.000 0 720 32 0.000 360.000 xcarc
+1 1.000 0 1040 48 0.000 360.000 xcarc
+1 1.000 0 1200 48 0.000 360.000 xcarc
+1 1.000 0 1200 32 0.000 360.000 xcarc
+1 1.000 0 1040 32 0.000 360.000 xcarc
+1 1.000 0 400 48 0.000 360.000 xcarc
+1 1.000 0 560 48 0.000 360.000 xcarc
+1 1.000 0 560 32 0.000 360.000 xcarc
+1 1.000 0 400 32 0.000 360.000 xcarc
+1 1.000 0 80 48 0.000 360.000 xcarc
+1 1.000 0 240 48 0.000 360.000 xcarc
+1 1.000 0 240 32 0.000 360.000 xcarc
+1 1.000 0 80 32 0.000 360.000 xcarc
+(GPIO0) {/Times-Roman cf} 2 20 0.000 1.000 96 1200 label
+(GPIO1) {/Times-Roman cf} 2 20 0.000 1.000 96 1040 label
+(GPIO2) {/Times-Roman cf} 2 20 0.000 1.000 96 880 label
+(GPIO3) {/Times-Roman cf} 2 20 0.000 1.000 96 720 label
+(GPIO4) {/Times-Roman cf} 2 20 0.000 1.000 96 560 label
+(GPIO5) {/Times-Roman cf} 2 20 0.000 1.000 96 400 label
+(GPIO6) {/Times-Roman cf} 2 20 0.000 1.000 96 240 label
+(GPIO7) {/Times-Roman cf} 2 20 0.000 1.000 96 80 label
+(GPIO8) {/Times-Roman cf} 2 20 0.000 1.000 96 -80 label
+(GPIO9) {/Times-Roman cf} 2 20 0.000 1.000 96 -240 label
+(GPIO10) {/Times-Roman cf} 2 20 0.000 1.000 96 -400 label
+(GPIO11) {/Times-Roman cf} 2 20 0.000 1.000 96 -560 label
+(GPIO12) {/Times-Roman cf} 2 20 0.000 1.000 96 -720 label
+(GPIO13) {/Times-Roman cf} 2 20 0.000 1.000 96 -880 label
+(GPIO14) {/Times-Roman cf} 2 20 0.000 1.000 96 -1024 label
+(GPIO15) {/Times-Roman cf} 2 20 0.000 1.000 96 -1200 label
+endgate
+} def
+
+/::Jumper {
+begingate
+1 1.000 0 -160 32 0.000 360.000 xcarc
+1 1.000 0 0 32 0.000 360.000 xcarc
+1 1.000 0 160 32 0.000 360.000 xcarc
+1 1.000 0 160 48 0.000 360.000 xcarc
+1 1.000 0 0 48 0.000 360.000 xcarc
+1 1.000 0 -160 48 0.000 360.000 xcarc
+endgate
+} def
+
+/::SMA_pad {
+begingate
+0 1.000 -320 -144 -320 160 -112 160 -112 -144 4 polygon
+0 1.000 112 -144 112 160 320 160 320 -144 4 polygon
+0 1.000 -16 -144 -16 160 16 160 16 -144 4 polygon
+endgate
+} def
+
+/::Power_header {
+begingate
+1 1.000 0 -160 32 0.000 360.000 xcarc
+1 1.000 0 0 32 0.000 360.000 xcarc
+1 1.000 0 160 32 0.000 360.000 xcarc
+1 1.000 0 160 48 0.000 360.000 xcarc
+1 1.000 0 0 48 0.000 360.000 xcarc
+1 1.000 0 -160 48 0.000 360.000 xcarc
+1 1.000 0 -320 32 0.000 360.000 xcarc
+1 1.000 0 -320 48 0.000 360.000 xcarc
+endgate
+} def
+
+
+%%EndSetup
+
+%%Page: raven_board 1
+%%PageOrientation: Landscape
+%%PageBoundingBox: 0 0 612 792
+/pgsave save def bop
+90 rotate 18 -629 translate
+0.8519 inchscale
+2.6000 setlinewidth 1130 186 translate
+
+0 1.000 -32 832 -32 1232 352 1232 352 832 4 polygon
+(Raven demonstration board, block diagram) {/Times-Roman cf} 2 16 0.000 0.700 
+-864 1520 label
+(Raven chip) {/Times-Roman cf} 2 21 0.000 0.700 176 1040 label
+0 1.000 480 800 480 960 816 960 816 800 4 polygon
+(Serial display) {/Times-Roman cf} 2 21 0.000 0.700 640 880 label
+1 1.000 352 896 480 896 2 polygon
+1 1.000 352 864 480 864 2 polygon
+(TX) {/Times-Roman cf} 2 17 0.000 0.700 416 912 label
+(RX) {/Times-Roman cf} 2 29 0.000 0.700 416 848 label
+0 1.000 -544 832 -544 1056 -288 1056 -288 832 4 polygon
+0 1.000 -144 576 -144 672 144 672 144 576 4 polygon
+0 1.000 -176 352 -176 544 16 544 16 352 4 polygon
+(USB-serial) {CR} (FTDI dual) {/Times-Roman cf} 4 21 0.000 0.700 -16 624 label
+1 1.000 64 672 64 832 2 polygon
+1 1.000 80 672 80 832 2 polygon
+1 1.000 96 672 96 832 2 polygon
+1 1.000 112 672 112 832 2 polygon
+(SDO) {CR} (SCK) {CR} (CSB) {CR} (SDI) {/Times-Roman cf} 8 16 0.000 0.700 128 
+704 label
+1 1.000 32 1232 32 1296 2 polygon
+(GPIO header) {/Times-Roman cf} 2 20 0.000 0.700 -32 1328 label
+0 1.000 -128 1296 -128 1360 224 1360 224 1296 4 polygon
+(GPIO) {/Times-Roman cf} 2 20 0.000 0.700 48 1264 label
+1 1.000 -80 576 -80 544 2 polygon
+(port) {CR} (USB) {/Times-Roman cf} 4 21 0.000 0.700 -80 448 label
+1 1.000 -288 992 -32 992 2 polygon
+1 1.000 -288 976 -32 976 2 polygon
+1 1.000 -288 960 -32 960 2 polygon
+1 1.000 -96 896 -32 896 2 polygon
+(QSPI flash) {/Times-Roman cf} 2 21 0.000 0.700 -416 944 label
+(CSB) {/Times-Roman cf} 2 17 0.000 0.700 -64 912 label
+(CLK, data) {/Times-Roman cf} 2 16 0.000 0.700 -224 1008 label
+1 1.000 -112 672 -112 720 -224 720 -224 992 4 polygon
+1 1.000 -96 672 -96 736 -208 736 -208 976 4 polygon
+0 1.000 -160 864 -160 928 -96 928 -96 864 4 polygon
+1 1.000 -64 672 -64 768 -128 768 -128 864 4 polygon
+1 1.000 -160 896 -288 896 2 polygon
+(CSB) {/Times-Roman cf} 2 16 0.000 0.700 -48 704 label
+1 1.000 -192 960 -192 752 -80 752 -80 672 4 polygon
+1 1.000 32 1360 32 1424 2 polygon
+0 1.000 -32 1424 -32 1472 96 1472 96 1424 4 polygon
+(jumpers) {/Times-Roman cf} 2 20 0.000 0.700 -16 1456 label
+0 1.000 -48 1520 -48 1568 96 1568 96 1520 4 polygon
+(LED array) {/Times-Roman cf} 2 20 0.000 0.700 -32 1552 label
+1 1.000 32 1520 32 1472 2 polygon
+(IRQ) {/Times-Roman cf} 2 23 0.000 0.700 240 1472 label
+0 1.000 480 1008 480 1120 640 1120 640 1008 4 polygon
+1 1.000 320 1504 320 1456 2 polygon
+0 1.000 288 1392 288 1456 352 1456 352 1392 4 polygon
+(XCLK) {/Times-Roman cf} 2 16 0.000 0.700 336 1472 label
+1 1.000 352 1424 464 1424 2 polygon
+0 1.000 464 1376 464 1472 640 1472 640 1376 4 polygon
+(\(8MHz\)) {CR} (crystal clock) {CR} (CMOS) {/Times-Roman cf} 6 20 0.000 0.700 
+480 1424 label
+(\(12.5MHz\)) {CR} (Crystal) {/Times-Roman cf} 4 28 0.000 0.700 496 1088 label
+1 1.000 352 1088 480 1088 2 polygon
+1 1.000 352 1056 480 1056 2 polygon
+(XI) {/Times-Roman cf} 2 17 0.000 0.700 416 1104 label
+(XO) {/Times-Roman cf} 2 29 0.000 0.700 416 1040 label
+0 1.000 -864 960 -864 1024 -736 1024 -736 960 4 polygon
+(jack) {CR} (power) {/Times-Roman cf} 4 29 0.000 0.700 -800 1008 label
+0 1.000 -928 880 -928 928 -736 928 -736 880 4 polygon
+(power header) {/Times-Roman cf} 2 17 0.000 0.700 -832 896 label
+0 1.000 -720 1072 -720 1168 -592 1168 -592 1072 4 polygon
+(regulator) {CR} (3.3V) {/Times-Roman cf} 4 21 0.000 0.700 -656 1120 label
+1 1.000 -592 1104 -32 1104 2 polygon
+(power) {/Times-Roman cf} 2 17 0.000 0.700 -128 1136 label
+0 1.000 -544 1184 -544 1280 -416 1280 -416 1184 4 polygon
+(regulator) {CR} (1.8V) {/Times-Roman cf} 4 21 0.000 0.700 -480 1232 label
+1 1.000 -416 1232 -384 1232 -384 1120 -32 1120 4 polygon
+1 1.000 -560 1104 -560 1232 -544 1232 3 polygon
+1 1.000 352 1200 544 1200 2 polygon
+(analog I/O) {/Times-Roman cf} 2 16 0.000 0.700 384 1216 label
+0 1.000 544 1168 544 1328 688 1328 688 1168 4 polygon
+(array) {CR} (connector) {CR} (SMA) {/Times-Roman cf} 6 16 0.000 0.700 560 1216 
+label
+(jmp) {/Times-Roman cf} 2 21 0.000 0.700 320 1424 label
+(jmp) {/Times-Roman cf} 2 21 0.000 0.700 -128 896 label
+0 1.000 -448 688 -448 784 -288 784 -288 688 4 polygon
+(SPI header) {/Times-Roman cf} 2 21 0.000 0.700 -368 736 label
+1 1.000 -128 768 -288 768 2 polygon
+1 1.000 -192 752 -288 752 2 polygon
+1 1.000 -208 736 -288 736 2 polygon
+1 1.000 -224 720 -288 720 2 polygon
+0 1.000 -704 848 -704 1024 -640 1024 -640 848 4 polygon
+(jmp) {/Times-Roman cf} 2 21 0.000 0.700 -672 944 label
+1 1.000 -672 512 -176 512 2 polygon
+(USB power) {/Times-Roman cf} 2 16 0.000 0.700 -336 528 label
+(Features:) {/Times-Roman cf} 2 16 0.000 0.700 80 368 label
+(1. Can be powered from external supplies, power jack, or USB.) 
+{/Times-Roman cf} 2 16 0.000 0.700 80 336 label
+
+(2. Split supplies if external 1.8V needed;  otherwise chip is powered from 3.3V only.) 
+{/Times-Roman cf} 2 16 0.000 0.700 80 304 label
+(3. Flash chip programmed through FTDI via USB) {/Times-Roman cf} 2 16 0.000 
+0.700 80 272 label
+(4. Raven SPI programmed through FTDI via USB) {/Times-Roman cf} 2 16 0.000 
+0.700 80 240 label
+(5. SMA inputs to analog functions.) {/Times-Roman cf} 2 16 0.000 0.700 80 208 
+label
+(6. Serial display for text I/O from Raven chip.) {/Times-Roman cf} 2 16 0.000 
+0.700 80 176 label
+
+(7. Clock from crystal \(100MHz onboard\), external \(8MHz\) or data line \(slow\)) 
+{/Times-Roman cf} 2 16 0.000 0.700 80 144 label
+(8. Match Raspberry Pi header pins with GPIO header pins) {/Times-Roman cf} 2 
+16 0.000 0.700 80 112 label
+(Use the 8-pin SOIC \(4 data + clock, select, power, and ground\).  3.3V.) {CR} 
+(SPI flash:  Cypress S25FL128 or similar \($2.42 each from Digi-Key\).) 
+{/Times-Roman cf} 4 16 0.000 0.700 -912 256 label
+(FTDI:  Use FT2232H \(about $7 for the LQFP package from Digi-Key\)) 
+{/Times-Roman cf} 2 16 360.000 0.700 -912 80 label
+(SerLCD \($20\).) {CR} 
+(or the 20x4 SerLCD \(also $25\) \(available from Digi-Key\).  Or the 20x2) 
+{CR} (Serial display:  Use a SparkFun serial-enabled 16x2 LCD \($25\), 3.3V,) 
+{/Times-Roman cf} 6 16 0.000 0.700 -912 144 label
+(\(optional\)) {/Times-Roman cf} 2 16 0.000 0.700 -544 1296 label
+1 1.000 320 1392 320 1232 2 polygon
+1 1.000 256 1232 256 1504 2 polygon
+0 1.000 128 1504 128 1584 688 1584 688 1504 4 polygon
+(Header pin array \(Raspberry Pi compatible\)) {/Times-Roman cf} 2 16 0.000 
+0.700 176 1536 label
+1 1.000 32 1392 176 1392 176 1504 3 polygon
+1 1.000 -672 848 -672 512 2 polygon
+1 1.000 -736 912 -704 912 2 polygon
+1 1.000 -736 992 -704 992 2 polygon
+1 1.000 -672 1024 -672 1072 2 polygon
+pgsave restore showpage
+
+%%Page: GPIO_pinout 2
+%%PageOrientation: Landscape
+%%PageBoundingBox: 0 0 612 792
+/pgsave save def bop
+90 rotate 120 -732 translate
+0.9750 inchscale
+2.6000 setlinewidth 964 717 translate
+
+0 1.000 -160 -192 -160 1088 -32 1088 -32 -192 4 polygon
+(header \(3.3V\)) {CR} (Raspberry-Pi compatibility GPIO) {/Times-Roman cf} 4 16 
+0.000 0.700 -768 896 label
+1 1.000 -96 1088 -96 -192 2 polygon
+1 1.000 -160 1024 -32 1024 2 polygon
+1 1.000 -160 960 -32 960 2 polygon
+1 1.000 -160 896 -32 896 2 polygon
+1 1.000 -160 832 -32 832 2 polygon
+1 1.000 -160 768 -32 768 2 polygon
+1 1.000 -160 704 -32 704 2 polygon
+1 1.000 -160 640 -32 640 2 polygon
+1 1.000 -160 576 -32 576 2 polygon
+1 1.000 -160 512 -32 512 2 polygon
+1 1.000 -160 448 -32 448 2 polygon
+1 1.000 -160 384 -32 384 2 polygon
+1 1.000 -160 320 -32 320 2 polygon
+1 1.000 -160 256 -32 256 2 polygon
+1 1.000 -160 192 -32 192 2 polygon
+1 1.000 -160 128 -32 128 2 polygon
+1 1.000 -160 64 -32 64 2 polygon
+1 1.000 -160 0 -32 0 2 polygon
+1 1.000 -160 -64 -32 -64 2 polygon
+1 1.000 -160 -128 -32 -128 2 polygon
+(5V) {/Times-Roman cf} 2 20 0.000 0.700 0 1056 label
+(5V) {/Times-Roman cf} 2 20 0.000 0.700 0 992 label
+(From USB or power jack) {/Times-Roman cf} 2 20 0.000 0.700 64 1024 label
+(VDD3V3) {/Times-Roman cf} 2 23 0.000 0.700 -192 1056 label
+(N/C \(I2C\)) {/Times-Roman cf} 2 23 0.000 0.700 -192 992 label
+(N/C \(I2C\)) {/Times-Roman cf} 2 23 0.000 0.700 -192 928 label
+(Ground) {/Times-Roman cf} 2 20 0.000 0.700 0 928 label
+(TX) {/Times-Roman cf} 2 20 0.000 0.700 0 864 label
+(RX) {/Times-Roman cf} 2 20 0.000 0.700 0 800 label
+(EXTCLK) {/Times-Roman cf} 2 23 0.000 0.700 -192 864 label
+(Ground) {/Times-Roman cf} 2 23 0.000 0.700 -192 800 label
+(GPIO0) {/Times-Roman cf} 2 23 0.000 0.700 -192 736 label
+(GPIO1) {/Times-Roman cf} 2 20 0.000 0.700 0 736 label
+(GPIO2) {/Times-Roman cf} 2 23 0.000 0.700 -192 672 label
+(GPIO3) {/Times-Roman cf} 2 23 0.000 0.700 -192 608 label
+(VDD3V3) {/Times-Roman cf} 2 23 0.000 0.700 -192 544 label
+(SDI) {/Times-Roman cf} 2 23 0.000 0.700 -192 480 label
+(SDO) {/Times-Roman cf} 2 23 0.000 0.700 -192 416 label
+(SCK) {/Times-Roman cf} 2 23 0.000 0.700 -192 352 label
+(Ground) {/Times-Roman cf} 2 23 0.000 0.700 -192 288 label
+(Ground) {/Times-Roman cf} 2 23 0.000 0.700 -192 -160 label
+(CSB \(Raven\)) {/Times-Roman cf} 2 20 0.000 0.700 0 352 label
+(N/C \(2nd SPI CSB\)) {/Times-Roman cf} 2 20 0.000 0.700 0 288 label
+(N/C \(I2C EEPROM\)) {/Times-Roman cf} 2 20 0.000 0.700 0 224 label
+(Ground) {/Times-Roman cf} 2 20 0.000 0.700 0 160 label
+(Ground) {/Times-Roman cf} 2 20 0.000 0.700 0 32 label
+(Ground) {/Times-Roman cf} 2 20 0.000 0.700 0 672 label
+(Ground) {/Times-Roman cf} 2 20 0.000 0.700 0 480 label
+(GPIO4) {/Times-Roman cf} 2 20 0.000 0.700 0 608 label
+(GPIO5) {/Times-Roman cf} 2 20 0.000 0.700 0 544 label
+(GPIO6) {/Times-Roman cf} 2 20 0.000 0.700 0 416 label
+(GPIO7) {/Times-Roman cf} 2 23 0.000 0.700 -192 160 label
+(GPIO8) {/Times-Roman cf} 2 23 0.000 0.700 -192 96 label
+(GPIO9) {/Times-Roman cf} 2 23 0.000 0.700 -192 32 label
+(GPIO10) {/Times-Roman cf} 2 23 0.000 0.700 -192 -32 label
+(GPIO11) {/Times-Roman cf} 2 23 0.000 0.700 -192 -96 label
+(GPIO13) {/Times-Roman cf} 2 20 0.000 0.700 0 -32 label
+(GPIO14) {/Times-Roman cf} 2 20 0.000 0.700 0 -96 label
+(GPIO15) {/Times-Roman cf} 2 20 0.000 0.700 0 -160 label
+(GPIO12) {/Times-Roman cf} 2 20 0.000 0.700 0 96 label
+(N/C \(I2C EEPROM\)) {/Times-Roman cf} 2 23 0.000 0.700 -192 224 label
+(NOTES:) {/Times-Roman cf} 2 16 0.000 0.700 -768 800 label
+(connected to the Pi SPI lines.) {CR} (connected.  The Raven SPI is) {CR} 
+(C lines are not) {ns} (2) {Ss} (clock input.  The I) {CR} 
+(is connected to the Raven external) {CR} (Pi board.  The GCLK on the Pi) {CR} 
+(similar channels on the Raspberry) {CR} (Generally, the GPIO line up with) 
+{/Times-Roman cf} 18 16 0.000 0.700 -768 576 label
+pgsave restore showpage
+
+%%Page: PCB_sketch 3
+%%PageOrientation: Landscape
+%%PageBoundingBox: 0 0 612 792
+/pgsave save def bop
+90 rotate 91 -702 translate
+0.3662 inchscale
+2.6000 setlinewidth 1996 1779 translate
+
+0 1.000 -1456 -576 -1456 2640 1904 2640 1904 -576 4 polygon
+(Raven circuit board sketch \(preliminary\)) {/Times-Roman cf} 2 16 0.000 1.200 
+-1456 2768 label
+1.000 90.000 416 448 ::raven_48qfn
+1.000 180.000 -1072 1040 ::header20pin
+1.000 90.000 384 1376 ::ft2232h_64qfn
+1.000 0.000 -176 720 ::S25FL128
+-1.000 180.000 -592 1536 ::JST3_SerLCD
+-1.000 180.000 -416 2272 ::USBconn
+-1.000 180.000 1216 1344 ::gpio16_header
+1.000 0.000 0.000 scb
+1 1.000 192 400 -224 400 -224 480 3 polygon
+1 1.000 192 432 -144 432 -144 480 3 polygon
+1 1.000 640 560 1072 560 1072 144 1216 144 4 polygon
+1 1.000 1216 304 1088 304 1088 592 640 592 4 polygon
+1 1.000 640 624 1104 624 1104 464 1216 464 4 polygon
+1 1.000 592 672 592 704 1120 704 1120 624 1216 624 5 polygon
+1 1.000 560 656 560 720 1152 720 1152 784 1216 784 5 polygon
+1 1.000 528 672 528 736 1136 736 1136 944 1216 944 5 polygon
+1 1.000 496 672 496 752 1120 752 1120 1104 1216 1104 5 polygon
+1 1.000 464 672 464 768 1104 768 1104 1264 1216 1264 5 polygon
+1 1.000 432 672 432 784 1088 784 1088 1424 1216 1424 5 polygon
+1 1.000 400 672 400 800 1072 800 1072 1584 1216 1584 5 polygon
+1 1.000 368 672 368 816 1056 816 1056 1744 1216 1744 5 polygon
+1 1.000 336 672 336 832 1040 832 1040 1904 1216 1904 5 polygon
+1 1.000 304 672 304 848 1024 848 1024 2064 1216 2064 5 polygon
+1 1.000 272 672 272 864 1008 864 1008 2224 1216 2224 5 polygon
+1 1.000 240 672 240 880 992 880 992 2384 1216 2384 5 polygon
+1 1.000 464 1600 464 1696 -512 1696 -512 2032 4 polygon
+sce
+0 1.000 848 0 848 512 1056 512 1056 0 4 polygon
+1.000 0.000 0.000 scb
+1 1.000 192 464 32 464 32 1024 -224 1024 -224 944 5 polygon
+1 1.000 192 304 -384 304 -384 784 -144 784 -144 896 5 polygon
+1 1.000 192 368 -256 368 -256 688 -64 688 -64 912 5 polygon
+1 1.000 640 528 960 528 960 416 3 polygon
+1 1.000 624 496 832 496 832 -32 960 -32 960 64 5 polygon
+1 1.000 624 304 704 304 704 -192 1536 -192 1536 -304 5 polygon
+1 1.000 640 272 672 272 672 -224 864 -224 864 -304 5 polygon
+1 1.000 400 224 400 -208 192 -208 192 -304 4 polygon
+1 1.000 368 224 368 -176 -480 -176 -480 -304 4 polygon
+1 1.000 -992 1280 -304 1280 -304 1056 80 1056 80 528 208 528 6 polygon
+1 1.000 -1152 1280 -1152 1344 -288 1344 -288 1072 96 1072 96 560 208 560 7 
+polygon
+1 1.000 -992 1120 -320 1120 -320 1040 64 1040 64 496 208 496 6 polygon
+1 1.000 208 592 112 592 112 1088 -736 1088 -736 960 -1008 960 6 polygon
+1 1.000 464 1072 464 928 96 928 3 polygon
+1 1.000 432 1072 432 944 112 944 3 polygon
+1 1.000 400 1072 400 960 64 960 3 polygon
+1 1.000 368 1072 368 976 80 976 3 polygon
+1 1.000 -144 960 -144 1632 208 1632 208 1600 4 polygon
+1 1.000 160 1520 -64 1520 -64 960 3 polygon
+sce
+1.000 0.000 -608 528 ::Jumper
+1.000 0.000 0.000 scb
+1 1.000 -608 528 -304 528 2 polygon
+1 1.000 208 336 -608 336 -608 368 3 polygon
+sce
+1.000 270.000 1760 1424 ::SMA_pad
+1.000 0.000 -480 -432 ::SMA_pad
+1.000 0.000 192 -432 ::SMA_pad
+1.000 0.000 864 -432 ::SMA_pad
+1.000 0.000 1536 -432 ::SMA_pad
+1.000 270.000 1760 80 ::SMA_pad
+1.000 270.000 1760 752 ::SMA_pad
+1.000 0.000 0.000 scb
+1 1.000 -352 2032 -352 1728 496 1728 496 1600 4 polygon
+1 1.000 640 400 800 400 800 -64 1504 -64 1504 1424 1616 1424 6 polygon
+1 1.000 640 368 768 368 768 -112 1536 -112 1536 752 1632 752 6 polygon
+1 1.000 640 336 736 336 736 -160 1568 -160 1568 80 1632 80 6 polygon
+sce
+0 1.000 432 2000 432 2640 912 2640 912 2000 4 polygon
+(Jack) {CR} (Power) {CR} (5V) {/Times-Roman cf} 6 1045 0.000 1.000 688 2320 
+label
+(USB) {/Times-Roman cf} 2 21 0.000 1.000 -432 2368 label
+1.000 0.000 1728 2352 ::Power_header
+(Header) {CR} (Power) {/Times-Roman cf} 4 21 0.000 1.000 1728 1904 label
+(Crystal) {/Times-Roman cf} 2 21 0.000 1.000 960 256 label
+0 1.000 943 1761 433 1760 432 1968 944 1967 4 polygon
+(Crystal) {/Times-Roman cf} 2 21 0.000 1.000 624 1872 label
+1.000 0.000 0.000 scb
+1 1.000 656 1600 656 1744 960 1744 960 1872 896 1872 5 polygon
+1 1.000 624 1600 624 1744 416 1744 416 1856 480 1856 5 polygon
+sce
+0 1.000 -32 2224 -32 2592 336 2592 336 2224 4 polygon
+(regulator) {CR} (3.3V) {/Times-Roman cf} 4 1045 0.000 1.000 144 2400 label
+0 1.000 -544 -128 -544 112 -96 112 -96 -128 4 polygon
+(CMOS clock) {/Times-Roman cf} 2 21 0.000 1.000 -320 -16 label
+1.000 0.000 0.000 scb
+1 1.000 160 1488 -432 1488 -432 688 -608 688 4 polygon
+1 1.000 272 224 272 176 -480 176 -480 1664 -592 1664 5 polygon
+sce
+0 1.000 1296 -32 1296 2624 1552 2624 1552 -32 4 polygon
+(LED array) {/Times-Roman cf} 2 16 0.000 1.000 1312 0 label
+0 1.000 -32 1792 -32 2160 336 2160 336 1792 4 polygon
+(regulator) {CR} (1.8V) {/Times-Roman cf} 4 1045 0.000 1.000 144 1968 label
+1.000 0.000 0.000 scb
+1 1.000 -992 0 -496 0 2 polygon
+1 1.000 192 272 80 272 80 0 -128 0 4 polygon
+1 1.000 208 624 160 624 160 896 976 896 976 2544 1216 2544 6 polygon
+1 1.000 -1152 160 -1152 240 -480 240 3 polygon
+1 1.000 -1152 0 -1152 80 -592 80 -592 128 304 128 304 240 6 polygon
+sce
+(e.g., 535-12077-1-ND) {/Times-Roman cf} 2 16 0.000 1.000 -480 -96 label
+(8 MHz) {/Times-Roman cf} 2 16 0.000 1.000 -384 32 label
+1.000 0.000 0.000 scb
+3 1.000 -144 1632 -480 1632 2 polygon
+3 1.000 -400 128 -400 1552 160 1552 3 polygon
+pgsave restore showpage
+
+%%Trailer
+XCIRCsave restore
+%%EOF

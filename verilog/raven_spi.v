@@ -30,7 +30,7 @@
 // Register 1l and 2:  Manufacturer ID (0x456) (readonly)
 // Register 3:  Product ID (= 2) (readonly)
 //
-// Register 4:  Analog IP enable and trim (xtal, regulator, PLL)  (8 bits)
+// Register 4:  X-Fab IP enable and trim (xtal, regulator, PLL)  (8 bits)
 // Register 5:  PLL bypass (1 bit)
 // Register 6:  IRQ (1 bit)
 // Register 7:  reset (1 bit)

@@ -1,6 +1,5 @@
 /*
- *  raven - A full example SoC using PicoRV32 in a realistic, unspecified 180nm
- *	    fabrication process.
+ *  raven - A full example SoC using PicoRV32 in X-Fab XH018
  *
  *  Copyright (C) 2017  Clifford Wolf <clifford@clifford.at>
  *  Copyright (C) 2018  Tim Edwards <tim@efabless.com>
@@ -29,50 +28,50 @@
 `include "raven_spi.v"
 `include "spi_slave.v"
 // Functional verilog components
-`include "analog_mux2_3v3.v"
-`include "analog_mux4_3v3.v"
-`include "level_shift.v"
-// SRAM (simple functional model)
-`include "sram1024x32.v"
+`include "AMUX2_3V.v"
+`include "AMUX4_3V.v"
+`include "LS_3VX2.v"
+// X-Fab SRAM (simple functional stand-in)
+`include "XSPRAM_1024X32_M8P.v"
 
-// Analog IP
+// PDK IP
 
 // 3.3V digital standard cells
 // (functional stand-in)
-`include "digital_cells_3v3.v"
+`include "D_CELLS_3V.v"
 
 // 1.8V core / 3.3V I/O padframe cells
 // (functional stand-in)
-`include "io_cells_1v8_3v3.v"
+`include "IO_CELLS_F3V.v"
  
 // 3.3V core / 3.3V I/O padframe cells (isolate from 1.8V core cells!)
 // (functional stand-in)
-`include "io_cells_3v3.v"
+`include "IO_CELLS_FC3V.v"
 
 // 1.8V Analog cells
-`include "analog_8xpll_1v8.v"
-`include "analog_isource_1v8.v"
+`include "apllc03_1v8.v"
+`include "acsoc04_1v8.v"
 
 // 3.3V Analog cells
-`include "analog_temp_alarm_3v3.v"
-`include "analog_adc_3v3.v"
-`include "analog_dac_3v3.v"
-`include "analog_opamp_3v3.v"
-`include "analog_bandgap_3v3.v"
-`include "analog_comparator_3v3.v"
-`include "analog_xtal_osc_3v3.v"
-`include "analog_rc_osc_3v3.v"
-`include "analog_ldo_3v3.v"
-`include "analog_por_3v3.v"
-`include "analog_isource1_3v3.v"
-`include "analog_isource2_3v3.v"
+`include "atmpc01_3v3.v"
+`include "aadcc01_3v3.v"
+`include "adacc01_3v3.v"
+`include "aopac01_3v3.v"
+`include "abgpc01_3v3.v"
+`include "acmpc01_3v3.v"
+`include "axtoc02_3v3.v"
+`include "arcoc01_3v3.v"
+`include "aregc01_3v3.v"
+`include "aporc02_3v3.v"
+`include "acsoc01_3v3.v"
+`include "acsoc02_3v3.v"
 
 `endif
 
 // Primitive devices (for LVS, and need (empty) model to prevent error on simulation).
-`include "mim_decap.v"
+`include "cmm5t.v"
 
-// raven, a picosoc implementation
+// raven, a picosoc implementation in X-Fab XH018
 
 module raven (
 	// Padframe I/O
@@ -213,416 +212,553 @@ module raven (
 	/* Padframe pads */
 
 	/* Analog input/output pads */
-	io_analog adc0_pad (
-	   .GNDA(VSS),
+	APR00DF adc0_pad (
+	   .GNDO(VSS),
+	   .GNDR(VSS),
 	   .PAD(adc0_in),
 	   .VDD(VDD1V8),
-	   .VDDA(VDD3V3)
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
-	io_analog adc1_pad (
-	   .GNDA(VSS),
+	APR00DF adc1_pad (
+	   .GNDO(VSS),
+	   .GNDR(VSS),
 	   .PAD(adc1_in),
 	   .VDD(VDD1V8),
-	   .VDDA(VDD3V3)
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
-	io_analog adc_low_pad (
-	   .GNDA(VSS),
+	APR00DF adc_low_pad (
+	   .GNDO(VSS),
+	   .GNDR(VSS),
 	   .PAD(adc_low),
 	   .VDD(VDD1V8),
-	   .VDDA(VDD3V3)
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
-	io_analog adc_high_pad (
-	   .GNDA(VSS),
+	APR00DF adc_high_pad (
+	   .GNDO(VSS),
+	   .GNDR(VSS),
 	   .PAD(adc_high),
 	   .VDD(VDD1V8),
-	   .VDDA(VDD3V3)
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
-	io_analog ana_out_pad (
-	   .GNDA(VSS),
+	APR00DF ana_out_pad (
+	   .GNDO(VSS),
+	   .GNDR(VSS),
 	   .PAD(analog_out),
 	   .VDD(VDD1V8),
-	   .VDDA(VDD3V3)
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
-	io_analog comp_inn_pad (
-	   .GNDA(VSS),
+	APR00DF comp_inn_pad (
+	   .GNDO(VSS),
+	   .GNDR(VSS),
 	   .PAD(comp_inn),
 	   .VDD(VDD1V8),
-	   .VDDA(VDD3V3)
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
-	io_analog comp_inp_pad (
-	   .GNDA(VSS),
+	APR00DF comp_inp_pad (
+	   .GNDO(VSS),
+	   .GNDR(VSS),
 	   .PAD(comp_inp),
 	   .VDD(VDD1V8),
-	   .VDDA(VDD3V3)
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
 	/* Power supplies (there are multiple pads that need to be represented) */
 
-	io_vdda vdda_pad [4:0] (
-	   .GNDA(VSS),
+	VDDORPADF vddor_pad [4:0] (
+	   .GNDO(VSS),
+	   .GNDR(VSS),
 	   .VDD(VDD1V8),
-	   .VDDA(VDD3V3)
+	   .VDDOR(VDD3V3)
 	);
 
-	io_vdd vdd_pad [1:0] (
-	   .GNDA(VSS),
+	VDDPADF vdd_pad [1:0] (
+	   .GNDO(VSS),
+	   .GNDR(VSS),
 	   .VDD(VDD1V8),
-	   .VDDA(VDD3V3)
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
-	io_vdd3 vdd3_pad (
-	   .GNDA(VSS),
+	VDDPADFC vdd3_pad (
+	   .GNDO(VSS),
+	   .GNDR(VSS),
 	   .VDD3(VDD3V3),
-	   .VDDA(VDD3V3)
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
-	io_ground gnda_pad [6:0] (
-	   .GNDA(VSS),
+	GNDORPADF gndor_pad [6:0] (
+	   .GNDOR(VSS),
 	   .VDD(VDD1V8),
-	   .VDDA(VDD3V3)
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
-	io_corner_clamp padframe_corner [3:0] (
-	   .GNDA(VSS),
+	CORNERESDF padframe_corner [3:0] (
+	   .GNDO(VSS),
+	   .GNDR(VSS),
 	   .VDD(VDD1V8),
-	   .VDDA(VDD3V3)
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
 	/* Custom-designed power cut cell isolates the VDD3 and VDD buses */
 
-	io_vdd_domain_cut pwr_cut [1:0] (
-	   .GNDA(VSS),
-	   .VDDA(VDD3V3)
+	POWERCUTVDD3FC pwr_cut [1:0] (
+	   .GNDO(VSS),
+	   .GNDR(VSS),
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
-        /* Implement bidirectional I/O pads */
+        /* Implement bidirectional I/O with X-Fab pads */
+        /* See: /ef/tech/XFAB.3/EFXH018D/libs.ref/verilog/IO_CELLS_3V/IO_CELLS_3V.v */
 
-	io_bidirectional flash_io_buf_3 (
+	BBC4F flash_io_buf_3 (
 		.PAD(flash_io3),
 		.EN(flash_io3_oeb),
 		.A(flash_io3_do),
-		.GNDA(VSS),
+		.PO(),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
+		.PI(dground),
 		.Y(flash_io3_di)
 	);
 
-	io_bidirectional flash_io_buf_2 (
+	BBC4F flash_io_buf_2 (
 		.PAD(flash_io2),
 		.EN(flash_io2_oeb),
 		.A(flash_io2_do),
-		.GNDA(VSS),
+		.PO(),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
+		.PI(dground),
 		.Y(flash_io2_di)
 	);
 
-	io_bidirectional flash_io_buf_1 (
+	BBC4F flash_io_buf_1 (
 		.PAD(flash_io1),
 		.EN(flash_io1_oeb),
 		.A(flash_io1_do),
-		.GNDA(VSS),
+		.PO(),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
+		.PI(dground),
 		.Y(flash_io1_di)
 	);
 
-	io_bidirectional flash_io_buf_0 (
+	BBC4F flash_io_buf_0 (
 		.PAD(flash_io0),
 		.EN(flash_io0_oeb),
 		.A(flash_io0_do),
-		.GNDA(VSS),
+		.PO(),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
+		.PI(dground),
 		.Y(flash_io0_di)
 	);
 
 	/* Standalone SPI controller (3V) */
-	io_input_3v3 sck_buf (
+	ICFC sck_buf (
 		.PAD(SCK),
-		.GNDA(VSS),
+		.PO(),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD3(VDD3V3),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
+		.PI(dground),
 		.Y(SCK_core)
 	);
 
-	io_input_3v3 csb_buf (
+	ICFC csb_buf (
 		.PAD(CSB),
-		.GNDA(VSS),
+		.PO(),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD3(VDD3V3),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
+		.PI(dground),
 		.Y(CSB_core)
 	);
 
-	io_input_3v3 sdi_buf (
+	ICFC sdi_buf (
 		.PAD(SDI),
-		.GNDA(VSS),
+		.PO(),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD3(VDD3V3),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
+		.PI(dground),
 		.Y(SDI_core)
 	);
 
-	io_bidirectional_3v3 sdo_buf (
+	BT4FC sdo_buf (
 		.PAD(SDO),
 		.EN(sdo_enb),
 		.A(SDO_core),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD3(VDD3V3),
-		.VDDA(VDD3V3)
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3)
 	);
 
 	/* Implement digital input on irq dedicated pin */
-	io_input irq_buf (
+	ICF irq_buf (
 		.PAD(irq),
-		.GNDA(VSS),
+		.PO(),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
+		.PI(dground),
 		.Y(irq_pin_core)
 	);
 
 	/* Implement digital input on ser_rx */
-	io_input ser_rx_buf (
+	ICF ser_rx_buf (
 		.PAD(ser_rx),
-		.GNDA(VSS),
+		.PO(),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
+		.PI(dground),
 		.Y(ser_rx_core)
 	);
 
 	/* Implement digital outputs on ser_tx, LEDs, csb, and clk */
-	io_bidirectional ser_tx_buf (
+	BT4F ser_tx_buf (
 		.PAD(ser_tx),
 		.EN(dground),
 		.A(ser_tx_core),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3)
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3)
 	);
 
 	// GPIO is digital bidirectional buffer with selectable pull-up and pull-down
 
-	io_bidirectional_pu_pd GPIO_buf_15 (
+	BBCUD4F GPIO_buf_15 (
 		.A(gpio_out_core[15]),
 		.EN(gpio_outenb[15]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[15]),
 		.PDEN(gpio_pulldown[15]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[15]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[15])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_14 (
+	BBCUD4F GPIO_buf_14 (
 		.A(gpio_out_core[14]),
 		.EN(gpio_outenb[14]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[14]),
 		.PDEN(gpio_pulldown[14]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[14]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[14])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_13 (
+	BBCUD4F GPIO_buf_13 (
 		.A(gpio_out_core[13]),
 		.EN(gpio_outenb[13]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[13]),
 		.PDEN(gpio_pulldown[13]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[13]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[13])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_12 (
+	BBCUD4F GPIO_buf_12 (
 		.A(gpio_out_core[12]),
 		.EN(gpio_outenb[12]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[12]),
 		.PDEN(gpio_pulldown[12]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[12]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[12])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_11 (
+	BBCUD4F GPIO_buf_11 (
 		.A(gpio_out_core[11]),
 		.EN(gpio_outenb[11]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[11]),
 		.PDEN(gpio_pulldown[11]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[11]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[11])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_10 (
+	BBCUD4F GPIO_buf_10 (
 		.A(gpio_out_core[10]),
 		.EN(gpio_outenb[10]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[10]),
 		.PDEN(gpio_pulldown[10]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[10]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[10])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_9 (
+	BBCUD4F GPIO_buf_9 (
 		.A(gpio_out_core[9]),
 		.EN(gpio_outenb[9]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[9]),
 		.PDEN(gpio_pulldown[9]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[9]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[9])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_8 (
+	BBCUD4F GPIO_buf_8 (
 		.A(gpio_out_core[8]),
 		.EN(gpio_outenb[8]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[8]),
 		.PDEN(gpio_pulldown[8]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[8]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[8])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_7 (
+	BBCUD4F GPIO_buf_7 (
 		.A(gpio_out_core[7]),
 		.EN(gpio_outenb[7]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[7]),
 		.PDEN(gpio_pulldown[7]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[7]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[7])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_6 (
+	BBCUD4F GPIO_buf_6 (
 		.A(gpio_out_core[6]),
 		.EN(gpio_outenb[6]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[6]),
 		.PDEN(gpio_pulldown[6]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[6]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[6])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_5 (
+	BBCUD4F GPIO_buf_5 (
 		.A(gpio_out_core[5]),
 		.EN(gpio_outenb[5]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[5]),
 		.PDEN(gpio_pulldown[5]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[5]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[5])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_4 (
+	BBCUD4F GPIO_buf_4 (
 		.A(gpio_out_core[4]),
 		.EN(gpio_outenb[4]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[4]),
 		.PDEN(gpio_pulldown[4]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[4]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[4])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_3 (
+	BBCUD4F GPIO_buf_3 (
 		.A(gpio_out_core[3]),
 		.EN(gpio_outenb[3]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[3]),
 		.PDEN(gpio_pulldown[3]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[3]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[3])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_2 (
+	BBCUD4F GPIO_buf_2 (
 		.A(gpio_out_core[2]),
 		.EN(gpio_outenb[2]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[2]),
 		.PDEN(gpio_pulldown[2]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[2]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[2])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_1 (
+	BBCUD4F GPIO_buf_1 (
 		.A(gpio_out_core[1]),
 		.EN(gpio_outenb[1]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[1]),
 		.PDEN(gpio_pulldown[1]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[1]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
 		.Y(gpio_in_core[1])
 	);
 
-	io_bidirectional_pu_pd GPIO_buf_0 (
+	BBCUD4F GPIO_buf_0 (
 		.A(gpio_out_core[0]),
 		.EN(gpio_outenb[0]),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.PAD(gpio[0]),
 		.PDEN(gpio_pulldown[0]),
+		.PI(dground),
+		.PO(),
 		.PUEN(gpio_pullup[0]),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDR(VDD3V3),
+		.VDDO(VDD3V3),
 		.Y(gpio_in_core[0])
 	);
 
-	io_bidirectional flash_csb_buf (
+	BT4F flash_csb_buf (
 		.PAD(flash_csb),
 		.EN(dground),
 		.A(flash_csb_core),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3)
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3)
 		
 	);
 
-	io_bidirectional flash_clk_buf (
+	BT4F flash_clk_buf (
 		.PAD(flash_clk),
 		.EN(dground),
 		.A(flash_clk_core),
-		.GNDA(VSS),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3)
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3)
 	);
 
-	io_input clk_ext_buf (	// External digital clock for PLL bypass mode
+	ICF clk_ext_buf (	// External digital clock for PLL bypass mode
 		.PAD(XCLK),
-		.GNDA(VSS),
+		.PO(),
+		.GNDO(VSS),
+		.GNDR(VSS),
 		.VDD(VDD1V8),
-		.VDDA(VDD3V3),
+		.VDDO(VDD3V3),
+		.VDDR(VDD3V3),
+		.PI(dground),
 		.Y(clk_ext_core)
 	);
 
@@ -630,7 +766,7 @@ module raven (
 	/* Enumerating all of the MiM cap arrays clockwise from the upper left corner */
 
 `ifdef LVS
-	mim_decap #(
+	cmm5t #(
 	   .A(4e-10),
 	   .P(8e-05)
 	) cap_area_fill_3 [27:0] (
@@ -638,7 +774,7 @@ module raven (
 	   .bottom(VSS),
 	   .subs(VSS)
 	);
-	mim_decap #(
+	cmm5t #(
 	   .A(7.5e-10),
 	   .P(1.1e-04)
 	) cap_area_fill_3 [2:0] (
@@ -646,7 +782,7 @@ module raven (
 	   .bottom(VSS),
 	   .subs(VSS)
 	);
-	mim_decap #(
+	cmm5t #(
 	   .A(4e-10),
 	   .P(8e-05)
 	) cap_area_fill_3 [11:0] (
@@ -654,7 +790,7 @@ module raven (
 	   .bottom(VSS),
 	   .subs(VSS)
 	);
-	mim_decap #(
+	cmm5t #(
 	   .A(4.6e-10),
 	   .P(8.6-05)
 	) cap_area_fill_3 [15:0] (
@@ -662,7 +798,7 @@ module raven (
 	   .bottom(VSS),
 	   .subs(VSS)
 	);
-	mim_decap #(
+	cmm5t #(
 	   .A(5e-10),
 	   .P(9e-05)
 	) cap_area_fill_3 [23:0] (
@@ -670,7 +806,7 @@ module raven (
 	   .bottom(VSS),
 	   .subs(VSS)
 	);
-	mim_decap #(
+	cmm5t #(
 	   .A(6e-10),
 	   .P(1e-04)
 	) cap_area_fill_3 [4:0] (
@@ -678,7 +814,7 @@ module raven (
 	   .bottom(VDD3V3),
 	   .subs(VSS)
 	);
-	mim_decap #(
+	cmm5t #(
 	   .A(5e-10),
 	   .P(9e-05)
 	) cap_area_fill_3 [7:0] (
@@ -686,7 +822,7 @@ module raven (
 	   .bottom(VDD1V8),
 	   .subs(VSS)
 	);
-	mim_decap #(
+	cmm5t #(
 	   .A(6e-10),
 	   .P(1e-04)
 	) cap_area_fill_3 [33:0] (
@@ -694,7 +830,7 @@ module raven (
 	   .bottom(VSS),
 	   .subs(VSS)
 	);
-	mim_decap #(
+	cmm5t #(
 	   .A(4e-10),
 	   .P(8e-05)
 	) cap_area_fill_3 [35:0] (
@@ -703,7 +839,7 @@ module raven (
 	   .subs(VSS)
 	);
 
-	mim_decap #(
+	cmm5t #(
 	   .A(5e-10),
 	   .P(9e-05)
 	) cap_area_fill_3 [39:0] (
@@ -721,7 +857,7 @@ module raven (
 	/* NOTE:  Hardwired digital 0 disallowed in structural netlist.	*/
 	/* Must generate from tie-low standard cell.			*/
 
-	digital_logic0_3v3 ground_digital (
+	LOGIC0_3V ground_digital (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD3V3),
@@ -731,7 +867,7 @@ module raven (
 
 	/* SCK_core is also input to raven_soc but needs to be shifted to 1.8V */
 	/* Level shift down */
-	digital_bufx2_3v3 SCK_core_level (
+	BU_3VX2 SCK_core_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -744,7 +880,7 @@ module raven (
 	/* Raven chip, the spi_config is just grounded.  However, this requires	*/
 	/* tie-low inputs.							*/
 
-	digital_logic0_3v3 spi_config_zero [7:0] (
+	LOGIC0_3V spi_config_zero [7:0] (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD3V3),
@@ -756,7 +892,7 @@ module raven (
 	/* be shifted down.  Those that are sent to the PLL already have	*/
 	/* shifted versions.							*/
 
-	digital_bufx2_3v3 spi_config_level [7:0] (
+	BU_3VX2 spi_config_level [7:0] (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -764,7 +900,7 @@ module raven (
 	   .A(spi_config),
 	   .Q(spi_config_lv)
 	);
-	digital_bufx2_3v3 spi_xtal_ena_level (
+	BU_3VX2 spi_xtal_ena_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -772,7 +908,7 @@ module raven (
 	   .A(spi_xtal_ena),
 	   .Q(spi_xtal_ena_lv)
 	);
-	digital_bufx2_3v3 spi_reg_ena_level (
+	BU_3VX2 spi_reg_ena_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -780,7 +916,7 @@ module raven (
 	   .A(spi_reg_ena),
 	   .Q(spi_reg_ena_lv)
 	);
-	digital_bufx2_3v3 spi_mfgr_id_level [11:0] (
+	BU_3VX2 spi_mfgr_id_level [11:0] (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -788,7 +924,7 @@ module raven (
 	   .A(spi_mfgr_id),
 	   .Q(spi_mfgr_id_lv)
 	);
-	digital_bufx2_3v3 spi_prod_id_level [7:0] (
+	BU_3VX2 spi_prod_id_level [7:0] (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -796,7 +932,7 @@ module raven (
 	   .A(spi_prod_id),
 	   .Q(spi_prod_id_lv)
 	);
-	digital_bufx2_3v3 spi_mask_rev_level [3:0] (
+	BU_3VX2 spi_mask_rev_level [3:0] (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -805,7 +941,7 @@ module raven (
 	   .Q(spi_mask_rev_lv)
 	);
 
-	digital_bufx2_3v3 spi_reset_level (
+	BU_3VX2 spi_reset_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -813,7 +949,7 @@ module raven (
 	   .A(spi_reset),
 	   .Q(spi_reset_lv)
 	);
-	digital_bufx2_3v3 spi_pll_bypass_level (
+	BU_3VX2 spi_pll_bypass_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -918,7 +1054,7 @@ module raven (
 
 	/* Level shift up */
 
-	level_shift spi_trap_level (
+	LS_3VX2 spi_trap_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -931,14 +1067,14 @@ module raven (
 	wire [3:0] pground;
 	wire [3:0] ppower;
 
-	digital_logic0_3v3 prog_ground [3:0] (
+	LOGIC0_3V prog_ground [3:0] (
 `ifdef LVS
 	    .gnd(VSS),
 	    .vdd3(VDD3V3),
 `endif
 	    .Q(pground)
 	);
-	digital_logic1_3v3 prog_power [3:0] (
+	LOGIC1_3V prog_power [3:0] (
 `ifdef LVS
 	    .gnd(VSS),
 	    .vdd3(VDD3V3),
@@ -981,7 +1117,7 @@ module raven (
 	/* Level shift down.  Unfortunately, PLL is in 1.8V only or	*/
 	/* else this would be easier.					*/
 
-	digital_bufx2_3v3 pll_vco_ena_level (
+	BU_3VX2 pll_vco_ena_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -989,7 +1125,7 @@ module raven (
 	   .A(spi_pll_vco_ena),
 	   .Q(spi_pll_vco_ena_lv)
 	);
-	digital_bufx2_3v3 pll_cp_ena_level (
+	BU_3VX2 pll_cp_ena_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -997,7 +1133,7 @@ module raven (
 	   .A(spi_pll_cp_ena),
 	   .Q(spi_pll_cp_ena_lv)
 	);
-	digital_bufx2_3v3 pll_trim_level [3:0] (
+	BU_3VX2 pll_trim_level [3:0] (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -1005,7 +1141,7 @@ module raven (
 	   .A(spi_pll_trim),
 	   .Q(spi_pll_trim_lv)
 	);
-	digital_bufx2_3v3 pll_bias_ena_level (
+	BU_3VX2 pll_bias_ena_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -1013,7 +1149,7 @@ module raven (
 	   .A(spi_pll_bias_ena),
 	   .Q(spi_pll_bias_ena_lv)
 	);
-	digital_bufx2_3v3 spi_irq_level (
+	BU_3VX2 spi_irq_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -1024,7 +1160,7 @@ module raven (
 
 	/* RAM module */
 
-        sram1024x32 sram_mem(
+        XSPRAM_1024X32_M8P xfab_mem(
 `ifdef LVS
 	    .VSSM(VSS),
 	    .VDD18M(VDD1V8),
@@ -1048,7 +1184,7 @@ module raven (
 	wire real dac_out;
 	wire real bandgap_out;
 
-        analog_mux4_3v3 adc0_input_mux (
+        AMUX4_3V adc0_input_mux (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1060,7 +1196,7 @@ module raven (
 	   .SEL(adc0_inputsrc)
 	);
 
-        analog_mux4_3v3 adc1_input_mux (
+        AMUX4_3V adc1_input_mux (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1072,7 +1208,7 @@ module raven (
 	   .SEL(adc1_inputsrc)
 	);
 
-        analog_mux4_3v3 comp_ninput_mux (
+        AMUX4_3V comp_ninput_mux (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1084,7 +1220,7 @@ module raven (
 	   .SEL(comp_ninputsrc)
 	);
 
-        analog_mux4_3v3 comp_pinput_mux (
+        AMUX4_3V comp_pinput_mux (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1096,7 +1232,7 @@ module raven (
 	   .SEL(comp_pinputsrc)
 	);
 
-        analog_mux2_3v3 analog_out_mux (
+        AMUX2_3V analog_out_mux (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1108,21 +1244,21 @@ module raven (
 
 	/* Level shift up */
 
-	level_shift adc0_ena_level (
+	LS_3VX2 adc0_ena_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
 	   .A(adc0_ena),
 	   .Q(adc0_ena_3v)
 	);
-	level_shift adc0_clk_level (
+	LS_3VX2 adc0_clk_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
 	   .A(adc0_clk),
 	   .Q(adc0_clk_3v)
 	);
-	level_shift adc0_convert_level (
+	LS_3VX2 adc0_convert_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1131,7 +1267,7 @@ module raven (
 	);
 
 	/* ADC 0 */
-	analog_adc_3v3 adc0 (
+	aadcc01_3v3 adc0 (
 	   .VDD(VDD3V3),
 	   .VIN(adc0_input),
 	   .CLK(adc0_clk_3v),
@@ -1148,7 +1284,7 @@ module raven (
 
 	/* Level shift down */
 	
-	digital_bufx2_3v3 adc0_done_level (
+	BU_3VX2 adc0_done_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -1157,7 +1293,7 @@ module raven (
 	   .Q(adc0_done_lv)
 	);
 
-	digital_bufx2_3v3 adc0_data_level [9:0] (
+	BU_3VX2 adc0_data_level [9:0] (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -1169,21 +1305,21 @@ module raven (
 	/* Level shift up */
 
 
-	level_shift adc1_ena_level (
+	LS_3VX2 adc1_ena_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
 	   .A(adc1_ena),
 	   .Q(adc1_ena_3v)
 	);
-	level_shift adc1_clk_level (
+	LS_3VX2 adc1_clk_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
 	   .A(adc1_clk),
 	   .Q(adc1_clk_3v)
 	);
-	level_shift adc1_convert_level (
+	LS_3VX2 adc1_convert_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1192,7 +1328,7 @@ module raven (
 	);
 
 	/* ADC 1 */
-	analog_adc_3v3 adc1 (
+	aadcc01_3v3 adc1 (
 	   .VDD(VDD3V3),
 	   .VIN(adc1_input),
 	   .CLK(adc1_clk_3v),
@@ -1209,7 +1345,7 @@ module raven (
 
 	/* Level shift down */
 	
-	digital_bufx2_3v3 adc1_done_level (
+	BU_3VX2 adc1_done_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -1218,7 +1354,7 @@ module raven (
 	   .Q(adc1_done_lv)
 	);
 
-	digital_bufx2_3v3 adc1_data_level [9:0] (
+	BU_3VX2 adc1_data_level [9:0] (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -1229,7 +1365,7 @@ module raven (
 
 	/* Level shift up */
 
-	level_shift dac_value_level [9:0] (
+	LS_3VX2 dac_value_level [9:0] (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1238,7 +1374,7 @@ module raven (
 	);
 
 
-	level_shift dac_ena_level (
+	LS_3VX2 dac_ena_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1247,7 +1383,7 @@ module raven (
 	);
 
 	/* DAC */
-	analog_dac_3v3 dac (
+	adacc01_3v3 dac (
 	   .OUT(dac_out),
 	   .D(dac_value_3v),
 	   .EN(dac_ena_3v),
@@ -1261,7 +1397,7 @@ module raven (
 
 	/* Level shift up */
 
-	level_shift opamp_ena_level (
+	LS_3VX2 opamp_ena_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1272,7 +1408,7 @@ module raven (
 	wire real bias3u;
 
 	/* Opamp (analog output buffer) */
-	analog_opamp_3v3 opamp (
+	aopac01_3v3 opamp (
 	   .OUT(analog_out),
 	   .EN(opamp_ena_3v),
 	   .IB(bias3u),
@@ -1284,7 +1420,7 @@ module raven (
 
 	/* Level shift up */
 
-	level_shift opamp_bias_ena_level (
+	LS_3VX2 opamp_bias_ena_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1293,7 +1429,7 @@ module raven (
 	);
 
 	/* Biasing for op-amp */
-	analog_isource2_3v3 opamp_bias (
+	acsoc02_3v3 opamp_bias (
 	   .EN(opamp_bias_ena_3v),
 	   .VDDA(VDD3V3),
 	   .VSSA(VSS),
@@ -1305,7 +1441,7 @@ module raven (
 
 	/* Level shift up */
 
-	level_shift bg_ena_level (
+	LS_3VX2 bg_ena_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1314,7 +1450,7 @@ module raven (
 	);
 
 	/* Bandgap */
-	analog_bandgap_3v3 bandgap (
+	abgpc01_3v3 bandgap (
 	   .EN(bg_ena_3v),
 	   .VBGP(bandgap_out),
 	   .VSSA(VSS),
@@ -1325,7 +1461,7 @@ module raven (
 	wire real bias400n;
 
 	/* Comparator */
-	analog_comparator_3v3 comparator (
+	acmpc01_3v3 comparator (
 	   .OUT(comp_out),
 	   .EN(comp_ena_3v),
 	   .IBN(bias400n),
@@ -1337,7 +1473,7 @@ module raven (
 
 	/* Level shift down */
 
-	digital_bufx2_3v3 comp_out_level (
+	BU_3VX2 comp_out_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -1348,7 +1484,7 @@ module raven (
 
 	/* Level shift up */
 
-	level_shift comp_ena_level (
+	LS_3VX2 comp_ena_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1357,7 +1493,7 @@ module raven (
 	);
 
 	/* Bias for comparator */
-	analog_isource1_3v3 comp_bias (
+	acsoc01_3v3 comp_bias (
 	   .EN(comp_ena_3v),
 	   .VSSA(VSS),
 	   .VDDA(VDD3V3),
@@ -1368,19 +1504,21 @@ module raven (
 	);
 
 	/* Crystal oscillator (5-12.5 MHz) */
-	analog_xtal_osc_3v3 xtal (
+	axtoc02_3v3 xtal (
 	   .CLK(xtal_out),
 	   .XI(XI),
 	   .XO(XO),
 	   .EN(spi_xtal_ena),
-	   .GNDA(VSS),
+	   .GNDO(VSS),
+	   .GNDR(VSS),
 	   .VDD(VDD1V8),
-	   .VDDA(VDD3V3)
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3)
 	);
 
 	/* Level shift down (because xtal osc is 3V but PLL is 1.8V) */
 
-	digital_bufx2_3v3 xtal_out_level (
+	BU_3VX2 xtal_out_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -1392,7 +1530,7 @@ module raven (
 	wire real bias10u, bias5u;
 
 	/* 8x clock multiplier PLL (NOTE: IP from A_CELLS_1V8) */
-	analog_8xpll_1v8 pll (
+	apllc03_1v8 pll (
 	   .VSSD(VSS),
 	   .EN_VCO(spi_pll_vco_ena_lv),
 	   .EN_CP(spi_pll_cp_ena_lv),
@@ -1408,7 +1546,7 @@ module raven (
 	);
 
 	/* Biasing for PLL */
-	analog_isource_1v8 pll_bias (
+	acsoc04_1v8 pll_bias (
 	   .EN(spi_pll_bias_ena_lv),
 	   .VDDA(VDD1V8),
 	   .VSSA(VSS),
@@ -1420,7 +1558,7 @@ module raven (
 
 	/* Level shift up */
 
-	level_shift rcosc_ena_level (
+	LS_3VX2 rcosc_ena_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1429,7 +1567,7 @@ module raven (
 	);
 
 	/* RC oscillator */
-	analog_rc_osc_3v3 rcosc (
+	arcoc01_3v3 rcosc (
 	   .CLK(rcosc_out),
 	   .EN(rcosc_ena_3v),
 	   .VDDA(VDD3V3),
@@ -1438,7 +1576,7 @@ module raven (
 
 	/* Level shift down */
 
-	digital_bufx2_3v3 rc_osc_out_level (
+	BU_3VX2 rcosc_out_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -1448,7 +1586,7 @@ module raven (
 	);
 
 	/* 1.8V regulator needs inverted enable (3V) */
-	digital_invx2_3v3 reg_enb_inv (
+	IN_3VX2 reg_enb_inv (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD3V3),
@@ -1458,35 +1596,23 @@ module raven (
 	);
 
 	/* 1.8V regulator (x2) */
-	/* NOTE:  Array of two devices with common real output;	need	*/
-	/* to figure out how to get iverilog to honor the analog	*/
-	/* connection (maybe not possible).  Hack solution is to use	*/
-	/* one for simulation and both for LVS.				*/
-
-	analog_ldo_3v3 regulator1 (
+	/* NOTE:  Array of two devices combined into one here. . .	*/
+	/* need to figure out how to get iverilog to honor the analog	*/
+	/* connection (maybe not possible).				*/
+	aregc01_3v3 regulator [1:0] (
 	   .OUT(VDD1V8),
 	   .VIN3(VDD3V3),
+	   .GNDO(VSS),
 	   .EN(spi_reg_ena),
-	   .GNDA(VSS),
-	   .VDDA(VDD3V3),
+	   .GNDR(VSS),
+	   .VDDO(VDD3V3),
+	   .VDDR(VDD3V3),
 	   .VDD(VDD1V8),
 	   .ENB(spi_reg_enb)
 	);
-
-`ifdef LVS
-	analog_ldo_3v3 regulator2 (
-	   .OUT(VDD1V8),
-	   .VIN3(VDD3V3),
-	   .EN(spi_reg_ena),
-	   .GNDA(VSS),
-	   .VDDA(VDD3V3),
-	   .VDD(VDD1V8),
-	   .ENB(spi_reg_enb)
-	);
-`endif
 
 	/* Power-on-reset */
-	analog_por_3v3 por (
+	aporc02_3v3 por (
 	   .POR(reset),
 	   .PORB(resetn),
 	   .VDDA(VDD3V3),
@@ -1495,7 +1621,7 @@ module raven (
 
 	/* Level shift down */
 
-	digital_bufx2_3v3 por_level (
+	BU_3VX2 por_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),
@@ -1506,7 +1632,7 @@ module raven (
 
 	/* Level shift up */
 
-	level_shift temp_level (
+	LS_3VX2 temp_level (
 	   .VDD3V3(VDD3V3),
 	   .VDD1V8(VDD1V8),
 	   .VSSA(VSS),
@@ -1515,7 +1641,7 @@ module raven (
 	);
 
 	/* Over-temperature alarm */
-	analog_temp_alarm_3v3 temp (
+	atmpc01_3v3 temp (
 	   .OVT(overtemp),
 	   .EN(overtemp_ena_3v),
 	   .VDDA(VDD3V3),
@@ -1524,7 +1650,7 @@ module raven (
 
 	/* Level shift down */
 
-	digital_bufx2_3v3 overtemp_level (
+	BU_3VX2 overtemp_level (
 `ifdef LVS
 	   .gnd(VSS),
 	   .vdd3(VDD1V8),

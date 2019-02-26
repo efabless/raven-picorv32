@@ -715,7 +715,7 @@ module raven_soc_regs (
 endmodule
 
 /* Removing original raven_soc_mem and replacing it with  */
-/* an external SRAM 					  */
+/* an external SRAM compiled on the X-Fab memory compiler */
 
 /*
 module raven_soc_mem #(
