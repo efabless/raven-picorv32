@@ -1,7 +1,10 @@
-Raven:  An ASIC hardware implementation of the PicoSoc PicoRV32
+Raven:  An ASIC implementation of the PicoSoC PicoRV32
 ===============================================================
 Designed by efabless engineering, San Jose, CA
 ---------------------------------------------------------------
+Overview
+--------
+
 The purpose of this repository is to provide a completely free
 and open-source simulation environment for the Raven chip.  The
 Raven chip itself can be found in the efabless IP catalog.  See
@@ -31,17 +34,20 @@ run the simulation test suite.
 Documentation on the memory mapping and the SPI slave interface
 can be found in the "doc/" directory.
 
+Summary
+-------
+
 Raven is using a very popular 32-bit RISC-V core (PicoRV32) developed by Clifford Wolf, a well-known open source champion. The core was previously proven with an FPGA implementation and Raven is the first SoC built with it. The system integrator is our own Tim Edwards, another champion in the open source domain. Included below is a 15s video showing the wakeup, key features and a link to high-level datasheet.
 
 Raven is now published in our marketplace for designers and partner companies to clone and customize starting from a silicon-proven point. It is also published on the RISC-V Foundation’s directory of designs
 (https://riscv.org/risc-v-cores)
 
 Short Video showing initial wakeup
-==================================
+----------------------------------
 * https://ef.link/raven3
 
 Key Features
-============
+------------
 * RISC-V CPU (PicoRV32)
 * SRAM 32x1024
 * 100 MHz clock rate
@@ -56,11 +62,11 @@ Key Features
 * Programmable interrupts on GPIO inputs
 
 High-level Datasheet 
-====================
+---------------------
 * https://ef.link/raven
 
-RAVEN BLOCK DIAGRAM
-===================
+RAVEN Block Diagram
+-------------------
 
 ![RAVEN-PICORV32](doc/raven_block_diagram.png)
 
