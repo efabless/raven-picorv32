@@ -1,7 +1,7 @@
 Raven:  An ASIC implementation of the PicoSoC PicoRV32
 ===============================================================
 Designed by efabless engineering, San Jose, CA
----------------------------------------------------------------
+
 Overview
 --------
 
