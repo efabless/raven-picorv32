@@ -34,6 +34,7 @@ run the simulation test suite.
 Documentation on the memory mapping and the SPI slave interface
 can be found in the "doc/" directory.
 
+
 Summary
 -------
 
@@ -42,9 +43,12 @@ Raven is using a very popular 32-bit RISC-V core (PicoRV32) developed by Cliffor
 Raven is now published in our marketplace for designers and partner companies to clone and customize starting from a silicon-proven point. It is also published on the RISC-V Foundation’s directory of designs
 (https://riscv.org/risc-v-cores)
 
-Short Video showing initial wakeup
-----------------------------------
-* https://ef.link/raven3
+
+RAVEN Block Diagram
+-------------------
+
+![RAVEN-PICORV32](doc/raven_block_diagram.png)
+
 
 Key Features
 ------------
@@ -65,9 +69,10 @@ High-level Datasheet
 ---------------------
 * https://ef.link/raven
 
-RAVEN Block Diagram
--------------------
 
-![RAVEN-PICORV32](doc/raven_block_diagram.png)
+Short Video showing initial wakeup
+----------------------------------
+* https://ef.link/raven3
+
 
 
