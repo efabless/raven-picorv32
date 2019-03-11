@@ -4,7 +4,8 @@ extern void write_i2c_slave(unsigned char slave_addr, unsigned char word_addr, u
 extern unsigned char read_i2c_slave_byte(unsigned char slave_addr, unsigned char word_addr);
 extern void read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, unsigned char *data, int len);
 
-#define RTC_I2C_ADDR (unsigned char) 0xA2 // RTC
+//#define RTC_I2C_ADDR (unsigned char) 0xA2 // RTC PCF8563
+#define RTC_I2C_ADDR (unsigned char) 0xD0 // RTC DS3231
 #define BCD_DIGIT0(x) (x & 0x0F)
 #define BCD_DIGIT1(x) ((x >> 4) & 0x0F)
 
@@ -168,7 +169,7 @@ void read_rtc()
 
     rtc_stop();
 
-    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x02);
+    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00);
     data &= 0x7F;
 
     print("Seconds = ");
