@@ -20,7 +20,7 @@ typedef struct
 
 #define I2C_SLAVE_ADDR (unsigned char) 0xA2
 
-#define SCL_HIGH (reg_gpio_data |= (1U << 14)
+#define SCL_HIGH (reg_gpio_data |= (1U << 14))
 #define SCL_LOW ((reg_gpio_data) &= ~(1U << (14)))
 #define SCL_CHECK (!!((reg_gpio_data) & (1U << (14))))
 #define SDA_HIGH (reg_gpio_data |= (1U << 15))
@@ -94,7 +94,7 @@ void write_i2c_slave(unsigned char addr, unsigned char ctl, unsigned char data)
     /* Start */
   	i2c_start();
 	/* Slave address */
-   	i2c_write(addr)
+   	i2c_write(addr);
 	/* Slave control byte */
    	i2c_write(0xBB);
 	/* Slave data */
