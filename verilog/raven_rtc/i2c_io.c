@@ -7,12 +7,12 @@
 #define SDA_OUT ((reg_gpio_ena) &= ~(1U << (SDA_PIN)))
 #define SDA_IN (reg_gpio_ena |= (1U << SDA_PIN))
 
-#define SCL_HIGH (SCL_OUT; (reg_gpio_data |= (1U << SCL_PIN)))
-#define SCL_LOW (SCL_OUT; ((reg_gpio_data) &= ~(1U << (SCL_PIN))))
-#define SCL_READ(x) (SCL_IN; x = (!!((reg_gpio_data) & (1U << (SCL_PIN)))))
-#define SDA_HIGH (SDA_OUT; (reg_gpio_data |= (1U << SDA_PIN)))
-#define SDA_LOW (SDA_OUT; ((reg_gpio_data) &= ~(1U << (SDA_PIN))))
-#define SDA_READ(x) (SDA_IN; x = (!!((reg_gpio_data) & (1U << (SDA_PIN)))))
+#define SCL_HIGH (reg_gpio_data |= (1U << SCL_PIN))
+#define SCL_LOW ((reg_gpio_data) &= ~(1U << (SCL_PIN)))
+#define SCL_READ (!!((reg_gpio_data) & (1U << (SCL_PIN))))
+#define SDA_HIGH (reg_gpio_data |= (1U << SDA_PIN))
+#define SDA_LOW ((reg_gpio_data) &= ~(1U << (SDA_PIN)))
+#define SDA_READ (!!((reg_gpio_data) & (1U << (SDA_PIN))))
 
 
 void i2c_delay()
@@ -22,6 +22,7 @@ void i2c_delay()
 void i2c_start(void)
 {
     /* i2c start condition, data line goes low when clock is high */
+    SCL_OUT; SDA_OUT;
     SDA_HIGH;
     SCL_HIGH;
     i2c_delay();
@@ -34,6 +35,7 @@ void i2c_start(void)
 void i2c_stop (void)
 {
     /* i2c stop condition, clock goes high when data is low */
+    SCL_OUT; SDA_OUT;
     SCL_LOW;
     SDA_LOW;
     i2c_delay();
@@ -49,15 +51,17 @@ bool clock()
     bool in_data;
 
     SCL_HIGH;
-    SCL_READ(clk);
+    SCL_IN; clk = SCL_READ;
 
     // wait for clock to go high - clock stretching
     while (!clk)
-        SCL_READ(clk);
+        clk = SCL_READ;
 
-    SDA_READ(in_data);
+    SDA_IN; in_data = SDA_READ;
     i2c_delay();
+    SCL_OUT;
     SCL_LOW;
+    SDA_OUT;
     return in_data;
 }
 
@@ -66,6 +70,7 @@ bool i2c_write(unsigned char data)
 	unsigned char outBits;
 	unsigned char inBit;
 
+ 	SDA_OUT;
  	/* 8 bits */
 	for(outBits = 0; outBits < 8; outBits++)
 	{
@@ -93,6 +98,7 @@ unsigned char i2c_read(bool ack)
       	inData |= clock();
 	}
 
+    SDA_OUT;
 	if (ack) {
 	    SDA_LOW;
 	} else {
