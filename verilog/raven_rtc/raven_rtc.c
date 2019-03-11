@@ -113,15 +113,15 @@ void print_dec(uint32_t v)
 
 void print_digit(unsigned int v)
 {
-    if (v == 9) putchar('9')
-    else if (v == 8) putchar('8')
-    else if (v == 7) putchar('7')
-    else if (v == 6) putchar('6')
-    else if (v == 5) putchar('5')
-    else if (v == 4) putchar('4')
-    else if (v == 3) putchar('3')
-    else if (v == 2) putchar('2')
-    else if (v == 1) putchar('1')
+    if (v == 9) { putchar('9'); }
+    else if (v == 8) { putchar('8'); }
+    else if (v == 7) { putchar('7'); }
+    else if (v == 6) { putchar('6'); }
+    else if (v == 5) { putchar('5'); }
+    else if (v == 4) { putchar('4'); }
+    else if (v == 3) { putchar('3'); }
+    else if (v == 2) { putchar('2'); }
+    else if (v == 1) { putchar('1'); }
     else putchar('0');
 }
 
