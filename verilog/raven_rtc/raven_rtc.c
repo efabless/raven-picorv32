@@ -112,7 +112,7 @@ void print_dec(uint32_t v)
 	else putchar('0');
 }
 
-void print_digit(unsigned int v)
+void print_digit(unsigned char v)
 {
     if (v == 9) { putchar('9'); }
     else if (v == 8) { putchar('8'); }
@@ -130,7 +130,7 @@ void print_digit(unsigned int v)
 
 void cmd_read_flash_regs_print(uint32_t addr, const char *name)
 {
-    uint32_t buffer[2] = {0x65000000 | addr, 0x0};
+    uint32_t buffer[2] = {0x65000000 | addr, 0x0}; //
     flashio(buffer, 6, 0);
 
     print("0x");
@@ -167,9 +167,10 @@ void read_rtc()
     unsigned char data;
     print("Reading RTC...      ");
 
-    rtc_stop();
+//    rtc_stop();
 
-    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00);
+    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00); // RTC DS3231
+//    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x02); // RTC PCF8563
     data &= 0x7F;
 
     print("Seconds = ");
@@ -177,7 +178,7 @@ void read_rtc()
     print_digit(BCD_DIGIT0(data));
     print("        ");
 
-    rtc_run();
+//    rtc_run();
 }
 
 // ----------------------------------------------------------------------

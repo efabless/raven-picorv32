@@ -17,7 +17,7 @@
 
 void i2c_delay()
 {
-	for (int j = 0; j < 10; j++);
+	for (int j = 0; j < 2; j++);
 }
 
 void i2c_start(void)
