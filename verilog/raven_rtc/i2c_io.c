@@ -92,7 +92,7 @@ unsigned char i2c_read(bool ack)
 	if (ack) {
 	    SDA_LOW;
 	} else {
-	    SDA_HIGh;
+	    SDA_HIGH;
 	}
 	i2c_delay();
 	clock();
@@ -127,11 +127,11 @@ unsigned char read_i2c_slave_byte(unsigned char slave_addr, unsigned char word_a
 
 unsigned char * read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, int n_bytes)
 {
-   	unsigned char inData[];
+   	unsigned char inData[n_bytes];
    	int i;
 
   	i2c_start();
-   	i2c_write(addr);
+   	i2c_write(slave_addr);
    	i2c_write(word_addr);
 
     i2c_start();
