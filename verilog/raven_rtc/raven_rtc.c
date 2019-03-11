@@ -1,9 +1,13 @@
 #include "../raven_defs.h"
 
-extern void write_i2c_slave(unsigned char addr, unsigned char ctl, unsigned char data);
-extern unsigned char read_i2c_slave(unsigned char addr, unsigned char ctl);
+extern void write_i2c_slave(unsigned char slave_addr, unsigned char word_addr, unsigned char data);
+extern unsigned char read_i2c_slave_byte(unsigned char slave_addr, unsigned char word_addr);
+extern unsigned char * read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, int n_bytes);
 
-#define I2C_SLAVE_ADDR (unsigned char) 0xA2
+
+#define RTC_I2C_ADDR (unsigned char) 0xA2 // RTC
+#define BCD_DIGIT0(x) (x & 0x0F)
+#define BCD_DIGIT1(x) ((x >> 4) & 0x0F)
 
 // --------------------------------------------------------
 // Firmware routines
@@ -137,7 +141,15 @@ void cmd_read_flash_regs()
 void read_rtc()
 {
     unsigned char data;
-    data = read_i2c_slave(I2C_SLAVE_ADDR, 0x00);
+    print("Reading RTC...      ");
+
+    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x02);
+    data &= 0x7F;
+
+    print("Seconds = ");
+    print_dec(BCD_DIGIT1(data));
+    print_dec(BCD_DIGIT0(data));
+    print("        ");
 }
 
 // ----------------------------------------------------------------------
@@ -177,35 +189,35 @@ void main()
 	m = 1;
 
 	// Enable GPIO (all output, ena = 0)
-	reg_gpio_ena = 0x0000;
-	reg_gpio_data = 0x1111;
+	// reg_gpio_ena = 0x0000;
+    // reg_gpio_data = 0x1111;
 
 	// Enable the 100MHz RC oscillator on gpio[4] (overrides LED function)
-	reg_rcosc_enable = 1;
-	reg_rcosc_out_dest = 3;
+	// reg_rcosc_enable = 1;
+	// reg_rcosc_out_dest = 3;
 
 	// Enable the analog output
-	reg_analog_out_bias_ena = 1;
-	reg_analog_out_ena = 1;
+	// reg_analog_out_bias_ena = 1;
+	// reg_analog_out_ena = 1;
 
 	// Enable the DAC and link to the analog output
-	reg_analog_out_sel = 1;
-	reg_dac_ena = 1;
-	dacval = 0;
+	// reg_analog_out_sel = 1;
+	// reg_dac_ena = 1;
+	// dacval = 0;
 
 	// Enable the bandgap and link to the analog output
 	// reg_analog_out_sel = 0;
-	reg_bandgap_ena = 1;
+	// reg_bandgap_ena = 1;
 
 	// Configure the ADC0
-	reg_adc0_clk_source = 0;	// RC oscillator drives ADC clock
-	reg_adc0_input_source = 2;	// Feed DAC output to ADC input
-	reg_adc0_ena = 1;
+	// reg_adc0_clk_source = 0;	// RC oscillator drives ADC clock
+	// reg_adc0_input_source = 2;	// Feed DAC output to ADC input
+	// reg_adc0_ena = 1;
 
 	// Configure the ADC1
-	reg_adc1_clk_source = 0;	// RC oscillator drives ADC clock
-	reg_adc1_input_source = 2;	// Feed bandgap output to ADC input
-	reg_adc1_ena = 1;
+	// reg_adc1_clk_source = 0;	// RC oscillator drives ADC clock
+	// reg_adc1_input_source = 2;	// Feed bandgap output to ADC input
+	// reg_adc1_ena = 1;
 
 	// NOTE: Crystal on testboard running at 12.5MHz
 	// Internal clock is 8x crystal, or 100MHz
@@ -238,77 +250,80 @@ void main()
 	cmd_read_flash_regs();
 	for (j = 0; j < 170000 * m; j++);
 
-	while (1) {
-	    // Increment the DAC every full cycle
-	    dacval += 5;
-	    dacval &= 1023;
-	    reg_dac_data = dacval;
+//	while (1) {
+//	    // Increment the DAC every full cycle
+//	    dacval += 5;
+//	    dacval &= 1023;
+//	    reg_dac_data = dacval;
+//
+//	    // Update LEDs
+//	    r = m >> 1;
+//	    while (1) {
+//	        reg_gpio_data = 0x0001;
+//	        for (i = 0; i < 16; i++) {
+//		    reg_gpio_data <<= 1;
+//		    for (j = 0; j < 17000; j++);
+//	        }
+//
+//	        reg_gpio_data = 0x8000;
+//	        for (i = 0; i < 16; i++) {
+//		    reg_gpio_data >>= 1;
+//		    for (j = 0; j < 17000; j++);
+//		}
+//		r >>= 1;
+//		if (r == 0) break;
+//	    }
+//
+//	    // Perform an ADC0 conversion every full cycle
+//	    reg_adc0_convert = 1;
+//	    for (i = 0; i < 100 * m; i++);
+//	    reg_adc0_convert = 0;
+//	    while (1) {
+//		if (reg_adc0_done != 0) break;	/* Wait for EOC */
+//	    }
+//
+//	    // Print ADC0 output in decimal
+//	    print("ADC0 In=");
+//	    print_dec(dacval);
+//	    print("Out=");
+//	    adcval = reg_adc0_data;
+//	    print_dec(adcval);
 
-	    // Update LEDs
-	    r = m >> 1;
-	    while (1) {
-	        reg_gpio_data = 0x0001;
-	        for (i = 0; i < 16; i++) {
-		    reg_gpio_data <<= 1;
-		    for (j = 0; j < 17000; j++);
-	        }
-	
-	        reg_gpio_data = 0x8000;
-	        for (i = 0; i < 16; i++) {
-		    reg_gpio_data >>= 1;
-		    for (j = 0; j < 17000; j++);
-		}
-		r >>= 1;
-		if (r == 0) break;
-	    }
-
-	    // Perform an ADC0 conversion every full cycle
-	    reg_adc0_convert = 1;
-	    for (i = 0; i < 100 * m; i++);
-	    reg_adc0_convert = 0;
-	    while (1) {
-		if (reg_adc0_done != 0) break;	/* Wait for EOC */
-	    }
-
-	    // Print ADC0 output in decimal
-	    print("ADC0 In=");
-	    print_dec(dacval);
-	    print("Out=");
-	    adcval = reg_adc0_data;
-	    print_dec(adcval);
+        // read and display real-time clock
+        read_rtc();
 
 	    // Update LEDs.  Run longer in quad and ddr modes.
 	    r = m >> 1;
 	    while (1) {
 	    	reg_gpio_data = 0x0101;
 	    	for (i = 0; i < 16; i++) {
-		    reg_gpio_data <<= 1;
-		    if (reg_gpio_data == 0x0100) reg_gpio_data = 0x0101;
-		    for (j = 0; j < 17000; j++);
+		        reg_gpio_data <<= 1;
+		        if (reg_gpio_data == 0x0100) reg_gpio_data = 0x0101;
+		        for (j = 0; j < 17000; j++);
 	        }
 	        reg_gpio_data = 0x8080;
 	        for (i = 0; i < 16; i++) {
-		    reg_gpio_data >>= 1;
-		    if (reg_gpio_data == 0x0080) reg_gpio_data = 0x8080;
-		    for (j = 0; j < 17000; j++);
+		        reg_gpio_data >>= 1;
+		        if (reg_gpio_data == 0x0080) reg_gpio_data = 0x8080;
+		        for (j = 0; j < 17000; j++);
 	        }
-		r >>= 1;
-		if (r == 0) break;
+		    r >>= 1;
+		    if (r == 0) break;
 	    }
 
 	    // Perform an ADC1 conversion every full cycle
-	    reg_adc1_convert = 1;
-	    for (i = 0; i < 100 * m; i++);
-	    reg_adc1_convert = 0;
-	    while (1) {
-		if (reg_adc1_done != 0) break;	/* Wait for EOC */
-	    }
-
-	    // Prepare binary string for printing
-	    print("ADC1: ");
-	    adcval = reg_adc1_data;
-	    print_dec(adcval);
-	    print("          ");
+//	    reg_adc1_convert = 1;
+//	    for (i = 0; i < 100 * m; i++);
+//	    reg_adc1_convert = 0;
+//	    while (1) {
+//		if (reg_adc1_done != 0) break;	/* Wait for EOC */
+//	    }
+//
+//	    // Prepare binary string for printing
+//	    print("ADC1: ");
+//	    adcval = reg_adc1_data;
+//	    print_dec(adcval);
+//	    print("          ");
 
 	    // Bump up speed factor.
 

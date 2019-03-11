@@ -1,51 +1,63 @@
 #include "../raven_defs.h"
 
-typedef struct
+#define SDA_PIN 13
+#define SCL_PIN 14
+
+#define SCL_HIGH (reg_gpio_data |= (1U << SCL_PIN))
+#define SCL_LOW ((reg_gpio_data) &= ~(1U << (SCL_PIN)))
+#define SCL_READ (!!((reg_gpio_data) & (1U << (SCL_PIN))))
+#define SDA_HIGH (reg_gpio_data |= (1U << SDA_PIN))
+#define SDA_LOW ((reg_gpio_data) &= ~(1U << (SDA_PIN)))
+#define SDA_READ (!!((reg_gpio_data) & (1U << (SDA_PIN))))
+
+
+void i2c_delay()
 {
-  unsigned int bit0:1;
-  unsigned int bit1:1;
-  unsigned int bit2:1;
-  unsigned int bit3:1;
-  unsigned int bit4:1;
-  unsigned int bit5:1;
-  unsigned int bit6:1;
-  unsigned int bit7:1;
-} Port;
-
-#define PORT0 *(volatile Port *) reg_gpio_data
-
-/* Define the port used for I2C data and clk as shown above to access them pin wise */
-#define I2C_DATA PORT0.bit0
-#define I2C_CLK  PORT0.bit1
-
-#define I2C_SLAVE_ADDR (unsigned char) 0xA2
-
-#define SCL_HIGH (reg_gpio_data |= (1U << 14))
-#define SCL_LOW ((reg_gpio_data) &= ~(1U << (14)))
-#define SCL_CHECK (!!((reg_gpio_data) & (1U << (14))))
-#define SDA_HIGH (reg_gpio_data |= (1U << 15))
-#define SDA_LOW ((reg_gpio_data) &= ~(1U << (15)))
-#define SDA_CHECK (!!((reg_gpio_data) & (1U << (15))))
+}
 
 void i2c_start(void)
 {
-    /* I2C Start condition, data line goes low when clock is high */
+    /* i2c start condition, data line goes low when clock is high */
     SDA_HIGH;
     SCL_HIGH;
+    i2c_delay();
     SDA_LOW;
+    i2c_delay();
     SCL_LOW;
+    i2c_delay();
 }
 
 void i2c_stop (void)
 {
-    /* I2C Stop condition, clock goes high when data is low */
+    /* i2c stop condition, clock goes high when data is low */
     SCL_LOW;
     SDA_LOW;
+    i2c_delay();
     SCL_HIGH;
+    i2c_delay();
     SDA_HIGH;
+    i2c_delay();
 }
 
-void i2c_write(unsigned char data)
+bool clock()
+{
+    bool clk;
+    bool in_data;
+
+    SCL_HIGH;
+    clk = SCL_READ;
+
+    // wait for clock to go high - clock stretching
+    while (!clk)
+        clk = SCL_READ;
+
+    in_data = SDA_READ;
+    i2c_delay();
+    SCL_LOW;
+    return in_data;
+}
+
+bool i2c_write(unsigned char data)
 {
 	unsigned char outBits;
 	unsigned char inBit;
@@ -57,22 +69,15 @@ void i2c_write(unsigned char data)
 		    SDA_HIGH;
 		else
 		    SDA_LOW;
+        i2c_delay();
       	data  <<= 1;
 		/* Generate clock for 8 data bits */
-		SCL_HIGH;
-		SCL_LOW;
+		clock();
 	}
-
-	/* Generate clock for ACK */
-	SCL_HIGH;
-        /* Wait for clock to go high, clock stretching */
-        while(SCL_CHECK);
-        /* Clock high, valid ACK */
-	inBit = SDA_CHECK;
-	SCL_LOW;
+	return clock();
 }
 
-unsigned char i2c_read(void)
+unsigned char i2c_read(bool ack)
 {
 	unsigned char inData, inBits;
 
@@ -81,47 +86,60 @@ unsigned char i2c_read(void)
 	for(inBits = 0; inBits < 8; inBits++)
 	{
 		inData <<= 1;
-		SCL_HIGH;
-      	inData |= SDA_CHECK;
-		SCL_LOW;
+      	inData |= clock();
 	}
+
+	if (ack) {
+	    SDA_LOW;
+	} else {
+	    SDA_HIGh;
+	}
+	i2c_delay();
+	clock();
 
    return inData;
 }
 
-void write_i2c_slave(unsigned char addr, unsigned char ctl, unsigned char data)
+void write_i2c_slave(unsigned char slave_addr, unsigned char word_addr, unsigned char data)
 {
-    /* Start */
   	i2c_start();
-	/* Slave address */
-   	i2c_write(addr);
-	/* Slave control byte */
-   	i2c_write(0xBB);
-	/* Slave data */
+   	i2c_write(slave_addr);
+   	i2c_write(word_addr);
    	i2c_write(data);
-	/* Stop */
    	i2c_stop();
 }
 
-unsigned char read_i2c_slave(unsigned char addr, unsigned char ctl)
+unsigned char read_i2c_slave_byte(unsigned char slave_addr, unsigned char word_addr)
 {
    	unsigned char inData;
 
-	/* Start */
   	i2c_start();
-	/* Slave address */
-   	i2c_write(addr);
-	/* Slave control byte */
-   	i2c_write(ctl);
-	/* Stop */
-   	i2c_stop();
+   	i2c_write(slave_addr);
+   	i2c_write(word_addr);
 
-	/* Start */
-   	i2c_start();
-	/* Slave address + read */
-   	i2c_write(addr | 1);
-	/* Read */
-	inData = i2c_read();
+    i2c_start();
+    i2c_write(slave_addr | 1);  // addr + read mode
+	inData = i2c_read(false);
+	i2c_stop();
+
+   	return inData;
+}
+
+unsigned char * read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, int n_bytes)
+{
+   	unsigned char inData[];
+   	int i;
+
+  	i2c_start();
+   	i2c_write(addr);
+   	i2c_write(word_addr);
+
+    i2c_start();
+    i2c_write(slave_addr | 1);  // addr + read mode
+    for (i = 0; i < n_bytes; i++)
+	    inData[i] = i2c_read(true);
+	inData[n_bytes] = i2c_read(false);
+	i2c_stop();
 
    	return inData;
 }
