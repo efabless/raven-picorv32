@@ -250,7 +250,7 @@ void main()
 	cmd_read_flash_regs();
 	for (j = 0; j < 170000 * m; j++);
 
-//	while (1) {
+	while (1) {
 //	    // Increment the DAC every full cycle
 //	    dacval += 5;
 //	    dacval &= 1023;
