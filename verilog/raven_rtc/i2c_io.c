@@ -1,18 +1,18 @@
 #include "../raven_defs.h"
 
-#define SDA_PIN 13
-#define SCL_PIN 14
-#define SCL_OUT ((reg_gpio_ena) &= ~(1U << (SCL_PIN)))
-#define SCL_IN (reg_gpio_ena |= (1U << SCL_PIN))
-#define SDA_OUT ((reg_gpio_ena) &= ~(1U << (SDA_PIN)))
-#define SDA_IN (reg_gpio_ena |= (1U << SDA_PIN))
+#define SDA_PIN 14
+#define SCL_PIN 15
+#define SCL_OUT ((reg_gpio_ena) &= ~(1UL << (SCL_PIN)))
+#define SCL_IN (reg_gpio_ena |= (1UL << SCL_PIN))
+#define SDA_OUT ((reg_gpio_ena) &= ~(1UL << (SDA_PIN)))
+#define SDA_IN (reg_gpio_ena |= (1UL << SDA_PIN))
 
-#define SCL_HIGH (reg_gpio_data |= (1U << SCL_PIN))
-#define SCL_LOW ((reg_gpio_data) &= ~(1U << (SCL_PIN)))
-#define SCL_READ (!!((reg_gpio_data) & (1U << (SCL_PIN))))
-#define SDA_HIGH (reg_gpio_data |= (1U << SDA_PIN))
-#define SDA_LOW ((reg_gpio_data) &= ~(1U << (SDA_PIN)))
-#define SDA_READ (!!((reg_gpio_data) & (1U << (SDA_PIN))))
+#define SCL_HIGH (reg_gpio_data |= (1UL << SCL_PIN))
+#define SCL_LOW ((reg_gpio_data) &= ~(1UL << (SCL_PIN)))
+#define SCL_READ (!!((reg_gpio_data) & (1UL << (SCL_PIN))))
+#define SDA_HIGH (reg_gpio_data |= (1UL << SDA_PIN))
+#define SDA_LOW ((reg_gpio_data) &= ~(1UL << (SDA_PIN)))
+#define SDA_READ (!!((reg_gpio_data) & (1UL << (SDA_PIN))))
 
 
 void i2c_delay()
