@@ -1,3 +1,5 @@
+#include "../raven_defs.h"
+
 typedef struct
 {
   unsigned int bit0:1;
@@ -21,7 +23,7 @@ typedef struct
 #define SCL_HIGH (reg_gpio_data |= (1U << 14)
 #define SCL_LOW ((reg_gpio_data) &= ~(1U << (14)))
 #define SCL_CHECK (!!((reg_gpio_data) & (1U << (14))))
-#define SDA_HIGH (reg_gpio_data |= (1U << 15)
+#define SDA_HIGH (reg_gpio_data |= (1U << 15))
 #define SDA_LOW ((reg_gpio_data) &= ~(1U << (15)))
 #define SDA_CHECK (!!((reg_gpio_data) & (1U << (15))))
 
