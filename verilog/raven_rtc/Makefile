@@ -2,7 +2,7 @@
 
 .SUFFIXES:
 
-PATTERN = raven_demo
+PATTERN = raven_rtc
 
 all:  ${PATTERN:=.vcd}
 
@@ -17,7 +17,7 @@ hex:  ${PATTERN:=.hex}
 	vvp $<
 
 %.elf: %.c ../sections.lds ../start.s
-	/ef/apps/bin/riscv32-unknown-elf-gcc -march=rv32imc -Wl,-Bstatic,-T,../sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../start.s $<
+	/ef/apps/bin/riscv32-unknown-elf-gcc -march=rv32imc -Wl,-Bstatic,-T,../sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../start.s i2c_io.c $<
 
 %.hex: %.elf
 	/ef/apps/bin/riscv32-unknown-elf-objcopy -O verilog $< /dev/stdout | sed -e '1 s/@00000000/@00100000/; 2,65537 d;' > $@
