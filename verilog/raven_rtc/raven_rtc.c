@@ -111,6 +111,20 @@ void print_dec(uint32_t v)
 	else putchar('0');
 }
 
+void print_digit(unsigned int v)
+{
+    if (v == 9) putchar('9')
+    else if (v == 8) putchar('8')
+    else if (v == 7) putchar('7')
+    else if (v == 6) putchar('6')
+    else if (v == 5) putchar('5')
+    else if (v == 4) putchar('4')
+    else if (v == 3) putchar('3')
+    else if (v == 2) putchar('2')
+    else if (v == 1) putchar('1')
+    else putchar('0');
+}
+
 // ----------------------------------------------------------------------
 
 void cmd_read_flash_regs_print(uint32_t addr, const char *name)
@@ -137,18 +151,32 @@ void cmd_read_flash_regs()
     cmd_read_flash_regs_print(0x800004, "CR3V");
 }
 
+void rtc_run()
+{
+    write_i2c_slave(RTC_I2C_ADDR, 0x00, 0x00);
+}
+
+void rtc_stop()
+{
+    write_i2c_slave(RTC_I2C_ADDR, 0x00, 0x10);
+}
+
 void read_rtc()
 {
     unsigned char data;
     print("Reading RTC...      ");
 
+    rtc_stop();
+
     data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x02);
     data &= 0x7F;
 
     print("Seconds = ");
-    print_dec(BCD_DIGIT1(data));
-    print_dec(BCD_DIGIT0(data));
+    print_digit(BCD_DIGIT1(data));
+    print_digit(BCD_DIGIT0(data));
     print("        ");
+
+    rtc_run();
 }
 
 // ----------------------------------------------------------------------
@@ -225,6 +253,8 @@ void main()
 
 	// Set UART clock to 9600 baud
 	reg_uart_clkdiv = 10417;
+
+	rtc_run();
 
 	// Need boot-up time for the display;  give it 2 seconds
 	for (j = 0; j < 350000 * m; j++);
