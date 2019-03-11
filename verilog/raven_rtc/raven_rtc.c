@@ -320,9 +320,10 @@ void main()
 
         // read and display real-time clock
         read_rtc();
+        for (j = 0; j < 350000 * m; j++);
 
 	    // Update LEDs.  Run longer in quad and ddr modes.
-	    r = m >> 1;
+//	    r = m >> 1;
 //	    while (1) {
 //	    	reg_gpio_data = 0x0101;
 //	    	for (i = 0; i < 16; i++) {
