@@ -2,8 +2,7 @@
 
 extern void write_i2c_slave(unsigned char slave_addr, unsigned char word_addr, unsigned char data);
 extern unsigned char read_i2c_slave_byte(unsigned char slave_addr, unsigned char word_addr);
-extern unsigned char * read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, int n_bytes);
-
+extern void read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, unsigned char *data, int len);
 
 #define RTC_I2C_ADDR (unsigned char) 0xA2 // RTC
 #define BCD_DIGIT0(x) (x & 0x0F)

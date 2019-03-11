@@ -125,9 +125,8 @@ unsigned char read_i2c_slave_byte(unsigned char slave_addr, unsigned char word_a
    	return inData;
 }
 
-unsigned char * read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, int n_bytes)
+void read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, unsigned char *data, int len)
 {
-   	unsigned char inData[n_bytes];
    	int i;
 
   	i2c_start();
@@ -136,10 +135,8 @@ unsigned char * read_i2c_slave_bytes(unsigned char slave_addr, unsigned char wor
 
     i2c_start();
     i2c_write(slave_addr | 1);  // addr + read mode
-    for (i = 0; i < n_bytes; i++)
-	    inData[i] = i2c_read(true);
-	inData[n_bytes] = i2c_read(false);
+    for (i = 0; i < len; i++)
+	    data[i] = i2c_read(true);
+	data[len] = i2c_read(false);
 	i2c_stop();
-
-   	return inData;
 }
