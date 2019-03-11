@@ -137,7 +137,7 @@ void cmd_read_flash_regs()
 void read_rtc()
 {
     unsigned char data;
-    data = read_i2c_slave(I2C_SLAVE_ADDR)
+    data = read_i2c_slave(I2C_SLAVE_ADDR, 0x00)
 }
 
 // ----------------------------------------------------------------------
