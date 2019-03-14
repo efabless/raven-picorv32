@@ -1,18 +1,21 @@
 #include "../raven_defs.h"
 
-#define SDA_PIN 14
-#define SCL_PIN 15
-#define SCL_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~((uint32_t) 1 << SCL_PIN))
-#define SCL_IN (volatile uint32_t) (reg_gpio_ena |= ((uint32_t) 1 << SCL_PIN))
-#define SDA_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~((uint32_t) 1 << SDA_PIN))
-#define SDA_IN (volatile uint32_t) (reg_gpio_ena |= ((uint32_t) 1 << SDA_PIN))
+#define SDA_PIN (uint32_t) (1 << 14) // bit 14
+#define SCL_PIN (uint32_t) (1 << 15) // bit 15
 
-#define SCL_HIGH (volatile uint32_t) (reg_gpio_data |= ((uint32_t) 1 << SCL_PIN))
-#define SCL_LOW (volatile uint32_t) ((reg_gpio_data) &= ~((uint32_t) 1 << SCL_PIN))
-#define SCL_READ (volatile uint32_t) (!!((reg_gpio_data) & ((uint32_t) 1 << SCL_PIN)))
-#define SDA_HIGH (volatile uint32_t) (reg_gpio_data |= ((uint32_t) 1 << SDA_PIN))
-#define SDA_LOW (volatile uint32_t) ((reg_gpio_data) &= ~((uint32_t) 1 << SDA_PIN))
-#define SDA_READ (volatile uint32_t) (!!((reg_gpio_data) & ((uint32_t) 1 << SDA_PIN)))
+#define SCL_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~(SCL_PIN))
+#define SCL_IN (volatile uint32_t) (reg_gpio_ena |= (SCL_PIN))
+#define SDA_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~(SDA_PIN))
+#define SDA_IN (volatile uint32_t) (reg_gpio_ena |= (SDA_PIN))
+
+//#define SCL_HIGH (volatile uint32_t) (reg_gpio_data |= (SCL_PIN))
+#define SCL_HIGH SCL_IN
+#define SCL_LOW (SCL_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SCL_PIN)))
+#define SCL_READ (volatile uint32_t) (!!((reg_gpio_data) & (SCL_PIN)))
+//#define SDA_HIGH (volatile uint32_t) (reg_gpio_data |= (SDA_PIN))
+#define SDA_HIGH SDA_IN
+#define SDA_LOW (SDA_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SDA_PIN)))
+#define SDA_READ (volatile uint32_t) (!!((reg_gpio_data) & (SDA_PIN)))
 
 
 void i2c_delay()
@@ -20,10 +23,17 @@ void i2c_delay()
 	for (int j = 0; j < 2; j++);
 }
 
+void i2c_init(void)
+{
+    SDA_HIGH;
+    SCL_HIGH;
+    i2c_delay();
+}
+
 void i2c_start(void)
 {
     /* i2c start condition, data line goes low when clock is high */
-    SCL_OUT; SDA_OUT;
+//    SCL_OUT; SDA_OUT;
     SDA_HIGH;
     SCL_HIGH;
     i2c_delay();
@@ -36,8 +46,8 @@ void i2c_start(void)
 void i2c_stop (void)
 {
     /* i2c stop condition, clock goes high when data is low */
-    SCL_OUT; SDA_OUT;
-    SCL_LOW;
+//    SCL_OUT; SDA_OUT;
+//    SCL_LOW;
     SDA_LOW;
     i2c_delay();
     SCL_HIGH;
@@ -58,11 +68,11 @@ volatile uint32_t clock()
     while (!clk)
         clk = SCL_READ;
 
-    SDA_IN; data = SDA_READ;
     i2c_delay();
-    SCL_OUT;
+    SDA_IN; data = SDA_READ;
+//    SCL_OUT;
     SCL_LOW;
-    SDA_OUT;
+//    SDA_OUT;
     return data;
 }
 
@@ -70,7 +80,7 @@ volatile uint32_t i2c_write(volatile uint32_t data)
 {
 	int bits;
 
- 	SDA_OUT;
+// 	SDA_OUT;
  	/* 8 bits */
 	for(bits = 0; bits < 8; bits++)
 	{
