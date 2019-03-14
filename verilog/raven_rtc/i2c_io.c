@@ -2,17 +2,17 @@
 
 #define SDA_PIN 14
 #define SCL_PIN 15
-#define SCL_OUT ((reg_gpio_ena) &= ~(1UL << (SCL_PIN)))
-#define SCL_IN (reg_gpio_ena |= (1UL << SCL_PIN))
-#define SDA_OUT ((reg_gpio_ena) &= ~(1UL << (SDA_PIN)))
-#define SDA_IN (reg_gpio_ena |= (1UL << SDA_PIN))
+#define SCL_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~(1UL << (SCL_PIN)))
+#define SCL_IN (volatile uint32_t) (reg_gpio_ena |= (1UL << SCL_PIN))
+#define SDA_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~(1UL << (SDA_PIN)))
+#define SDA_IN (volatile uint32_t) (reg_gpio_ena |= (1UL << SDA_PIN))
 
-#define SCL_HIGH (reg_gpio_data |= (1UL << SCL_PIN))
-#define SCL_LOW ((reg_gpio_data) &= ~(1UL << (SCL_PIN)))
-#define SCL_READ (!!((reg_gpio_data) & (1UL << (SCL_PIN))))
-#define SDA_HIGH (reg_gpio_data |= (1UL << SDA_PIN))
-#define SDA_LOW ((reg_gpio_data) &= ~(1UL << (SDA_PIN)))
-#define SDA_READ (!!((reg_gpio_data) & (1UL << (SDA_PIN))))
+#define SCL_HIGH (volatile uint32_t) (reg_gpio_data |= (1UL << SCL_PIN))
+#define SCL_LOW (volatile uint32_t) ((reg_gpio_data) &= ~(1UL << (SCL_PIN)))
+#define SCL_READ (volatile uint32_t) (!!((reg_gpio_data) & (1UL << (SCL_PIN))))
+#define SDA_HIGH (volatile uint32_t) (reg_gpio_data |= (1UL << SDA_PIN))
+#define SDA_LOW (volatile uint32_t) ((reg_gpio_data) &= ~(1UL << (SDA_PIN)))
+#define SDA_READ (volatile uint32_t) (!!((reg_gpio_data) & (1UL << (SDA_PIN))))
 
 
 void i2c_delay()
@@ -46,10 +46,10 @@ void i2c_stop (void)
     i2c_delay();
 }
 
-bool clock()
+volatile uint32_t clock()
 {
-    bool clk;
-    bool in_data;
+    volatile uint32_t clk;
+    volatile uint32_t data;
 
     SCL_HIGH;
     SCL_IN; clk = SCL_READ;
@@ -63,17 +63,16 @@ bool clock()
     SCL_OUT;
     SCL_LOW;
     SDA_OUT;
-    return in_data;
+    return data;
 }
 
-bool i2c_write(unsigned char data)
+volatile uint32_t i2c_write(volatile uint32_t data)
 {
-	unsigned char outBits;
-	unsigned char inBit;
+	int bits;
 
  	SDA_OUT;
  	/* 8 bits */
-	for(outBits = 0; outBits < 8; outBits++)
+	for(bits = 0; bits < 8; bits++)
 	{
 	    if(data & 0x80)
 		    SDA_HIGH;
@@ -87,16 +86,17 @@ bool i2c_write(unsigned char data)
 	return clock();
 }
 
-unsigned char i2c_read(bool ack)
+volatile uint32_t i2c_read(bool ack)
 {
-	unsigned char inData, inBits;
+	volatile uint32_t data;
+	int bits;
 
-	inData = 0x00;
+	data = 0x0000;
 	/* 8 bits */
-	for(inBits = 0; inBits < 8; inBits++)
+	for(bits = 0; bits < 8; bits++)
 	{
-		inData <<= 1;
-      	inData |= clock();
+		data <<= 1;
+      	data |= clock();
 	}
 
     SDA_OUT;
@@ -108,10 +108,10 @@ unsigned char i2c_read(bool ack)
 	i2c_delay();
 	clock();
 
-   return inData;
+   return data;
 }
 
-void write_i2c_slave(unsigned char slave_addr, unsigned char word_addr, unsigned char data)
+void write_i2c_slave(volatile uint32_t slave_addr, volatile uint32_t word_addr, volatile uint32_t data)
 {
   	i2c_start();
    	i2c_write(slave_addr);
@@ -120,23 +120,23 @@ void write_i2c_slave(unsigned char slave_addr, unsigned char word_addr, unsigned
    	i2c_stop();
 }
 
-unsigned char read_i2c_slave_byte(unsigned char slave_addr, unsigned char word_addr)
+volatile uint32_t read_i2c_slave_byte(volatile uint32_t slave_addr, volatile uint32_t word_addr)
 {
-   	unsigned char inData;
+   	volatile uint32_t data;
 
   	i2c_start();
    	i2c_write(slave_addr);
    	i2c_write(word_addr);
 
     i2c_start();
-    i2c_write(slave_addr | 1);  // addr + read mode
-	inData = i2c_read(false);
+    i2c_write(slave_addr | (volatile uint32_t) 1);  // addr + read mode
+	data = i2c_read(false);
 	i2c_stop();
 
-   	return inData;
+   	return data;
 }
 
-void read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, unsigned char *data, int len)
+void read_i2c_slave_bytes(volatile uint32_t slave_addr, volatile uint32_t word_addr, volatile uint32_t *data, int len)
 {
    	int i;
 
@@ -145,7 +145,7 @@ void read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, uns
    	i2c_write(word_addr);
 
     i2c_start();
-    i2c_write(slave_addr | 1);  // addr + read mode
+    i2c_write(slave_addr | (volatile uint32_t) 1);  // addr + read mode
     for (i = 0; i < len; i++)
 	    data[i] = i2c_read(true);
 	data[len] = i2c_read(false);
