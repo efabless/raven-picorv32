@@ -10,11 +10,11 @@
 
 //#define SCL_HIGH (volatile uint32_t) (reg_gpio_data |= (SCL_PIN))
 #define SCL_HIGH SCL_IN
-#define SCL_LOW (SCL_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SCL_PIN)))
+#define SCL_LOW SCL_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SCL_PIN))
 #define SCL_READ (volatile uint32_t) (!!((reg_gpio_data) & (SCL_PIN)))
 //#define SDA_HIGH (volatile uint32_t) (reg_gpio_data |= (SDA_PIN))
 #define SDA_HIGH SDA_IN
-#define SDA_LOW (SDA_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SDA_PIN)))
+#define SDA_LOW SDA_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SDA_PIN))
 #define SDA_READ (volatile uint32_t) (!!((reg_gpio_data) & (SDA_PIN)))
 
 
