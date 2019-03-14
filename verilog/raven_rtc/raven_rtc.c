@@ -6,8 +6,8 @@ extern void read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_ad
 
 //#define RTC_I2C_ADDR (unsigned char) 0xA2 // RTC PCF8563
 #define RTC_I2C_ADDR (uint32_t)0xD0 // RTC DS3231
-#define BCD_DIGIT0(x) (x & (uint32_t)0x0F)
-#define BCD_DIGIT1(x) ((x >> 4) & (uint32_t)0x0F)
+#define BCD_DIGIT0(x) (x & (uint32_t)0x000F)
+#define BCD_DIGIT1(x) ((x >> 4) & (uint32_t)0x000F)
 
 // --------------------------------------------------------
 // Firmware routines
@@ -114,7 +114,7 @@ void print_dec(uint32_t v)
 
 void print_digit(uint32_t v)
 {
-    v &= (uint32_t)0x0F;
+    v &= (uint32_t)0x000F;
 
     if (v == 9) { putchar('9'); }
     else if (v == 8) { putchar('8'); }
@@ -174,7 +174,13 @@ void read_rtc()
     data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00); // RTC DS3231
     print("Data = ");
     print_hex(data,4);
-    print("      ");
+    print("         ");
+    print("Data = ");
+    print_hex(BCD_DIGIT1(data),4);
+    print("         ");
+    print("Data = ");
+    print_hex(BCD_DIGIT0(data),4);
+    print("         ");
 
 //    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x02); // RTC PCF8563
     data &= (uint32_t) 0x7F;
