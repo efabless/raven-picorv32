@@ -5,9 +5,9 @@ extern unsigned char read_i2c_slave_byte(unsigned char slave_addr, unsigned char
 extern void read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, unsigned char *data, int len);
 
 //#define RTC_I2C_ADDR (unsigned char) 0xA2 // RTC PCF8563
-#define RTC_I2C_ADDR (unit32_t) 0xD0 // RTC DS3231
-#define BCD_DIGIT0(x) (x & (unit32_t) 0x0F)
-#define BCD_DIGIT1(x) ((x >> 4) & (unit32_t) 0x0F)
+#define RTC_I2C_ADDR (uint32_t)0xD0 // RTC DS3231
+#define BCD_DIGIT0(x) (x & (uint32_t)0x0F)
+#define BCD_DIGIT1(x) ((x >> 4) & (uint32_t)0x0F)
 
 // --------------------------------------------------------
 // Firmware routines
@@ -112,7 +112,7 @@ void print_dec(uint32_t v)
 	else putchar('0');
 }
 
-void print_digit(unit32_t v)
+void print_digit(uint32_t v)
 {
     if (v == 9) { putchar('9'); }
     else if (v == 8) { putchar('8'); }
