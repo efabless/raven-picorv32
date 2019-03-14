@@ -114,6 +114,8 @@ void print_dec(uint32_t v)
 
 void print_digit(uint32_t v)
 {
+    v &= (uint32_t)0x0F;
+
     if (v == 9) { putchar('9'); }
     else if (v == 8) { putchar('8'); }
     else if (v == 7) { putchar('7'); }
@@ -170,6 +172,10 @@ void read_rtc()
 //    rtc_stop();
 
     data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00); // RTC DS3231
+    print("Data = ");
+    print_hex(data,4);
+    print("      ");
+
 //    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x02); // RTC PCF8563
     data &= (uint32_t) 0x7F;
 
