@@ -2,17 +2,17 @@
 
 #define SDA_PIN 14
 #define SCL_PIN 15
-#define SCL_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~((unit32_t) 1 << SCL_PIN))
-#define SCL_IN (volatile uint32_t) (reg_gpio_ena |= ((unit32_t) 1 << SCL_PIN))
-#define SDA_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~((unit32_t) 1 << SDA_PIN))
-#define SDA_IN (volatile uint32_t) (reg_gpio_ena |= ((unit32_t) 1 << SDA_PIN))
+#define SCL_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~((uint32_t) 1 << SCL_PIN))
+#define SCL_IN (volatile uint32_t) (reg_gpio_ena |= ((uint32_t) 1 << SCL_PIN))
+#define SDA_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~((uint32_t) 1 << SDA_PIN))
+#define SDA_IN (volatile uint32_t) (reg_gpio_ena |= ((uint32_t) 1 << SDA_PIN))
 
-#define SCL_HIGH (volatile uint32_t) (reg_gpio_data |= ((unit32_t) 1 << SCL_PIN))
-#define SCL_LOW (volatile uint32_t) ((reg_gpio_data) &= ~((unit32_t) 1 << SCL_PIN))
-#define SCL_READ (volatile uint32_t) (!!((reg_gpio_data) & ((unit32_t) 1 << SCL_PIN)))
-#define SDA_HIGH (volatile uint32_t) (reg_gpio_data |= ((unit32_t) 1 << SDA_PIN))
-#define SDA_LOW (volatile uint32_t) ((reg_gpio_data) &= ~((unit32_t) 1 << SDA_PIN))
-#define SDA_READ (volatile uint32_t) (!!((reg_gpio_data) & ((unit32_t) 1 << SDA_PIN)))
+#define SCL_HIGH (volatile uint32_t) (reg_gpio_data |= ((uint32_t) 1 << SCL_PIN))
+#define SCL_LOW (volatile uint32_t) ((reg_gpio_data) &= ~((uint32_t) 1 << SCL_PIN))
+#define SCL_READ (volatile uint32_t) (!!((reg_gpio_data) & ((uint32_t) 1 << SCL_PIN)))
+#define SDA_HIGH (volatile uint32_t) (reg_gpio_data |= ((uint32_t) 1 << SDA_PIN))
+#define SDA_LOW (volatile uint32_t) ((reg_gpio_data) &= ~((uint32_t) 1 << SDA_PIN))
+#define SDA_READ (volatile uint32_t) (!!((reg_gpio_data) & ((uint32_t) 1 << SDA_PIN)))
 
 
 void i2c_delay()
@@ -74,7 +74,7 @@ volatile uint32_t i2c_write(volatile uint32_t data)
  	/* 8 bits */
 	for(bits = 0; bits < 8; bits++)
 	{
-	    if (data & (unit32_t) 0x0080)
+	    if (data & (uint32_t) 0x0080)
 		    SDA_HIGH;
 		else
 		    SDA_LOW;
