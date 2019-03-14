@@ -58,7 +58,7 @@ volatile uint32_t clock()
     while (!clk)
         clk = SCL_READ;
 
-    SDA_IN; in_data = SDA_READ;
+    SDA_IN; data = SDA_READ;
     i2c_delay();
     SCL_OUT;
     SCL_LOW;
