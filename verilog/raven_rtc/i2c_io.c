@@ -82,7 +82,7 @@ volatile uint32_t clock()
     return data;
 }
 
-volatile uint32_t i2c_write(volatile uint32_t data)
+uint32_t i2c_write(volatile uint32_t data)
 {
 	int bits;
     print_ln("i2c_write()...");
@@ -102,7 +102,7 @@ volatile uint32_t i2c_write(volatile uint32_t data)
 	return clock();
 }
 
-volatile uint32_t i2c_read(bool ack)
+uint32_t i2c_read(bool ack)
 {
 	volatile uint32_t data;
 	int bits;

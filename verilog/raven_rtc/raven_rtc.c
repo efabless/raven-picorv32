@@ -6,8 +6,8 @@ extern void read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_ad
 extern void i2c_init();
 extern void i2c_start();
 extern void i2c_stop();
-extern void write_i2c_slave(volatile uint32_t slave_addr, volatile uint32_t word_addr, volatile uint32_t data);
-extern uint32_t read_i2c_slave_byte(volatile uint32_t slave_addr, volatile uint32_t word_addr);
+extern uint32_t i2c_write(volatile uint32_t data);
+extern uint32_t i2c_read(bool ack);
 
 #define RTC_I2C_ADDR (unsigned char) 0xA2 // RTC PCF8563
 //#define RTC_I2C_ADDR (uint32_t)0xD0 // RTC DS3231
@@ -346,7 +346,7 @@ void main()
 
         // read and display real-time clock
 //        read_rtc();
-        i2c_write_i2c_slave(0x01, 0x02, 0xff);
+        i2c_write(0x01);
         for (j = 0; j < 350000 * m; j++); // 2 sec
 
 	    // Update LEDs.  Run longer in quad and ddr modes.
