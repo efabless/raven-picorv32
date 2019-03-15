@@ -273,7 +273,7 @@ void main()
 	for (j = 0; j < 350000 * m; j++);
 
 	// This should appear on the LCD display 4x20 characters.
-        print("Starting...         ");
+    print("Starting...         ");
 //	reg_gpio_data = 0x2222;
 //	for (j = 0; j < 50000 * m; j++);
 //        print("Clifford Wolf       ");
@@ -334,7 +334,9 @@ void main()
         // read and display real-time clock
 //        read_rtc();
         i2c_start();
-        for (j = 0; j < 350000 * m; j++);
+        for (j = 0; j < 350000 * m; j++); // 2 sec
+        i2c_stop();
+        for (j = 0; j < 700000 * m; j++); // 4 sec
 
 	    // Update LEDs.  Run longer in quad and ddr modes.
 //	    r = m >> 1;
