@@ -17,11 +17,13 @@
 #define SDA_LOW SDA_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SDA_PIN))
 #define SDA_READ (volatile uint32_t) (!!((reg_gpio_data) & (SDA_PIN)))
 
+extern void print_ln(const char *p);
 
 void i2c_delay()
 {
-//	for (int j = 0; j < 2; j++);  // 12 usec
-	for (int j = 0; j < 1000000; j++);  // 6 secs
+//	for (int j = 0; j < 2; j++);  // 10 usec
+//	for (int j = 0; j < 1000000; j++);  // 5 secs
+	for (int j = 0; j < 400000; j++);  // 2 secs
 }
 
 void i2c_init()
@@ -35,6 +37,7 @@ void i2c_start()
 {
     /* i2c start condition, data line goes low when clock is high */
 //    SCL_OUT; SDA_OUT;
+    print_ln("i2c_start()...");
     SDA_HIGH;
     SCL_HIGH;
     i2c_delay();
@@ -49,6 +52,7 @@ void i2c_stop ()
     /* i2c stop condition, clock goes high when data is low */
 //    SCL_OUT; SDA_OUT;
 //    SCL_LOW;
+    print_ln("i2c_stop()...");
     SDA_LOW;
     i2c_delay();
     SCL_HIGH;
@@ -62,6 +66,7 @@ volatile uint32_t clock()
     volatile uint32_t clk;
     volatile uint32_t data;
 
+    print_ln("clock()...");
     SCL_HIGH;
     SCL_IN; clk = SCL_READ;
 
@@ -80,7 +85,7 @@ volatile uint32_t clock()
 volatile uint32_t i2c_write(volatile uint32_t data)
 {
 	int bits;
-
+    print_ln("i2c_write()...");
 // 	SDA_OUT;
  	/* 8 bits */
 	for(bits = 0; bits < 8; bits++)
@@ -102,6 +107,7 @@ volatile uint32_t i2c_read(bool ack)
 	volatile uint32_t data;
 	int bits;
 
+    print_ln("i2c_read()...");
 	data = 0x0000;
 	/* 8 bits */
 	for (bits = 0; bits < 8; bits++)
@@ -124,6 +130,7 @@ volatile uint32_t i2c_read(bool ack)
 
 void write_i2c_slave(volatile uint32_t slave_addr, volatile uint32_t word_addr, volatile uint32_t data)
 {
+    print_ln("write_i2c_slave()...");
   	i2c_start();
    	i2c_write(slave_addr);
    	i2c_write(word_addr);
@@ -131,10 +138,11 @@ void write_i2c_slave(volatile uint32_t slave_addr, volatile uint32_t word_addr, 
    	i2c_stop();
 }
 
-volatile uint32_t read_i2c_slave_byte(volatile uint32_t slave_addr, volatile uint32_t word_addr)
+uint32_t read_i2c_slave_byte(volatile uint32_t slave_addr, volatile uint32_t word_addr)
 {
    	volatile uint32_t data;
 
+    print_ln("read_i2c_slave_byte()...");
   	i2c_start();
    	i2c_write(slave_addr);
    	i2c_write(word_addr);
@@ -151,6 +159,7 @@ void read_i2c_slave_bytes(volatile uint32_t slave_addr, volatile uint32_t word_a
 {
    	int i;
 
+    print_ln("read_i2c_slave_bytes()...");
   	i2c_start();
    	i2c_write(slave_addr);
    	i2c_write(word_addr);

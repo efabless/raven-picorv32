@@ -6,6 +6,8 @@ extern void read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_ad
 extern void i2c_init();
 extern void i2c_start();
 extern void i2c_stop();
+extern void write_i2c_slave(volatile uint32_t slave_addr, volatile uint32_t word_addr, volatile uint32_t data);
+extern uint32_t read_i2c_slave_byte(volatile uint32_t slave_addr, volatile uint32_t word_addr);
 
 #define RTC_I2C_ADDR (unsigned char) 0xA2 // RTC PCF8563
 //#define RTC_I2C_ADDR (uint32_t)0xD0 // RTC DS3231
@@ -62,6 +64,17 @@ void print(const char *p)
 {
 	while (*p)
 		putchar(*(p++));
+}
+
+void print_ln(const char *p)
+{
+	for (int i=0; i<20; i++)
+	{
+	    if (*p)
+		    putchar(*(p++));
+        else
+		    putchar(' ');
+    }
 }
 
 void print_hex(uint32_t v, int digits)
@@ -272,7 +285,7 @@ void main()
 	for (j = 0; j < 350000 * m; j++);
 
 	// This should appear on the LCD display 4x20 characters.
-    print("Starting...         ");
+    print_ln("Starting...");
     i2c_init();
 //	reg_gpio_data = 0x2222;
 //	for (j = 0; j < 50000 * m; j++);
@@ -333,12 +346,8 @@ void main()
 
         // read and display real-time clock
 //        read_rtc();
-        print("i2c_start()...      ");
-        i2c_start();
+        i2c_write_i2c_slave(0x01, 0x02, 0xff);
         for (j = 0; j < 350000 * m; j++); // 2 sec
-        print("i2c_stop()...       ");
-        i2c_stop();
-        for (j = 0; j < 700000 * m; j++); // 4 sec
 
 	    // Update LEDs.  Run longer in quad and ddr modes.
 //	    r = m >> 1;
