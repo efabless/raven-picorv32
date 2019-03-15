@@ -167,8 +167,8 @@ void write_i2c_slave(volatile uint32_t slave_addr, volatile uint32_t word_addr, 
 {
     print_ln("write_i2c_slave()...");
   	i2c_start();
-   	if (not i2c_write(slave_addr)) print_ln("** error **");
-    if (not i2c_write(word_addr)) print_ln("** error **");
+   	if (!i2c_write(slave_addr)) print_ln("** error **");
+    if (!i2c_write(word_addr)) print_ln("** error **");
    	i2c_write(data);
    	i2c_stop();
 }
@@ -179,8 +179,8 @@ uint32_t read_i2c_slave_byte(volatile uint32_t slave_addr, volatile uint32_t wor
 
     print_ln("read_i2c_slave_byte()...");
   	i2c_start();
-   	if (not i2c_write(slave_addr)) print_ln("** error **");
-    if (not i2c_write(word_addr)) print_ln("** error **");
+   	if (!i2c_write(slave_addr)) print_ln("** error **");
+    if (!i2c_write(word_addr)) print_ln("** error **");
 
     i2c_start();
     i2c_write(slave_addr | (uint32_t) 0x0001);  // addr + read mode
