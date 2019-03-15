@@ -3,9 +3,9 @@
 extern void write_i2c_slave(unsigned char slave_addr, unsigned char word_addr, unsigned char data);
 extern unsigned char read_i2c_slave_byte(unsigned char slave_addr, unsigned char word_addr);
 extern void read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, unsigned char *data, int len);
-extern void void i2c_init();
-extern void void i2c_start();
-extern void void i2c_stop();
+extern void i2c_init();
+extern void i2c_start();
+extern void i2c_stop();
 
 #define RTC_I2C_ADDR (unsigned char) 0xA2 // RTC PCF8563
 //#define RTC_I2C_ADDR (uint32_t)0xD0 // RTC DS3231
