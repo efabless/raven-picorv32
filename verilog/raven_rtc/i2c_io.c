@@ -20,7 +20,8 @@
 
 void i2c_delay()
 {
-	for (int j = 0; j < 2; j++);
+//	for (int j = 0; j < 2; j++);  // 12 usec
+	for (int j = 0; j < 2*10^6; j++);  // 12 secs
 }
 
 void i2c_init()
