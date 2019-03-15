@@ -267,13 +267,13 @@ void main()
 	reg_uart_clkdiv = 10417;
 
 //	rtc_run();
-    i2c_init();
 
 	// Need boot-up time for the display;  give it 2 seconds
 	for (j = 0; j < 350000 * m; j++);
 
 	// This should appear on the LCD display 4x20 characters.
     print("Starting...         ");
+    i2c_init();
 //	reg_gpio_data = 0x2222;
 //	for (j = 0; j < 50000 * m; j++);
 //        print("Clifford Wolf       ");
@@ -333,8 +333,10 @@ void main()
 
         // read and display real-time clock
 //        read_rtc();
+        print("i2c_start()...      ");
         i2c_start();
         for (j = 0; j < 350000 * m; j++); // 2 sec
+        print("i2c_stop()...       ");
         i2c_stop();
         for (j = 0; j < 700000 * m; j++); // 4 sec
 
