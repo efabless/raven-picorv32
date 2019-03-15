@@ -63,6 +63,8 @@ void i2c_stop ()
 
 void i2c_write_bit(volatile uint32_t b)
 {
+    volatile uint32_t clk;
+
     if ( b > 0 )
         SDA_HIGH;
     else
