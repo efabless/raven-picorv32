@@ -70,6 +70,8 @@ void i2c_write_bit(volatile uint32_t b)
     else
         SDA_LOW;
 
+    i2c_delay();
+
     SCL_HIGH;
 
     // clock stretching
@@ -96,6 +98,8 @@ volatile uint32_t i2c_read_bit()
     SCL_IN; clk = SCL_READ;
     while (!clk)
         clk = SCL_READ;
+
+    i2c_delay();
 
     SDA_IN; if ( SDA_READ)
         b = 1;
