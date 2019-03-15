@@ -23,14 +23,14 @@ void i2c_delay()
 	for (int j = 0; j < 2; j++);
 }
 
-void i2c_init(void)
+void i2c_init()
 {
     SDA_HIGH;
     SCL_HIGH;
     i2c_delay();
 }
 
-void i2c_start(void)
+void i2c_start()
 {
     /* i2c start condition, data line goes low when clock is high */
 //    SCL_OUT; SDA_OUT;
@@ -43,7 +43,7 @@ void i2c_start(void)
     i2c_delay();
 }
 
-void i2c_stop (void)
+void i2c_stop ()
 {
     /* i2c stop condition, clock goes high when data is low */
 //    SCL_OUT; SDA_OUT;

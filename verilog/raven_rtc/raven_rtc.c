@@ -3,9 +3,12 @@
 extern void write_i2c_slave(unsigned char slave_addr, unsigned char word_addr, unsigned char data);
 extern unsigned char read_i2c_slave_byte(unsigned char slave_addr, unsigned char word_addr);
 extern void read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, unsigned char *data, int len);
+extern void void i2c_init();
+extern void void i2c_start();
+extern void void i2c_stop();
 
-//#define RTC_I2C_ADDR (unsigned char) 0xA2 // RTC PCF8563
-#define RTC_I2C_ADDR (uint32_t)0xD0 // RTC DS3231
+#define RTC_I2C_ADDR (unsigned char) 0xA2 // RTC PCF8563
+//#define RTC_I2C_ADDR (uint32_t)0xD0 // RTC DS3231
 #define BCD_DIGIT0(x) (x & (uint32_t)0x000F)
 #define BCD_DIGIT1(x) ((x >> 4) & (uint32_t)0x000F)
 
@@ -125,7 +128,8 @@ void print_digit(uint32_t v)
     else if (v == 3) { putchar('3'); }
     else if (v == 2) { putchar('2'); }
     else if (v == 1) { putchar('1'); }
-    else putchar('0');
+    else if (v == 0) { putchar('0'); }
+    else putchar('*');
 }
 
 // ----------------------------------------------------------------------
@@ -171,24 +175,13 @@ void read_rtc()
 
 //    rtc_stop();
 
-    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00); // RTC DS3231
+//    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00); // RTC DS3231
+    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x02); // RTC PCF8563
     print("Data    = ");
     print_hex(data,4);
     print("      ");
-    print("Digit 1 = ");
-    print_hex(BCD_DIGIT1(data),4);
-    print("      ");
-    print("Digit 0 = ");
-    print_hex(BCD_DIGIT0(data),4);
-    print("      ");
 
-//    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x02); // RTC PCF8563
     data &= (uint32_t) 0x007F;
-
-    print("Data    = ");
-    print_hex(data,4);
-    print("      ");
-
 
     print("Seconds = ");
     print_digit(BCD_DIGIT1(data));
@@ -273,30 +266,31 @@ void main()
 	// Set UART clock to 9600 baud
 	reg_uart_clkdiv = 10417;
 
-	rtc_run();
+//	rtc_run();
+    i2c_init();
 
 	// Need boot-up time for the display;  give it 2 seconds
 	for (j = 0; j < 350000 * m; j++);
 
 	// This should appear on the LCD display 4x20 characters.
-        print("PicoRV32 RISC       ");
+        print("Starting...         ");
 //	reg_gpio_data = 0x2222;
-	for (j = 0; j < 50000 * m; j++);
-        print("Clifford Wolf       ");
+//	for (j = 0; j < 50000 * m; j++);
+//        print("Clifford Wolf       ");
 //	reg_gpio_data = 0x4444;
-	for (j = 0; j < 50000 * m; j++);
-        print("Raven PicoSoc       ");
+//	for (j = 0; j < 50000 * m; j++);
+//        print("Raven PicoSoc       ");
 //	reg_gpio_data = 0x8888;
-	for (j = 0; j < 50000 * m; j++);
-        print("Tim Edwards/efabless");
+//	for (j = 0; j < 50000 * m; j++);
+//        print("Tim Edwards/efabless");
 
 	// Follow this with an LED pattern
 //	reg_gpio_ena = 0x0000;		// 1 = input, 0 = output
 
 	// Delay 1 second, print registers, delay another second
-	for (j = 0; j < 170000 * m; j++);
-	cmd_read_flash_regs();
-	for (j = 0; j < 170000 * m; j++);
+//	for (j = 0; j < 170000 * m; j++);
+//	cmd_read_flash_regs();
+//	for (j = 0; j < 170000 * m; j++);
 
 	while (1) {
 //	    // Increment the DAC every full cycle
@@ -338,7 +332,8 @@ void main()
 //	    print_dec(adcval);
 
         // read and display real-time clock
-        read_rtc();
+//        read_rtc();
+        i2c_start();
         for (j = 0; j < 350000 * m; j++);
 
 	    // Update LEDs.  Run longer in quad and ddr modes.
@@ -376,7 +371,7 @@ void main()
 
 	    // Bump up speed factor.
 
-	    mode++;
+//	    mode++;
 
 	    // Enable fast quad DDR access on the SPI flash (8 dummy cycles)
 	    // NOTE: QSPI modes only work if enabled in the flash's config register 
