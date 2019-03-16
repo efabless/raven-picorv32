@@ -105,7 +105,8 @@ volatile uint32_t i2c_read_bit()
 
     i2c_delay();
 
-    SDA_IN; if ( SDA_READ)
+    SDA_IN;
+    if ( SDA_READ)
         b = 1;
     else
         b = 0;

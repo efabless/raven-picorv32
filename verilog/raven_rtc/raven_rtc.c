@@ -357,7 +357,9 @@ void main()
         i2c_start();
         i2c_write(0xA2);
         i2c_write(0x00);
-        i2c_write(0x00);
+        i2c_start();
+        i2c_write(0xA3);
+        i2c_read(false);
         i2c_stop();
         for (j = 0; j < 350000 * m; j++); // 2 sec
 
