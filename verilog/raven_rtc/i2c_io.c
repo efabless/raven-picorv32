@@ -11,11 +11,13 @@
 //#define SCL_HIGH (volatile uint32_t) (reg_gpio_data |= (SCL_PIN))
 #define SCL_HIGH SCL_IN
 #define SCL_LOW SCL_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SCL_PIN))
-#define SCL_READ (volatile uint32_t) (!!((reg_gpio_data) & (SCL_PIN)))
+//#define SCL_READ (volatile uint32_t) (!!((reg_gpio_data) & (SCL_PIN)))
+#define SCL_READ (volatile uint32_t) ((reg_gpio_data) & (SCL_PIN))
 //#define SDA_HIGH (volatile uint32_t) (reg_gpio_data |= (SDA_PIN))
 #define SDA_HIGH SDA_IN
 #define SDA_LOW SDA_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SDA_PIN))
-#define SDA_READ (volatile uint32_t) (!!((reg_gpio_data) & (SDA_PIN)))
+//#define SDA_READ (volatile uint32_t) (!!((reg_gpio_data) & (SDA_PIN)))
+#define SDA_READ (volatile uint32_t) ((reg_gpio_data) & (SDA_PIN))
 
 extern void print_ln(const char *p);
 extern void putchar(char c);
@@ -27,7 +29,7 @@ void i2c_delay()
 //	for (int j = 0; j < 1000000; j++);  // 5 secs
 //	for (int j = 0; j < 200000; j++);  // 1 secs
 //	for (int j = 0; j < 100000; j++);  // 0.5 secs
-	for (int j = 0; j < 2; j++);  // 10 usec
+	for (int j = 0; j < 1; j++);  // 5 usec
 }
 
 void i2c_init()
@@ -142,7 +144,7 @@ bool i2c_write(volatile uint32_t data)
     uint32_t ack;
 
 //    print_ln("i2c_write()...");
-    putchar('*');
+//    putchar('*');
  	/* 8 bits */
 	for (int i = 0; i < 8; i++)
 	{
@@ -159,7 +161,7 @@ volatile uint32_t i2c_read(bool ack)
 {
 	volatile uint32_t data;
 
-    print_ln("i2c_read()...");
+//    print_ln("i2c_read()...");
 	data = 0x0000;
 	for (int i = 0; i < 8; i++)
 	{
