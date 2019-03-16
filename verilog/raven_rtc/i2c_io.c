@@ -23,10 +23,10 @@ void i2c_delay()
 {
 
 //  100k BAUD (I2C standard) = 5 usec
-//	for (int j = 0; j < 2; j++);  // 10 usec
 //	for (int j = 0; j < 1000000; j++);  // 5 secs
 //	for (int j = 0; j < 200000; j++);  // 1 secs
-	for (int j = 0; j < 100000; j++);  // 0.5 secs
+//	for (int j = 0; j < 100000; j++);  // 0.5 secs
+	for (int j = 0; j < 2; j++);  // 10 usec
 }
 
 void i2c_init()

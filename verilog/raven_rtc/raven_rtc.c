@@ -355,7 +355,9 @@ void main()
         // read and display real-time clock
 //        read_rtc();
         i2c_start();
-        i2c_write(0x01);
+        i2c_write(0xA2);
+        i2c_write(0x00);
+        i2c_write(0x00);
         i2c_stop();
         for (j = 0; j < 350000 * m; j++); // 2 sec
 
