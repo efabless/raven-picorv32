@@ -345,8 +345,7 @@ void main()
 //	    print_dec(adcval);
 
         // read and display real-time clock
-//        read_rtc();
-        i2c_write(0x01);
+        read_rtc();
         for (j = 0; j < 350000 * m; j++); // 2 sec
 
 	    // Update LEDs.  Run longer in quad and ddr modes.
