@@ -18,7 +18,7 @@
 #define SDA_READ (volatile uint32_t) (!!((reg_gpio_data) & (SDA_PIN)))
 
 extern void print_ln(const char *p);
-extern void print(const char *p);
+extern void putchar(char c);
 
 void i2c_delay()
 {
@@ -141,7 +141,7 @@ bool i2c_write(volatile uint32_t data)
     uint32_t ack;
 
 //    print_ln("i2c_write()...");
-    print('*');
+    putchar('*');
  	/* 8 bits */
 	for (int i = 0; i < 8; i++)
 	{
