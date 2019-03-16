@@ -234,6 +234,7 @@ void main()
 	uint32_t i, j, m, r, mode;
 	uint32_t adcval;
 	uint32_t dacval;
+	uint32_t data;
 
 	/* Note that it definitely does not work in simulation because	*/
 	/* the behavioral verilog for the SPI flash does not support	*/
@@ -356,11 +357,15 @@ void main()
 //        read_rtc();
         i2c_start();
         i2c_write(0xA2);
-        i2c_write(0x00);
+        i2c_write(0x02);
         i2c_start();
         i2c_write(0xA3);
-        i2c_read(false);
+        data = i2c_read(false);
         i2c_stop();
+        print("Data    = ");
+        print_hex(data,4);
+        print("      ");
+
         for (j = 0; j < 350000 * m; j++); // 2 sec
 
 	    // Update LEDs.  Run longer in quad and ddr modes.
