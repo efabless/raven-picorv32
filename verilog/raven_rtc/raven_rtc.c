@@ -189,23 +189,11 @@ void read_rtc()
 
 //    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00); // RTC DS3231
 
-//    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00); // RTC PCF8563
-//    print("Status 1= ");
-//    print_hex(data,4);
-//    print("      ");
-//    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x01); // RTC PCF8563
-//    print("Status 2= ");
-//    print_hex(data,4);
-//    print("      ");
-
     read_i2c_slave_bytes(RTC_I2C_ADDR, 0x02, data, 3); // RTC PCF8563
-//    print("Data    = ");
-//    print_hex(data,4);
-//    print("      ");
 
     data[0] &= (uint32_t) 0x007F;
     data[1] &= (uint32_t) 0x007F;
-    data[2] &= (uint32_t) 0x005F;
+    data[2] &= (uint32_t) 0x003F;
 
     print("Time = ");
     print_digit(BCD_DIGIT1(data[2]));
