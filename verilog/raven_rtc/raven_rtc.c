@@ -77,6 +77,18 @@ void print_ln(const char *p)
     }
 }
 
+void clear()
+{
+    reg_uart_data = 0x7c;
+    reg_uart_data = 0x01;
+}
+
+void home()
+{
+    reg_uart_data = 0x7c;
+    reg_uart_data = 0x02;
+}
+
 void print_hex(uint32_t v, int digits)
 {
 	for (int i = digits - 1; i >= 0; i--) {
@@ -195,6 +207,7 @@ void read_rtc()
     data[1] &= (uint32_t) 0x007F;
     data[2] &= (uint32_t) 0x003F;
 
+    home();
     print("Time = ");
     print_digit(BCD_DIGIT1(data[2]));
     print_digit(BCD_DIGIT0(data[2]));
