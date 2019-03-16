@@ -183,31 +183,40 @@ void rtc_stop()
 
 void read_rtc()
 {
-    uint32_t data;
-    print("Reading RTC...      ");
+    uint32_t data[2];
 
 //    rtc_stop();
 
 //    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00); // RTC DS3231
-    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00); // RTC PCF8563
-    print("Status 1= ");
-    print_hex(data,4);
-    print("      ");
-    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x01); // RTC PCF8563
-    print("Status 2= ");
-    print_hex(data,4);
-    print("      ");
-    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x02); // RTC PCF8563
-    print("Data    = ");
-    print_hex(data,4);
-    print("      ");
 
-    data &= (uint32_t) 0x007F;
+//    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00); // RTC PCF8563
+//    print("Status 1= ");
+//    print_hex(data,4);
+//    print("      ");
+//    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x01); // RTC PCF8563
+//    print("Status 2= ");
+//    print_hex(data,4);
+//    print("      ");
 
-    print("Seconds = ");
-    print_digit(BCD_DIGIT1(data));
-    print_digit(BCD_DIGIT0(data));
-    print("        ");
+    read_i2c_slave_bytes(RTC_I2C_ADDR, 0x02, data, 3); // RTC PCF8563
+//    print("Data    = ");
+//    print_hex(data,4);
+//    print("      ");
+
+    data[0] &= (uint32_t) 0x007F;
+    data[1] &= (uint32_t) 0x007F;
+    data[2] &= (uint32_t) 0x005F;
+
+    print("Time = ");
+    print_digit(BCD_DIGIT1(data[2]));
+    print_digit(BCD_DIGIT0(data[2]));
+    print(":");
+    print_digit(BCD_DIGIT1(data[1]));
+    print_digit(BCD_DIGIT0(data[1]));
+    print(":");
+    print_digit(BCD_DIGIT1(data[0]));
+    print_digit(BCD_DIGIT0(data[0]));
+    print("     ");
 
 //    rtc_run();
 }
@@ -354,17 +363,18 @@ void main()
 //	    print_dec(adcval);
 
         // read and display real-time clock
-//        read_rtc();
-        i2c_start();
-        i2c_write(0xA2);
-        i2c_write(0x02);
-        i2c_start();
-        i2c_write(0xA3);
-        data = i2c_read(false);
-        i2c_stop();
-        print("Data    = ");
-        print_hex(data,4);
-        print("      ");
+        read_rtc();
+
+//        i2c_start();
+//        i2c_write(0xA2);
+//        i2c_write(0x02);
+//        i2c_start();
+//        i2c_write(0xA3);
+//        data = i2c_read(false);
+//        i2c_stop();
+//        print("Data    = ");
+//        print_hex(data,4);
+//        print("      ");
 
         for (j = 0; j < 350000 * m; j++); // 2 sec
 
