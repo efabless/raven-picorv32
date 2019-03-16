@@ -287,7 +287,7 @@ void main()
 	// Set UART clock to 9600 baud
 	reg_uart_clkdiv = 10417;
 
-	rtc_run();
+//	rtc_run();
 
 	// Need boot-up time for the display;  give it 2 seconds
 	for (j = 0; j < 350000 * m; j++);
@@ -353,7 +353,10 @@ void main()
 //	    print_dec(adcval);
 
         // read and display real-time clock
-        read_rtc();
+//        read_rtc();
+        i2c_start();
+        i2c_write(0x01);
+        i2c_stop();
         for (j = 0; j < 350000 * m; j++); // 2 sec
 
 	    // Update LEDs.  Run longer in quad and ddr modes.
