@@ -279,7 +279,7 @@ void main()
 	// Set UART clock to 9600 baud
 	reg_uart_clkdiv = 10417;
 
-//	rtc_run();
+	rtc_run();
 
 	// Need boot-up time for the display;  give it 2 seconds
 	for (j = 0; j < 350000 * m; j++);
