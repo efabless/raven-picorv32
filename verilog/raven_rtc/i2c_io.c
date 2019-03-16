@@ -18,6 +18,7 @@
 #define SDA_READ (volatile uint32_t) (!!((reg_gpio_data) & (SDA_PIN)))
 
 extern void print_ln(const char *p);
+extern void print(const char *p);
 
 void i2c_delay()
 {
@@ -40,7 +41,7 @@ void i2c_start()
 {
     /* i2c start condition, data line goes low when clock is high */
 //    SCL_OUT; SDA_OUT;
-    print_ln("i2c_start()...");
+//    print_ln("i2c_start()...");
     SDA_HIGH;
     SCL_HIGH;
     i2c_delay();
@@ -55,7 +56,7 @@ void i2c_stop ()
     /* i2c stop condition, clock goes high when data is low */
 //    SCL_OUT; SDA_OUT;
 //    SCL_LOW;
-    print_ln("i2c_stop()...");
+//    print_ln("i2c_stop()...");
     SDA_LOW;
     i2c_delay();
     SCL_HIGH;
@@ -139,7 +140,8 @@ bool i2c_write(volatile uint32_t data)
 {
     uint32_t ack;
 
-    print_ln("i2c_write()...");
+//    print_ln("i2c_write()...");
+    print('*');
  	/* 8 bits */
 	for (int i = 0; i < 8; i++)
 	{
