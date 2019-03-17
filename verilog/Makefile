@@ -1,5 +1,5 @@
-TOOLCHAIN_PREFIX = /opt/riscv32imc/bin
-# TOOLCHAIN_PREFIX = /ef/apps/bin
+TOOLCHAIN_PATH = /opt/riscv32imc/bin/
+# TOOLCHAIN_PATH = /ef/apps/bin/
 
 # ---- Test patterns for project raven ----
 
@@ -18,13 +18,13 @@ hex:  ${PATTERN:=.hex}
 	vvp $<
 
 %.elf: %.c ../sections.lds ../start.s
-	$(TOOLCHAIN_PREFIX)riscv32-unknown-elf-gcc -march=rv32imc -Wl,-Bstatic,-T,../sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../start.s $<
+	$(TOOLCHAIN_PATH)riscv32-unknown-elf-gcc -march=rv32imc -Wl,-Bstatic,-T,../sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../start.s $<
 
 %.hex: %.elf
-	$(TOOLCHAIN_PREFIX)riscv32-unknown-elf-objcopy -O verilog $< /dev/stdout | sed -e '1 s/@00000000/@00100000/; 2,65537 d;' > $@
+	$(TOOLCHAIN_PATH)riscv32-unknown-elf-objcopy -O verilog $< /dev/stdout | sed -e '1 s/@00000000/@00100000/; 2,65537 d;' > $@
 
 %.bin: %.elf
-	$(TOOLCHAIN_PREFIX)riscv32-unknown-elf-objcopy -O binary $< /dev/stdout | tail -c +1048577 > $@
+	$(TOOLCHAIN_PATH)riscv32-unknown-elf-objcopy -O binary $< /dev/stdout | tail -c +1048577 > $@
 
 # ---- Clean ----
 
