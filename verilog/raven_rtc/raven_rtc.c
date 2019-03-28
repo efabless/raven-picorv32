@@ -358,7 +358,7 @@ void main()
 
     cmd_echo();
 
-    print('\n\n');
+    print("\n\n");
 
 //	reg_gpio_data = 0x2222;
 //	for (j = 0; j < 50000 * m; j++);
