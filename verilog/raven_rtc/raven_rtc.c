@@ -181,7 +181,7 @@ char getchar_prompt(char *prompt)
 		c = reg_uart_data;
 	}
 
-	reg_leds = 0;
+//	reg_leds = 0;
 	return c;
 }
 
