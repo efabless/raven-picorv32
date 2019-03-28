@@ -157,6 +157,39 @@ void print_digit(uint32_t v)
     else putchar('*');
 }
 
+char getchar_prompt(char *prompt)
+{
+	int32_t c = -1;
+
+	uint32_t cycles_begin, cycles_now, cycles;
+	__asm__ volatile ("rdcycle %0" : "=r"(cycles_begin));
+
+	reg_leds = ~0;
+
+	if (prompt)
+		print(prompt);
+
+	while (c == -1) {
+		__asm__ volatile ("rdcycle %0" : "=r"(cycles_now));
+		cycles = cycles_now - cycles_begin;
+		if (cycles > 12000000) {
+			if (prompt)
+				print(prompt);
+			cycles_begin = cycles_now;
+			reg_leds = ~reg_leds;
+		}
+		c = reg_uart_data;
+	}
+
+	reg_leds = 0;
+	return c;
+}
+
+char getchar()
+{
+	return getchar_prompt(0);
+}
+
 // ----------------------------------------------------------------------
 
 void cmd_read_flash_regs_print(uint32_t addr, const char *name)
@@ -306,6 +339,7 @@ void main()
 	// This should appear on the LCD display 4x20 characters.
     print_ln("Starting...");
     i2c_init();
+    while (getchar_prompt("Press ENTER to continue..\n") != '\r')
 //	reg_gpio_data = 0x2222;
 //	for (j = 0; j < 50000 * m; j++);
 //        print("Clifford Wolf       ");
