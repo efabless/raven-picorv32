@@ -206,6 +206,14 @@ void cmd_read_flash_regs_print(uint32_t addr, const char *name)
     print("  ");
 }
 
+void cmd_echo()
+{
+	print("Return to menu by sending '!'\n\n");
+	char c;
+	while ((c = getchar()) != '!')
+		putchar(c);
+}
+
 // ----------------------------------------------------------------------
 
 void cmd_read_flash_regs()
@@ -250,7 +258,7 @@ void read_rtc()
     print(":");
     print_digit(BCD_DIGIT1(data[0]));
     print_digit(BCD_DIGIT0(data[0]));
-    print("     ");
+    print("    \n");
 
 //    rtc_run();
 }
@@ -337,10 +345,12 @@ void main()
 	for (j = 0; j < 350000 * m; j++);
 
 	// This should appear on the LCD display 4x20 characters.
-    print_ln("Starting...");
+    print_ln("Starting...\n");
     i2c_init();
 
-    while (getchar_prompt("Press ENTER to continue..\n") != '\r')
+    while (getchar_prompt("Press ENTER to continue..\n") != '\r') {}
+
+    cmd_echo();
 
 //	reg_gpio_data = 0x2222;
 //	for (j = 0; j < 50000 * m; j++);
