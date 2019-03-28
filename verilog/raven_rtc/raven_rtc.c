@@ -80,12 +80,12 @@ void print_ln(const char *p)
 void clear()
 {
     reg_uart_data = 0x7c;
-    reg_uart_data = 0x01;
+    reg_uart_data = 0x2d;
 }
 
 void home()
 {
-    reg_uart_data = 0x7c;
+    reg_uart_data = 254;
     reg_uart_data = 0x02;
 }
 
