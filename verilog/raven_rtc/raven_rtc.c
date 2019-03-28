@@ -164,7 +164,7 @@ char getchar_prompt(char *prompt)
 	uint32_t cycles_begin, cycles_now, cycles;
 	__asm__ volatile ("rdcycle %0" : "=r"(cycles_begin));
 
-	reg_leds = ~0;
+//	reg_leds = ~0;
 
 	if (prompt)
 		print(prompt);
@@ -176,7 +176,7 @@ char getchar_prompt(char *prompt)
 			if (prompt)
 				print(prompt);
 			cycles_begin = cycles_now;
-			reg_leds = ~reg_leds;
+//			reg_leds = ~reg_leds;
 		}
 		c = reg_uart_data;
 	}
