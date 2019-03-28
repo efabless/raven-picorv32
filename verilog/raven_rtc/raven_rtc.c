@@ -211,7 +211,7 @@ void cmd_echo()
 	print("Return to menu by sending '!'\n\n");
 	char c;
 	while ((c = getchar()) != '!') {
-		if c == '\r'
+		if (c == '\r')
 		    putchar('\n');
         else
 		    putchar(c);
