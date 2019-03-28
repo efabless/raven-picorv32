@@ -210,8 +210,12 @@ void cmd_echo()
 {
 	print("Return to menu by sending '!'\n\n");
 	char c;
-	while ((c = getchar()) != '!')
-		putchar(c);
+	while ((c = getchar()) != '!') {
+		if c == '\r'
+		    putchar('\n');
+        else
+		    putchar(c);
+    }
 }
 
 // ----------------------------------------------------------------------
@@ -341,16 +345,19 @@ void main()
 
 //	rtc_run();
 
-	// Need boot-up time for the display;  give it 2 seconds
-	for (j = 0; j < 350000 * m; j++);
+	// Need boot-up time for the display;  give it 4 seconds
+	for (j = 0; j < 700000 * m; j++);
 
 	// This should appear on the LCD display 4x20 characters.
     print_ln("Starting...\n");
     i2c_init();
 
-    while (getchar_prompt("Press ENTER to continue..\n") != '\r') {}
+    print("Press ENTER to continue..\n");
+    while (getchar() != '\r') {}
 
     cmd_echo();
+
+    putchar('/f');
 
 //	reg_gpio_data = 0x2222;
 //	for (j = 0; j < 50000 * m; j++);
