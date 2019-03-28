@@ -253,7 +253,7 @@ void read_rtc()
     data[2] &= (uint32_t) 0x003F;
 
 //    clear();
-    print("\r")
+    print("\r");
     print("Time = ");
     print_digit(BCD_DIGIT1(data[2]));
     print_digit(BCD_DIGIT0(data[2]));
