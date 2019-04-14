@@ -1,22 +1,22 @@
 #include "../raven_defs.h"
 
-extern void write_i2c_slave(unsigned char slave_addr, unsigned char word_addr, unsigned char data);
-extern unsigned char read_i2c_slave_byte(unsigned char slave_addr, unsigned char word_addr);
-extern void read_i2c_slave_bytes(unsigned char slave_addr, unsigned char word_addr, unsigned char *data, int len);
+extern void write_i2c_slave(uint32_t slave_addr, uint32_t word_addr, uint32_t data);
+extern uint32_t read_i2c_slave_byte(uint32_t slave_addr, uint32_t word_addr);
+extern void read_i2c_slave_bytes(uint32_t slave_addr, uint32_t word_addr, uint32_t *data, int len);
 extern void i2c_init();
 extern void i2c_start();
 extern void i2c_stop();
 extern uint32_t i2c_write(volatile uint32_t data);
 extern uint32_t i2c_read(bool ack);
 
-#define RTC_I2C_ADDR (unsigned char) 0xA2 // RTC PCF8563
+#define RTC_I2C_ADDR (uint32_t) 0xA2 // RTC PCF8563
 //#define RTC_I2C_ADDR (uint32_t)0xD0 // RTC DS3231
 #define BCD_DIGIT0(x) (x & (uint32_t)0x000F)
 #define BCD_DIGIT1(x) ((x >> 4) & (uint32_t)0x000F)
 
-extern void write_spi_slave(unsigned char slave_addr, unsigned char word_addr, unsigned char data);
-extern unsigned char read_spi_slave_byte(unsigned char slave_addr, unsigned char word_addr);
-extern void read_spi_slave_bytes(unsigned char slave_addr, unsigned char word_addr, unsigned char *data, int len);
+extern void write_spi_slave(uint32_t slave_addr, uint32_t word_addr, uint32_t data);
+extern uint32_t read_spi_slave_byte(uint32_t slave_addr, uint32_t word_addr);
+extern void read_spi_slave_bytes(uuint32_t slave_addr, uint32_t word_addr, uint32_t *data, int len);
 extern void spi_init();
 extern void spi_start();
 extern void spi_stop();
