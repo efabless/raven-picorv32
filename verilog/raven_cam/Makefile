@@ -19,7 +19,7 @@ hex:  ${PATTERN:=.hex}
 %.vcd: %.vvp
 	vvp $<
 
-%.elf: %.c ../sections.lds ../start.s i2c_io.c
+%.elf: %.c ../sections.lds ../start.s i2c_io.c spi_io.c
 	$(TOOLCHAIN_PATH)riscv32-unknown-elf-gcc -march=rv32imc -Wl,-Bstatic,-T,../sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../start.s i2c_io.c spi_io.c $<
 
 %.hex: %.elf
