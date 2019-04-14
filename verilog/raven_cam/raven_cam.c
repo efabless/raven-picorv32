@@ -16,7 +16,7 @@ extern uint32_t i2c_read(bool ack);
 
 extern void write_spi_slave(uint32_t slave_addr, uint32_t word_addr, uint32_t data);
 extern uint32_t read_spi_slave_byte(uint32_t slave_addr, uint32_t word_addr);
-extern void read_spi_slave_bytes(uuint32_t slave_addr, uint32_t word_addr, uint32_t *data, int len);
+extern void read_spi_slave_bytes(uint32_t slave_addr, uint32_t word_addr, uint32_t *data, int len);
 extern void spi_init();
 extern void spi_start();
 extern void spi_stop();
