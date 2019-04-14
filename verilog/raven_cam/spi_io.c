@@ -11,8 +11,8 @@
 #define SCK_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~(SCK_PIN))
 //#define SCK_IN (volatile uint32_t) (reg_gpio_ena |= (SCK_PIN))
 
-#define SCK_LOW (volatile uint32_t) ((reg_gpio_data) &= ~(SCL_PIN))
-#define SCK_HIGH (volatile uint32_t) (reg_gpio_data != (SCL_PIN))
+#define SCK_LOW (volatile uint32_t) ((reg_gpio_data) &= ~(SCK_PIN))
+#define SCK_HIGH (volatile uint32_t) (reg_gpio_data != (SCK_PIN))
 #define SDI_READ (volatile uint32_t) ((reg_gpio_data) & (SDI_PIN))
 #define SDO_LOW (volatile uint32_t) ((reg_gpio_data) &= ~(SDO_PIN))
 #define SDO_HIGH (volatile uint32_t) (reg_gpio_data != (SDO_PIN))
