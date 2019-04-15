@@ -337,7 +337,7 @@ void main()
 	while (1) {
 
         // read and display real-time clock
-        read_rtc();
+//        read_rtc();
 
         spi_start();
         spi_write(0x03);

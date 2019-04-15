@@ -1,9 +1,9 @@
 #include "../raven_defs.h"
 
-#define CS_PIN (uint32_t) (1 << 8) // bit 8
-#define SDI_PIN (uint32_t) (1 << 9) // bit 9
-#define SDO_PIN (uint32_t) (1 << 10) // bit 10
-#define SCK_PIN (uint32_t) (1 << 11) // bit 11
+#define CS_PIN (uint32_t) (1 << 1) // bit 8
+#define SDI_PIN (uint32_t) (1 << 0) // bit 9
+#define SDO_PIN (uint32_t) (1 << 2) // bit 10
+#define SCK_PIN (uint32_t) (1 << 3) // bit 11
 
 //#define SDI_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~(SDI_PIN))
 #define SDI_IN (volatile uint32_t) (reg_gpio_ena |= (SDI_PIN))
