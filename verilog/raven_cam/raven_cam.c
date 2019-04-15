@@ -339,11 +339,15 @@ void main()
         // read and display real-time clock
         read_rtc();
 
+        spi_start();
         spi_write(0x03);
-        for (j = 0; j < 170000 * m; j++); // 2 sec
-        spi_write(0xC3);
+        spi_stop();
+        for (j = 0; j < 170000 * m; j++); // 1 sec
 
-        for (j = 0; j < 350000 * m; j++); // 2 sec
+        spi_start();
+        spi_write(0xC3);
+        spi_stop();
+        for (j = 0; j < 170000 * m; j++); // 1 sec
 
 	}
 }
