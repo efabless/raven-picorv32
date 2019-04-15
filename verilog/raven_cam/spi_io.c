@@ -27,7 +27,8 @@ void spi_delay()
 
 //	for (int j = 0; j < 200000; j++);  // 1 secs
 //	for (int j = 0; j < 100000; j++);  // 0.5 secs
-	for (int j = 0; j < 1; j++);  // ~23 usec (measured)
+	for (int j = 0; j < 100; j++);  // ~23 usec (measured)
+//	for (int j = 0; j < 1; j++);  // ~23 usec (measured)
 
 }
 
@@ -54,16 +55,20 @@ void spi_write_bit(volatile uint32_t b)
 {
     volatile uint32_t clk;
 
-    SCK_HIGH;
+//    SCK_HIGH;
 
     if ( b > 0 )
         SDO_HIGH;
     else
         SDO_LOW;
 
+    SCK_HIGH;
+
     spi_delay();
 
     SCK_LOW;
+
+    spi_delay();
 
 }
 

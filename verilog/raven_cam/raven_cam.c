@@ -306,6 +306,9 @@ void main()
 	/* the configuration register read/write functions.		*/
 
 	set_flash_latency(8);
+	reg_spictrl = 0x80080000;
+
+	m = 1;
 
 	// NOTE: Crystal on testboard running at 12.5MHz
 	// Internal clock is 8x crystal, or 100MHz
