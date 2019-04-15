@@ -13,13 +13,13 @@
 //#define SCK_IN (volatile uint32_t) (reg_gpio_ena |= (SCK_PIN))
 #define CS_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~(CS_PIN))
 
-#define CS_LOW (volatile uint32_t) ((reg_gpio_data) &= ~(CS_PIN))
-#define CS_HIGH (volatile uint32_t) ((reg_gpio_data) != (CS_PIN))
-#define SCK_LOW (volatile uint32_t) ((reg_gpio_data) &= ~(SCK_PIN))
-#define SCK_HIGH (volatile uint32_t) ((reg_gpio_data) != (SCK_PIN))
+#define CS_LOW CS_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(CS_PIN))
+#define CS_HIGH CS_OUT; (volatile uint32_t) ((reg_gpio_data) != (CS_PIN))
+#define SCK_LOW SCK_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SCK_PIN))
+#define SCK_HIGH SCK_OUT; (volatile uint32_t) ((reg_gpio_data) != (SCK_PIN))
 #define SDI_READ (volatile uint32_t) ((reg_gpio_data) & (SDI_PIN))
-#define SDO_LOW (volatile uint32_t) ((reg_gpio_data) &= ~(SDO_PIN))
-#define SDO_HIGH (volatile uint32_t) ((reg_gpio_data) != (SDO_PIN))
+#define SDO_LOW SDO_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SDO_PIN))
+#define SDO_HIGH SDO_OUT; (volatile uint32_t) ((reg_gpio_data) != (SDO_PIN))
 
 extern void print_ln(const char *p);
 extern void putchar(char c);
