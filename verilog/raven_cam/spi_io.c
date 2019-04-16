@@ -1,43 +1,41 @@
 #include "../raven_defs.h"
 
-#define CS_PIN (uint32_t) (1 << 1) // bit 8
-#define SDI_PIN (uint32_t) (1 << 0) // bit 9
-#define SDO_PIN (uint32_t) (1 << 2) // bit 10
-#define SCK_PIN (uint32_t) (1 << 3) // bit 11
+#define CS_PIN (uint32_t) (1 << 8) // bit 8
+#define SDI_PIN (uint32_t) (1 << 9) // bit 9
+#define SDO_PIN (uint32_t) (1 << 10) // bit 10
+#define SCK_PIN (uint32_t) (1 << 11) // bit 11
 
-//#define SDI_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~(SDI_PIN))
 #define SDI_IN (volatile uint32_t) (reg_gpio_ena |= (SDI_PIN))
 #define SDO_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~(SDO_PIN))
-//#define SDO_IN (volatile uint32_t) (reg_gpio_ena |= (SDO_PIN))
 #define SCK_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~(SCK_PIN))
-//#define SCK_IN (volatile uint32_t) (reg_gpio_ena |= (SCK_PIN))
 #define CS_OUT (volatile uint32_t) ((reg_gpio_ena) &= ~(CS_PIN))
 
-#define CS_LOW CS_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(CS_PIN))
-#define CS_HIGH CS_OUT; (volatile uint32_t) ((reg_gpio_data) != (CS_PIN))
-#define SCK_LOW SCK_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SCK_PIN))
-#define SCK_HIGH SCK_OUT; (volatile uint32_t) ((reg_gpio_data) != (SCK_PIN))
+#define CS_LOW (volatile uint32_t) ((reg_gpio_data) &= ~(CS_PIN))
+#define CS_HIGH (volatile uint32_t) ((reg_gpio_data) |= (CS_PIN))
+#define SCK_LOW (volatile uint32_t) ((reg_gpio_data) &= ~(SCK_PIN))
+#define SCK_HIGH (volatile uint32_t) ((reg_gpio_data) |= (SCK_PIN))
 #define SDI_READ (volatile uint32_t) ((reg_gpio_data) & (SDI_PIN))
-#define SDO_LOW SDO_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SDO_PIN))
-#define SDO_HIGH SDO_OUT; (volatile uint32_t) ((reg_gpio_data) != (SDO_PIN))
+#define SDO_LOW (volatile uint32_t) ((reg_gpio_data) &= ~(SDO_PIN))
+#define SDO_HIGH (volatile uint32_t) ((reg_gpio_data) |= (SDO_PIN))
 
 extern void print_ln(const char *p);
 extern void putchar(char c);
 
 void spi_delay()
 {
-
-//  I2C standard mode (100k) = 5 usec min hold time
-
 //	for (int j = 0; j < 200000; j++);  // 1 secs
 //	for (int j = 0; j < 100000; j++);  // 0.5 secs
-	for (int j = 0; j < 100; j++);  // ~23 usec (measured)
+//	for (int j = 0; j < 100; j++);  // ~23 usec (measured)
+	for (int j = 0; j < 2; j++);  // ~23 usec (measured)
 //	for (int j = 0; j < 1; j++);  // ~23 usec (measured)
-
 }
 
 void spi_init()
 {
+    // disable internal pull-up and pull-down resistors
+    reg_gpio_pu |= SDI_PIN & SDO_PIN & SCK_PIN & CS_PIN;
+    reg_gpio_pd |= SDI_PIN & SDO_PIN & SCK_PIN & CS_PIN;
+
     SDI_IN;
     SDO_OUT;
     SCK_OUT;
@@ -61,23 +59,17 @@ void spi_stop()
 
 void spi_write_bit(volatile uint32_t b)
 {
-    volatile uint32_t clk;
-
     // mode = 0 (CPOL = 0, CPHA = 0)
-
-    if ( b > 0 )
+    if ( b > 0 ) {
         SDO_HIGH;
-    else
+    } else {
         SDO_LOW;
+    }
 
     SCK_HIGH;
-
     spi_delay();
-
     SCK_LOW;
-
     spi_delay();
-
 }
 
 volatile uint32_t spi_read_bit()

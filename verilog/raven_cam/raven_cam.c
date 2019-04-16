@@ -23,6 +23,7 @@ extern void spi_stop();
 extern uint32_t spi_write(volatile uint32_t data);
 extern uint32_t spi_read(bool ack);
 
+
 // --------------------------------------------------------
 // Firmware routines
 // --------------------------------------------------------
@@ -61,6 +62,18 @@ void set_flash_latency(uint8_t value)
 }
 
 //--------------------------------------------------------------
+
+void flash_led(int led, bool on)
+{
+    uint32_t pin = (1 << led);
+    reg_gpio_ena &= ~(pin);
+
+    if (on)
+        reg_gpio_data |= pin;
+    else
+        reg_gpio_data &= ~(pin);
+
+}
 
 void putchar(char c)
 {
@@ -310,6 +323,10 @@ void main()
 
 	m = 1;
 
+    // disable all pull-up and pull-down gpio resistors
+	reg_gpio_pu = 0xffff;
+	reg_gpio_pd = 0xffff;
+
 	// NOTE: Crystal on testboard running at 12.5MHz
 	// Internal clock is 8x crystal, or 100MHz
 	// Divided by clkdiv is 9.6 kHz
@@ -333,17 +350,23 @@ void main()
     cmd_echo();
 
     print("\n\n");
+    print_ln("Starting main loop...\n");
+
+	int led_a = 6;
+	int led_b = 7;
 
 	while (1) {
 
         // read and display real-time clock
-//        read_rtc();
+        read_rtc();
 
+        flash_led(led_a, true); flash_led(led_b, false);
         spi_start();
         spi_write(0x03);
         spi_stop();
         for (j = 0; j < 170000 * m; j++); // 1 sec
 
+        flash_led(led_a, false); flash_led(led_b, true);
         spi_start();
         spi_write(0xC3);
         spi_stop();

@@ -31,6 +31,10 @@ void i2c_delay()
 
 void i2c_init()
 {
+    // enable internal pull-up and disable internal pull-down resistors
+    reg_gpio_pu &= ~(SCL_PIN & SDA_PIN);
+    reg_gpio_pd |= SCL_PIN & SDA_PIN;
+
     SDA_HIGH;
     SCL_HIGH;
     i2c_delay();
