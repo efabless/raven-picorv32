@@ -14,14 +14,14 @@ extern uint32_t i2c_read(bool ack);
 #define BCD_DIGIT0(x) (x & (uint32_t)0x000F)
 #define BCD_DIGIT1(x) ((x >> 4) & (uint32_t)0x000F)
 
-extern void write_spi_slave(uint32_t slave_addr, uint32_t word_addr, uint32_t data);
-extern uint32_t read_spi_slave_byte(uint32_t slave_addr, uint32_t word_addr);
-extern void read_spi_slave_bytes(uint32_t slave_addr, uint32_t word_addr, uint32_t *data, int len);
+extern void write_spi_slave(uint32_t slave_addr, uint32_t data);
+extern uint32_t read_spi_slave_byte(uint32_t slave_addr);
+extern void read_spi_slave_bytes(uint32_t slave_addr, uint32_t *data, int len);
 extern void spi_init();
 extern void spi_start();
 extern void spi_stop();
 extern uint32_t spi_write(volatile uint32_t data);
-extern uint32_t spi_read(bool ack);
+extern uint32_t spi_read();
 
 
 // --------------------------------------------------------
@@ -186,7 +186,6 @@ char getchar_prompt(char *prompt)
 	uint32_t cycles_begin, cycles_now, cycles;
 	__asm__ volatile ("rdcycle %0" : "=r"(cycles_begin));
 
-//	reg_leds = ~0;
 
 	if (prompt)
 		print(prompt);
@@ -198,12 +197,10 @@ char getchar_prompt(char *prompt)
 			if (prompt)
 				print(prompt);
 			cycles_begin = cycles_now;
-//			reg_leds = ~reg_leds;
 		}
 		c = reg_uart_data;
 	}
 
-//	reg_leds = 0;
 	return c;
 }
 
@@ -264,8 +261,6 @@ void read_rtc()
 {
     uint32_t data[2];
 
-//    rtc_stop();
-
 //    data = read_i2c_slave_byte(RTC_I2C_ADDR, 0x00); // RTC DS3231
 
     read_i2c_slave_bytes(RTC_I2C_ADDR, 0x02, data, 3); // RTC PCF8563
@@ -274,7 +269,6 @@ void read_rtc()
     data[1] &= (uint32_t) 0x007F;
     data[2] &= (uint32_t) 0x003F;
 
-//    clear();
     print("\r");
     print("Time = ");
     print_digit(BCD_DIGIT1(data[2]));
@@ -287,7 +281,6 @@ void read_rtc()
     print_digit(BCD_DIGIT0(data[0]));
     print("     ");
 
-//    rtc_run();
 }
 
 // ----------------------------------------------------------------------
@@ -347,8 +340,6 @@ void main()
     print("Press ENTER to continue..\n");
     while (getchar() != '\r') {}
 
-    cmd_echo();
-
     print("\n\n");
     print_ln("Starting main loop...\n");
 
@@ -358,19 +349,25 @@ void main()
 	while (1) {
 
         // read and display real-time clock
-        read_rtc();
+//        read_rtc();
+        if (getchar() == ' ') {
+            write_spi_slave(0x04, 0x01);
+            print_ln("Camera started\n");
+            while !(read_spi_slave_byte(0x41) & 0x04) {};
+            print_ln("Camera finished\n");
+        }
 
-        flash_led(led_a, true); flash_led(led_b, false);
-        spi_start();
-        spi_write(0x03);
-        spi_stop();
-        for (j = 0; j < 170000 * m; j++); // 1 sec
+//        flash_led(led_a, true); flash_led(led_b, false);
+//        spi_start();
+//        spi_write(0x03);
+//        spi_stop();
+//        for (j = 0; j < 170000 * m; j++); // 1 sec
 
-        flash_led(led_a, false); flash_led(led_b, true);
-        spi_start();
-        spi_write(0xC3);
-        spi_stop();
-        for (j = 0; j < 170000 * m; j++); // 1 sec
+//        flash_led(led_a, false); flash_led(led_b, true);
+//        spi_start();
+//        spi_write(0xC3);
+//        spi_stop();
+//        for (j = 0; j < 170000 * m; j++); // 1 sec
 
 	}
 }

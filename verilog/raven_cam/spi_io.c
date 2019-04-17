@@ -76,37 +76,33 @@ volatile uint32_t spi_read_bit()
 {
 
     volatile uint32_t b;
-    volatile uint32_t clk;
 
-    SCK_HIGH;
+    SDO_HIGH;
     spi_delay();
-    SCK_LOW;
+    SCK_HIGH;
 
-    if ( SDI_IN)
+    if (SDI_IN)
         b = 1;
     else
         b = 0;
 
+    SDO_LOW;
+    SCK_LOW;
+
     return b;
 }
 
-bool spi_write(volatile uint32_t data)
+void spi_write(volatile uint32_t data)
 {
-    uint32_t ack;
-
  	/* 8 bits */
 	for (int i = 0; i < 8; i++)
 	{
 	    spi_write_bit(data & (uint32_t) 0x0080);
       	data  <<= 1;
 	}
-
-//	ack = spi_read_bit();
-
-	return ack;
 }
 
-volatile uint32_t spi_read(bool ack)
+volatile uint32_t spi_read()
 {
 	volatile uint32_t data;
 
@@ -117,40 +113,30 @@ volatile uint32_t spi_read(bool ack)
       	data |= spi_read_bit();
 	}
 
-//	if (ack)
-//	    spi_write_bit(0);
-//	else
-//	    spi_write_bit(1);
-
    return data;
 }
 
-void write_spi_slave(volatile uint32_t slave_addr, volatile uint32_t word_addr, volatile uint32_t data)
+void write_spi_slave(volatile uint32_t slave_addr, volatile uint32_t data)
 {
   	spi_start();
-   	spi_write(slave_addr);
-    spi_write(word_addr);
+   	spi_write(slave_addr | (uint32_t) 0x0080);  // MSB set for write
    	spi_write(data);
    	spi_stop();
 }
 
-uint32_t read_spi_slave_byte(volatile uint32_t slave_addr, volatile uint32_t word_addr)
+uint32_t read_spi_slave_byte(volatile uint32_t slave_addr)
 {
    	volatile uint32_t data;
 
   	spi_start();
-   	spi_write(slave_addr);
-    spi_write(word_addr);
-
-    spi_start();
-    spi_write(slave_addr | (uint32_t) 0x0001);  // addr + read mode
-	data = spi_read(false);
+   	spi_write(slave_addr); // MSB clear for write
+	data = spi_read();
 	spi_stop();
 
    	return data;
 }
 
-void read_spi_slave_bytes(volatile uint32_t slave_addr, volatile uint32_t word_addr, volatile uint32_t *data, int len)
+void read_spi_slave_bytes(volatile uint32_t slave_addr, volatile uint32_t *data, int len)
 {
    	int i;
 
