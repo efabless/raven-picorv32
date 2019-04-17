@@ -307,7 +307,6 @@ void main()
 	uint32_t dacval;
 	uint32_t data, data2;
 	char k;
-	int done = 0;
 
 	/* Note that it definitely does not work in simulation because	*/
 	/* the behavioral verilog for the SPI flash does not support	*/
@@ -363,12 +362,13 @@ void main()
             write_spi_slave(0x04, 0x01);
 
             // wait for status
-            done = 0;
-            while (!done) {
+            i = 0;
+            while (i > 150000) {
                 data = read_spi_slave_byte(0x41);
                 if (data & 0x08) {
-                    done = 1;
+                    i = 150000;
                 }
+                i++;
             };
             print("0x"); print_hex(data, 2);
 

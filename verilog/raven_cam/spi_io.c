@@ -83,6 +83,7 @@ volatile uint32_t spi_read_bit()
     spi_delay();
     SCK_HIGH;
 
+    SDI_IN;
     if (SDI_READ)
         b = 1;
     else
