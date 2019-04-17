@@ -343,7 +343,7 @@ void main()
     while (getchar() != '\r') {}
 
     print("\n\n");
-    print_ln("Starting main loop...\n");
+    print("Starting main loop...\n");
 
 	int led_a = 6;
 	int led_b = 7;
