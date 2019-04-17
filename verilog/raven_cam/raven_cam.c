@@ -306,6 +306,8 @@ void main()
 	uint32_t adcval;
 	uint32_t dacval;
 	uint32_t data, data2;
+	char k;
+	int done = 0;
 
 	/* Note that it definitely does not work in simulation because	*/
 	/* the behavioral verilog for the SPI flash does not support	*/
@@ -351,26 +353,52 @@ void main()
         // read and display real-time clock
 //        read_rtc();
 
+        k = getchar();
+
         // spacebar to trigger camera via SPI
-        if (getchar() == ' ') {
+        if (k == ' ') {
             flash_led(led_a, true); flash_led(led_b, false);
 
             // trigger capture
             write_spi_slave(0x04, 0x01);
 
             // wait for status
-            while (!(read_spi_slave_byte(0x41) & 0x04)) {};
-
-            // check bus mode
-            data = read_spi_slave_byte(0x02);
+            while (!done) {
+                data = read_spi_slave_byte(0x41);
+                if (data & 0x08) {
+                    done = 1;
+                }
+            };
             print("0x"); print_hex(data, 2);
+
+            // read registers
+            data = read_spi_slave_byte(0x02);
+            print("   ");
+            print("0x"); print_hex(data, 2);
+
+            data = read_spi_slave_byte(0x40);
+            print("   ");
+            print("0x"); print_hex(data, 2);
+
+            data = read_spi_slave_byte(0x42);
+            print("   ");
+            print("0x"); print_hex(data, 2);
+
+            data = read_spi_slave_byte(0x43);
+            print("   ");
+            print("0x"); print_hex(data, 2);
+
+            data = read_spi_slave_byte(0x44);
+            print("   ");
+            print("0x"); print_hex(data, 2);
+
             print("\n");
 
             flash_led(led_a, false); flash_led(led_b, true);
         }
 
         // 'i' to trigger camera via I2C
-        if (getchar() == 'i') {
+        if (k == 'i') {
             flash_led(led_a, true); flash_led(led_b, false);
 
             // set register bank 2
@@ -378,7 +406,7 @@ void main()
 
             // read register
             data = read_i2c_slave_byte(0x60, 0x0A);
-            data2 = read_i2c_slave_byte(0x60, 0x0A);
+            data2 = read_i2c_slave_byte(0x60, 0x0B);
             print("0x"); print_hex(data, 2);
             print("   ");
             print("0x"); print_hex(data2, 2);
