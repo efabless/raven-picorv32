@@ -345,25 +345,35 @@ void main()
 
 	int led_a = 6;
 	int led_b = 7;
+	unit32_t data;
 
 	while (1) {
 
         // read and display real-time clock
 //        read_rtc();
+
+        // spacebar to trigger camera
         if (getchar() == ' ') {
+            flash_led(led_a, true); flash_led(led_b, false);
+
+            // trigger capture
             write_spi_slave(0x04, 0x01);
-            print_ln("Camera started\n");
-            while (!(read_spi_slave_byte(0x41) & 0x04)) {};
-            print_ln("Camera finished\n");
+
+            // wait for status
+            while !(read_spi_slave_byte(0x41) & 0x04) {};
+
+            // check bus mode
+            data = read_spi_slave_byte(0x02);
+            print("0x"); print_hex(data, 2);
+
+            flash_led(led_a, false); flash_led(led_b, true);
         }
 
-//        flash_led(led_a, true); flash_led(led_b, false);
 //        spi_start();
 //        spi_write(0x03);
 //        spi_stop();
 //        for (j = 0; j < 170000 * m; j++); // 1 sec
 
-//        flash_led(led_a, false); flash_led(led_b, true);
 //        spi_start();
 //        spi_write(0xC3);
 //        spi_stop();
