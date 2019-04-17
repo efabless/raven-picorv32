@@ -363,6 +363,7 @@ void main()
             write_spi_slave(0x04, 0x01);
 
             // wait for status
+            done = 0;
             while (!done) {
                 data = read_spi_slave_byte(0x41);
                 if (data & 0x08) {
