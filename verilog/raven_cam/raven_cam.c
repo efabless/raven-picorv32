@@ -345,7 +345,6 @@ void main()
 
 	int led_a = 6;
 	int led_b = 7;
-	unit32_t data;
 
 	while (1) {
 
@@ -360,7 +359,7 @@ void main()
             write_spi_slave(0x04, 0x01);
 
             // wait for status
-            while !(read_spi_slave_byte(0x41) & 0x04) {};
+            while (!(read_spi_slave_byte(0x41) & 0x04)) {};
 
             // check bus mode
             data = read_spi_slave_byte(0x02);
