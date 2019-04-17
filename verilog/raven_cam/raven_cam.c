@@ -359,8 +359,8 @@ void main()
             flash_led(led_a, true); flash_led(led_b, false);
 
             // trigger capture
-            write_spi_slave(0x41, 0x01);
             write_spi_slave(0x04, 0x01);
+            write_spi_slave(0x04, 0x02);
 
             // wait for status
             i = 0;
