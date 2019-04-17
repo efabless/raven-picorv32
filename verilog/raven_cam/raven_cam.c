@@ -305,7 +305,7 @@ void main()
 	uint32_t i, j, m, r, mode;
 	uint32_t adcval;
 	uint32_t dacval;
-	uint32_t data;
+	uint32_t data, data2;
 
 	/* Note that it definitely does not work in simulation because	*/
 	/* the behavioral verilog for the SPI flash does not support	*/
@@ -351,7 +351,7 @@ void main()
         // read and display real-time clock
 //        read_rtc();
 
-        // spacebar to trigger camera
+        // spacebar to trigger camera via SPI
         if (getchar() == ' ') {
             flash_led(led_a, true); flash_led(led_b, false);
 
@@ -364,19 +364,30 @@ void main()
             // check bus mode
             data = read_spi_slave_byte(0x02);
             print("0x"); print_hex(data, 2);
+            print("\n");
 
             flash_led(led_a, false); flash_led(led_b, true);
         }
 
-//        spi_start();
-//        spi_write(0x03);
-//        spi_stop();
-//        for (j = 0; j < 170000 * m; j++); // 1 sec
+        // 'i' to trigger camera via I2C
+        if (getchar() == 'i') {
+            flash_led(led_a, true); flash_led(led_b, false);
 
-//        spi_start();
-//        spi_write(0xC3);
-//        spi_stop();
-//        for (j = 0; j < 170000 * m; j++); // 1 sec
+            // set register bank 2
+            write_i2c_slave(0x60, 0xff, 0x01);
+
+            // read register
+            data = read_i2c_slave_byte(0x60, 0x0A);
+            data2 = read_i2c_slave_byte(0x60, 0x0A);
+            print("0x"); print_hex(data, 2);
+            print("   ");
+            print("0x"); print_hex(data2, 2);
+            print("\n");
+
+            flash_led(led_a, false); flash_led(led_b, true);
+        }
+
+        for (j = 0; j < 170000; j++); // 1 sec delay
 
 	}
 }

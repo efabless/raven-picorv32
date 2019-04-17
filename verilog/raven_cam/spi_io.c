@@ -36,6 +36,8 @@ void spi_init()
     reg_gpio_pu |= SDI_PIN & SDO_PIN & SCK_PIN & CS_PIN;
     reg_gpio_pd |= SDI_PIN & SDO_PIN & SCK_PIN & CS_PIN;
 
+    reg_gpio_pd &= ~(CS_PIN);  // enable pull-down on select
+
     SDI_IN;
     SDO_OUT;
     SCK_OUT;
