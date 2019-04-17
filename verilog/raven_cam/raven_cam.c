@@ -353,7 +353,7 @@ void main()
         if (getchar() == ' ') {
             write_spi_slave(0x04, 0x01);
             print_ln("Camera started\n");
-            while !(read_spi_slave_byte(0x41) & 0x04) {};
+            while (!(read_spi_slave_byte(0x41) & 0x04)) {};
             print_ln("Camera finished\n");
         }
 

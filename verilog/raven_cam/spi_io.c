@@ -142,7 +142,6 @@ void read_spi_slave_bytes(volatile uint32_t slave_addr, volatile uint32_t *data,
 
   	spi_start();
    	spi_write(slave_addr);
-   	spi_write(word_addr);
 
     spi_start();
     spi_write(slave_addr | (uint32_t) 0x0001);  // addr + read mode
