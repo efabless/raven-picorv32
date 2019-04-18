@@ -122,8 +122,8 @@ volatile uint32_t spi_read()
 void write_spi_slave(volatile uint32_t slave_addr, volatile uint32_t data)
 {
   	spi_start();
-//   	spi_write(slave_addr | (uint32_t) 0x0080);  // MSB set for write
-   	spi_write(slave_addr);
+   	spi_write(slave_addr | (uint32_t) 0x0080);  // MSB set for write
+//   	spi_write(slave_addr);
    	spi_write(data);
    	spi_stop();
 }
