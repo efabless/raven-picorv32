@@ -1,4 +1,5 @@
 #include "../raven_defs.h"
+#include "i2c_io.h"
 
 #define SDA_PIN (uint32_t) (1 << 14) // bit 14
 #define SCL_PIN (uint32_t) (1 << 15) // bit 15
