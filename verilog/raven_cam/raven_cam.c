@@ -347,6 +347,10 @@ void main()
 	int led_a = 6;
 	int led_b = 7;
 
+	// reset CPLD
+    write_spi_slave(0x07, 0x80);
+    write_spi_slave(0x07, 0x00);
+
 	while (1) {
 
         // read and display real-time clock
@@ -358,8 +362,10 @@ void main()
         if (k == ' ') {
             flash_led(led_a, true); flash_led(led_b, false);
 
-            // trigger capture
+            // reset FIFO and flag
             write_spi_slave(0x04, 0x01);
+            write_spi_slave(0x04, 0x18);
+            // trigger capture
             write_spi_slave(0x04, 0x02);
 
             // wait for status
