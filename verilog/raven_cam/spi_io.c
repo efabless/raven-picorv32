@@ -1,4 +1,5 @@
 #include "../raven_defs.h"
+#include "spi_io.h"
 
 #define CS_PIN (uint32_t) (1 << 8) // bit 8
 #define SDI_PIN (uint32_t) (1 << 9) // bit 9
@@ -17,9 +18,6 @@
 #define SDI_READ (volatile uint32_t) ((reg_gpio_data) & (SDI_PIN))
 #define SDO_LOW (volatile uint32_t) ((reg_gpio_data) &= ~(SDO_PIN))
 #define SDO_HIGH (volatile uint32_t) ((reg_gpio_data) |= (SDO_PIN))
-
-extern void print_ln(const char *p);
-extern void putchar(char c);
 
 void spi_delay()
 {
@@ -123,7 +121,6 @@ void write_spi_slave(volatile uint32_t slave_addr, volatile uint32_t data)
 {
   	spi_start();
    	spi_write(slave_addr | (uint32_t) 0x0080);  // MSB set for write
-//   	spi_write(slave_addr);
    	spi_write(data);
    	spi_stop();
 }
