@@ -1,27 +1,11 @@
 #include "../raven_defs.h"
+#include "cam.h"
+#include "spi_io.h"
+#include "i2c_io.h"
 
-extern void write_i2c_slave(uint32_t slave_addr, uint32_t word_addr, uint32_t data);
-extern uint32_t read_i2c_slave_byte(uint32_t slave_addr, uint32_t word_addr);
-extern void read_i2c_slave_bytes(uint32_t slave_addr, uint32_t word_addr, uint32_t *data, int len);
-extern void i2c_init();
-extern void i2c_start();
-extern void i2c_stop();
-extern uint32_t i2c_write(volatile uint32_t data);
-extern uint32_t i2c_read(bool ack);
 
-#define RTC_I2C_ADDR (uint32_t) 0xA2 // RTC PCF8563
-//#define RTC_I2C_ADDR (uint32_t)0xD0 // RTC DS3231
 #define BCD_DIGIT0(x) (x & (uint32_t)0x000F)
 #define BCD_DIGIT1(x) ((x >> 4) & (uint32_t)0x000F)
-
-extern void write_spi_slave(uint32_t slave_addr, uint32_t data);
-extern uint32_t read_spi_slave_byte(uint32_t slave_addr);
-extern void read_spi_slave_bytes(uint32_t slave_addr, uint32_t *data, int len);
-extern void spi_init();
-extern void spi_start();
-extern void spi_stop();
-extern uint32_t spi_write(volatile uint32_t data);
-extern uint32_t spi_read();
 
 
 // --------------------------------------------------------
@@ -347,15 +331,25 @@ void main()
 	int led_a = 6;
 	int led_b = 7;
 
-    // write and read from test register
-    write_spi_slave(0x00, 0x55);
-    data = read_spi_slave_byte(0x00);
-    print("read test value -> 0x"); print_hex(data, 2);
-    print("\n");
+    // test spi with write and read from test register
+    if (check_spi()) {
+        print("SPI communication successful.\n");
+    } else {
+        print("SPI communication FAILED!\n");
+    }
+
+    // test if camera is present
+    if (check_camera()) {
+        print("Camera located. \n");
+    } else {
+        print("Camera NOT FOUND!\n");
+    }
 
 	// reset CPLD
-    write_spi_slave(0x07, 0x80);
-    write_spi_slave(0x07, 0x00);
+	reset_cpld();
+
+	init_camera();
+	set_JPEG_size();
 
 	while (1) {
 
@@ -369,10 +363,11 @@ void main()
             flash_led(led_a, true); flash_led(led_b, false);
 
             // reset FIFO and flag
-            write_spi_slave(0x04, 0x01);
-            write_spi_slave(0x04, 0x18);
+            flush_fifo();
+            clear_fifo_flag();
+
             // trigger capture
-            write_spi_slave(0x04, 0x02);
+            start_capture();
 
             // wait for status
             i = 0;
