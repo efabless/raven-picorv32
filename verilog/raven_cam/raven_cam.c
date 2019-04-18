@@ -347,6 +347,12 @@ void main()
 	int led_a = 6;
 	int led_b = 7;
 
+    // write and read from test register
+    write_spi_slave(0x00, 0x55);
+    data = read_spi_slave_byte(0x00);
+    print("read test value -> 0x"); print_hex(data, 2);
+    print("\n");
+
 	// reset CPLD
     write_spi_slave(0x07, 0x80);
     write_spi_slave(0x07, 0x00);
