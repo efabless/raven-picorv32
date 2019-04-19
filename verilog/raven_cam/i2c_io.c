@@ -16,9 +16,6 @@
 #define SDA_LOW SDA_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SDA_PIN))
 #define SDA_READ (volatile uint32_t) ((reg_gpio_data) & (SDA_PIN))
 
-extern void print_ln(const char *p);
-extern void putchar(char c);
-
 void i2c_delay()
 {
 

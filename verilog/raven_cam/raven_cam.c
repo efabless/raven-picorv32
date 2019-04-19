@@ -349,7 +349,7 @@ void main()
 	reset_cpld();
 
 	init_camera();
-	set_JPEG_size();
+	set_JPEG_size(0);
 
 	while (1) {
 
