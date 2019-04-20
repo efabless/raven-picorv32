@@ -38,8 +38,8 @@
 //typedef unsigned char uint8_t;
 
 struct sensor_reg {
-	uint8_t reg;
-	uint8_t val;
+	volatile uint32_t reg;
+	volatile uint32_t val;
 };
 
 /****************************************************/

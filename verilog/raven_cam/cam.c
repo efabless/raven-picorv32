@@ -45,9 +45,18 @@ void init_camera() {
     write_sensor_reg(0x12, 0x80);
     _delay_ms(1000);
 
+    print("jpeg init");
     write_sensor_reg_list(OV2640_JPEG_INIT);
+    read_sensor_reg_list(OV2640_JPEG_INIT);
+
+    print("yuv422");
     write_sensor_reg_list(OV2640_YUV422);
+    read_sensor_reg_list(OV2640_YUV422);
+
+    print("ov2640 jpeg");
     write_sensor_reg_list(OV2640_JPEG);
+    read_sensor_reg_list(OV2640_JPEG);
+
     write_sensor_reg(0xff, 0x01);
     write_sensor_reg(0x15, 0x00);
 //    write_sensor_reg_list(OV2640_160x120_JPEG);
@@ -67,8 +76,8 @@ void set_frame_count() {
 }
 
 void flush_fifo(void) {
-//	write_reg(ARDUCHIP_FIFO, FIFO_CLEAR_MASK);
-	write_reg(ARDUCHIP_FIFO, FIFO_RDPTR_RST_MASK);
+	write_reg(ARDUCHIP_FIFO, FIFO_CLEAR_MASK);
+//	write_reg(ARDUCHIP_FIFO, FIFO_RDPTR_RST_MASK);
 //	write_reg(ARDUCHIP_FIFO, FIFO_RDPTR_RST_MASK | FIFO_WRPTR_RST_MASK);
 }
 
@@ -105,11 +114,13 @@ void write_sensor_reg_list(const struct sensor_reg reglist[]) {
         write_sensor_reg(reg_addr, reg_val);
         next++;
     }
+    _delay_ms(1000);
 }
 
 bool read_sensor_reg_list(const struct sensor_reg reglist[]) {
     uint8_t reg_addr = 0;
     uint8_t reg_val = 0, data;
+    bool status = true;
     const struct sensor_reg *next = reglist;
     while ((reg_addr != 0xff) | (reg_val != 0xff))
     {
@@ -117,15 +128,15 @@ bool read_sensor_reg_list(const struct sensor_reg reglist[]) {
         reg_val = next->val;
         read_sensor_reg(reg_addr, &data);
         if (data != reg_val) {
-            print("addr = 0x"); print_hex(reg_addr, 2);
+            print("compare error: addr = 0x"); print_hex(reg_addr, 2);
             print(" value = 0x"); print_hex(reg_val, 2);
             print(" data = 0x"); print_hex(data, 2);
             print("\n");
-            return false;
+            status = false;
          }
         next++;
     }
-    return true;
+    return status;
 }
 
 void read_sensor_reg(uint8_t addr, uint8_t* data) {
@@ -143,9 +154,10 @@ uint32_t read_fifo_length()
 }
 
 bool set_JPEG_size(uint8_t size) {
-    write_sensor_reg_list(OV2640_160x120_JPEG);
+//    write_sensor_reg_list(OV2640_160x120_JPEG);
+    write_sensor_reg_list(OV2640_320x240_JPEG);
     _delay_ms(1000);
-    return read_sensor_reg_list(OV2640_160x120_JPEG);
+    return read_sensor_reg_list(OV2640_320x240_JPEG);
 }
 
 void set_Light_Mode(uint8_t Light_Mode) {}
