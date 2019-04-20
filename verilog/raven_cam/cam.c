@@ -117,9 +117,9 @@ bool read_sensor_reg_list(const struct sensor_reg reglist[]) {
         reg_val = next->val;
         read_sensor_reg(reg_addr, &data);
         if (data != reg_val)
-            print("addr = 0x"); print_hex(reg_addr);
-            print(" value = 0x"); print_hex(reg_val);
-            print(" data = 0x"); print_hex(data);
+            print("addr = 0x"); print_hex(reg_addr, 2);
+            print(" value = 0x"); print_hex(reg_val, 2);
+            print(" data = 0x"); print_hex(data, 2);
             print("\n");
              return false;
         next++;
