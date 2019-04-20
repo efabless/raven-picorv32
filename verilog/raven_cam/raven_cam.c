@@ -318,7 +318,7 @@ void main()
 	for (j = 0; j < 700000 * m; j++);
 
 	// This should appear on the LCD display 4x20 characters.
-    print_ln("Starting...\n");
+    print("Starting...\n");
     i2c_init();
     spi_init();
 
@@ -355,8 +355,12 @@ void main()
 	reset_cpld();
 
 	init_camera();
-	set_JPEG_size(0);
+	if (!set_JPEG_size(0))
+	    print("set_JPEG_size FAILED!\n");
+
     for (j = 0; j < 170000; j++); // 1 sec delay
+    set_frame_count();
+
 
 
 	while (1) {
@@ -409,6 +413,10 @@ void main()
             data = read_spi_slave_byte(0x44);
             print("   ");
             print("0x"); print_hex(data, 2);
+
+            fifo_size = read_fifo_length();
+            print("   ");
+            print("0x"); print_hex(data, 6);
 
             print("\n");
 

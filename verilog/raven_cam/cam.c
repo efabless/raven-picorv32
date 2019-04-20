@@ -47,16 +47,21 @@ void init_camera() {
     write_sensor_reg_list(OV2640_JPEG);
     write_sensor_reg(0xff, 0x01);
     write_sensor_reg(0x15, 0x00);
-    write_sensor_reg_list(OV2640_160x120_JPEG);
+//    write_sensor_reg_list(OV2640_160x120_JPEG);
 //    write_sensor_reg_list(OV2640_320x240_JPEG);
     //write_sensor_reg(0xff, 0x00);
     //write_sensor_reg(0x44, 0x32);
 
 //    write_sensor_reg_list(OV2640_QVGA);
+    _delay_ms(1000);
 
+
+}
+
+void set_frame_count() {
     write_reg(0x01, 0x00); // set frame count to 1
     write_reg(0x02, 0x00); // set LCD bus mode to MCU
-
+    _delay_ms(1000);
 }
 
 void flush_fifo(void) {
@@ -120,6 +125,7 @@ uint32_t read_fifo_length()
 
 bool set_JPEG_size(uint8_t size) {
     write_sensor_reg_list(OV2640_160x120_JPEG);
+    _delay_ms(1000);
     return read_sensor_reg_list(OV2640_160x120_JPEG);
 }
 
