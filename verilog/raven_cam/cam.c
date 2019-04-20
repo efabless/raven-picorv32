@@ -2,6 +2,9 @@
 #include "spi_io.h"
 #include "i2c_io.h"
 
+extern void print(const char *p);
+extern void print_hex(uint32_t v, int digits);
+
 void _delay_ms(int v) {
     for (int j = 0; j < 170 * v; j++);
 }
@@ -114,6 +117,10 @@ bool read_sensor_reg_list(const struct sensor_reg reglist[]) {
         reg_val = next->val;
         read_sensor_reg(reg_addr, &data);
         if (data != reg_val)
+            print("addr = 0x"); print_hex(reg_addr);
+            print(" value = 0x"); print_hex(reg_val);
+            print(" data = 0x"); print_hex(data);
+            print("\n");
              return false;
         next++;
     }
