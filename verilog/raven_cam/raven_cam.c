@@ -356,6 +356,8 @@ void main()
 
 	init_camera();
 	set_JPEG_size(0);
+    for (j = 0; j < 170000; j++); // 1 sec delay
+
 
 	while (1) {
 
