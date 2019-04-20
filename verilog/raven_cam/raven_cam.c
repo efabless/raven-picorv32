@@ -339,11 +339,17 @@ void main()
     }
 
     // test if camera is present
-    if (check_camera()) {
-        print("Camera located. \n");
+    uint8_t vid, pid;
+    if (check_camera(&vid, &pid)) {
+        print("Camera Located (");
     } else {
-        print("Camera NOT FOUND!\n");
+        print("Camera NOT FOUND (");
     }
+    print("vid = 0x");
+    print_hex(vid,2);
+    print(", pid = 0x");
+    print_hex(pid,2);
+    print(")\n");
 
 	// reset CPLD
 	reset_cpld();
@@ -371,17 +377,18 @@ void main()
 
             // wait for status
             i = 0;
-            while (i > 150000) {
+            while (i < 100) {
                 data = read_spi_slave_byte(0x41);
                 if (data & 0x08) {
-                    i = 150000;
+                    i = 100;
                 }
                 i++;
+                print(" 0x"); print_hex(data, 2);
             };
-            print("0x"); print_hex(data, 2);
+            print("\n\n0x"); print_hex(data, 2);
 
             // read registers
-            data = read_spi_slave_byte(0x02);
+            data = read_spi_slave_byte(0x01);
             print("   ");
             print("0x"); print_hex(data, 2);
 

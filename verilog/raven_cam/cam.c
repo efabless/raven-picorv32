@@ -17,12 +17,14 @@ bool check_spi() {
     return false;
 }
 
-bool check_camera() {
-    uint8_t vid, pid;
+bool check_camera(uint8_t *vid, uint8_t *pid) {
+//    uint8_t vid, pid;
     write_sensor_reg(0xff, 0x01);
-    read_sensor_reg(OV2640_CHIPID_HIGH, &vid);
-    read_sensor_reg(OV2640_CHIPID_LOW, &pid);
-    if ((vid != 0x26 ) && (( pid != 0x41 ) || ( pid != 0x42 )))
+    read_sensor_reg(OV2640_CHIPID_HIGH, vid);
+    read_sensor_reg(OV2640_CHIPID_LOW, pid);
+    *vid &= (uint8_t) 0xff;
+    *pid &= (uint8_t) 0xff;
+    if ((*vid != 0x26 ) && (( *pid != 0x41 ) || ( *pid != 0x42 )))
         return false;
     else
         return true;
@@ -52,10 +54,15 @@ void init_camera() {
 
 //    write_sensor_reg_list(OV2640_QVGA);
 
+    write_reg(0x01, 0x00); // set frame count to 1
+    write_reg(0x02, 0x00); // set LCD bus mode to MCU
+
 }
 
 void flush_fifo(void) {
-	write_reg(ARDUCHIP_FIFO, FIFO_CLEAR_MASK);
+//	write_reg(ARDUCHIP_FIFO, FIFO_CLEAR_MASK);
+	write_reg(ARDUCHIP_FIFO, FIFO_RDPTR_RST_MASK);
+//	write_reg(ARDUCHIP_FIFO, FIFO_RDPTR_RST_MASK | FIFO_WRPTR_RST_MASK);
 }
 
 void start_capture(void) {
