@@ -91,11 +91,11 @@ void clear_fifo_flag(void) {
 
 uint8_t read_fifo(void) {}
 
-uint8_t read_reg(uint8_t addr) {
+uint8_t read_reg(uint32_t addr) {
     return read_spi_slave_byte(addr);
 }
 
-void write_reg(uint8_t addr, uint8_t data) {
+void write_reg(uint32_t addr, uint32_t data) {
     write_spi_slave(addr, data);
 }
 
@@ -104,8 +104,8 @@ void write_sensor_reg(uint8_t addr, uint8_t data) {
 }
 
 void write_sensor_reg_list(const struct sensor_reg reglist[]) {
-    uint8_t reg_addr = 0;
-    uint8_t reg_val = 0, data;
+    uint32_t reg_addr = 0;
+    uint32_t reg_val = 0, data;
     const struct sensor_reg *next = reglist;
     while ((reg_addr != 0xff) | (reg_val != 0xff))
     {
@@ -118,8 +118,8 @@ void write_sensor_reg_list(const struct sensor_reg reglist[]) {
 }
 
 bool read_sensor_reg_list(const struct sensor_reg reglist[]) {
-    uint8_t reg_addr = 0;
-    uint8_t reg_val = 0, data;
+    uint32_t reg_addr = 0;
+    uint32_t reg_val = 0, data;
     bool status = true;
     const struct sensor_reg *next = reglist;
     while ((reg_addr != 0xff) | (reg_val != 0xff))
@@ -139,7 +139,7 @@ bool read_sensor_reg_list(const struct sensor_reg reglist[]) {
     return status;
 }
 
-void read_sensor_reg(uint8_t addr, uint8_t* data) {
+void read_sensor_reg(uint32_t addr, uint32_t* data) {
     *data = read_i2c_slave_byte(SENSOR_ADDR, addr) & 0xff;
 }
 

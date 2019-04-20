@@ -215,14 +215,14 @@ void start_capture(void);
 void clear_fifo_flag(void);
 uint8_t read_fifo(void);
 
-uint8_t read_reg(uint8_t addr);
-void write_reg(uint8_t addr, uint8_t data);
+uint8_t read_reg(uint32_t addr);
+void write_reg(uint32_t addr, uint32_t data);
 
-void write_sensor_reg(uint8_t addr, uint8_t data);
+void write_sensor_reg(uint32_t addr, uint32_t data);
 void write_sensor_reg_list(const struct sensor_reg reglist[]);
 bool read_sensor_reg_list(const struct sensor_reg reglist[]);
 
-void read_sensor_reg(uint8_t addr, uint8_t* data);
+void read_sensor_reg(uint32_t addr, uint32_t* data);
 
 uint32_t read_fifo_length();
 void set_frame_count();
