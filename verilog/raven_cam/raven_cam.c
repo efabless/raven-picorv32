@@ -289,7 +289,7 @@ void main()
 	uint32_t i, j, m, r, mode;
 	uint32_t adcval;
 	uint32_t dacval;
-	uint32_t data, data2;
+	uint32_t data, data2, fifo_size;
 	char k;
 
 	/* Note that it definitely does not work in simulation because	*/
@@ -416,7 +416,7 @@ void main()
 
             fifo_size = read_fifo_length();
             print("   ");
-            print("0x"); print_hex(data, 6);
+            print("0x"); print_hex(fifo_size, 6);
 
             print("\n");
 

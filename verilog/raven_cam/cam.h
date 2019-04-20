@@ -219,12 +219,13 @@ uint8_t read_reg(uint8_t addr);
 void write_reg(uint8_t addr, uint8_t data);
 
 void write_sensor_reg(uint8_t addr, uint8_t data);
-bool write_sensor_reg_list(const struct sensor_reg reglist[]);
+void write_sensor_reg_list(const struct sensor_reg reglist[]);
+bool read_sensor_reg_list(const struct sensor_reg reglist[]);
 
 void read_sensor_reg(uint8_t addr, uint8_t* data);
 
 uint32_t read_fifo_length();
-void set_frame_count()
+void set_frame_count();
 
 bool set_JPEG_size(uint8_t size);
 void set_Light_Mode(uint8_t Light_Mode);

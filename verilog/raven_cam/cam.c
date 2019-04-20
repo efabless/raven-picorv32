@@ -24,7 +24,7 @@ bool check_camera(uint8_t *vid, uint8_t *pid) {
     read_sensor_reg(OV2640_CHIPID_LOW, pid);
     *vid &= (uint8_t) 0xff;
     *pid &= (uint8_t) 0xff;
-    if ((vid == 0x26 ) || ( pid == 0x41 ) || ( pid == 0x42 ))
+    if ((*vid == 0x26 ) || (*pid == 0x41 ) || (*pid == 0x42 ))
         return true;
     else
         return false;
@@ -54,7 +54,6 @@ void init_camera() {
 
 //    write_sensor_reg_list(OV2640_QVGA);
     _delay_ms(1000);
-
 
 }
 
@@ -92,8 +91,7 @@ void write_sensor_reg(uint8_t addr, uint8_t data) {
     write_i2c_slave(SENSOR_ADDR, addr, data);
 }
 
-
-void read_sensor_reg_list(const struct sensor_reg reglist[]) {
+void write_sensor_reg_list(const struct sensor_reg reglist[]) {
     uint8_t reg_addr = 0;
     uint8_t reg_val = 0, data;
     const struct sensor_reg *next = reglist;
@@ -101,7 +99,20 @@ void read_sensor_reg_list(const struct sensor_reg reglist[]) {
     {
         reg_addr = next->reg;
         reg_val = next->val;
-        write_sensor_reg(reg_addr, data);
+        write_sensor_reg(reg_addr, reg_val);
+        next++;
+    }
+}
+
+bool read_sensor_reg_list(const struct sensor_reg reglist[]) {
+    uint8_t reg_addr = 0;
+    uint8_t reg_val = 0, data;
+    const struct sensor_reg *next = reglist;
+    while ((reg_addr != 0xff) | (reg_val != 0xff))
+    {
+        reg_addr = next->reg;
+        reg_val = next->val;
+        read_sensor_reg(reg_addr, &data);
         if (data != reg_val)
              return false;
         next++;
