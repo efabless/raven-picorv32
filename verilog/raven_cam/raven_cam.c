@@ -339,7 +339,7 @@ void main()
     }
 
     // test if camera is present
-    uint8_t vid, pid;
+    uint32_t vid, pid;
     if (check_camera(&vid, &pid)) {
         print("Camera Located (");
     } else {

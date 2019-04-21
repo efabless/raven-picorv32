@@ -206,7 +206,7 @@ struct sensor_reg {
 #define Auto_Detection                 3
 
 bool check_spi();
-bool check_camera();
+bool check_camera(uint32_t *vid, uint32_t *pid);
 void reset_cpld();
 void init_camera();
 

@@ -20,7 +20,7 @@ bool check_spi() {
     return false;
 }
 
-bool check_camera(uint8_t *vid, uint8_t *pid) {
+bool check_camera(uint32_t *vid, uint32_t *pid) {
 //    uint8_t vid, pid;
     write_sensor_reg(0xff, 0x01);
     read_sensor_reg(OV2640_CHIPID_HIGH, vid);
@@ -99,7 +99,7 @@ void write_reg(uint32_t addr, uint32_t data) {
     write_spi_slave(addr, data);
 }
 
-void write_sensor_reg(uint8_t addr, uint8_t data) {
+void write_sensor_reg(uint32_t addr, uint32_t data) {
     write_i2c_slave(SENSOR_ADDR, addr, data);
 }
 
