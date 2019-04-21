@@ -28,6 +28,9 @@ hex:  ${PATTERN:=.hex}
 %.bin: %.elf
 	$(TOOLCHAIN_PATH)riscv32-unknown-elf-objcopy -O binary $< /dev/stdout | tail -c +1048577 > $@
 
+client: client.c
+    gcc client.c
+
 # ---- Clean ----
 
 clean:
