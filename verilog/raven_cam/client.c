@@ -132,20 +132,17 @@ int main()
 
     do {
         while (!kbhit()) {
-            if (n = read(fd, buf, sizeof(buf)))
+            if (n = read(fd, buf, sizeof(buf) - 1))
             {
                 buf[n] = '\0';
                 i = 0;
                 while (buf[i] != '\0')
                 {
-                    if (buf[i] == '\r')
-                        printf("\r");
-                    else
-                        putchar(buf[i++]);
+                    if (buf[i] == '\n')
+                        putchar('\r');
+                    putchar(buf[i++]);
                 }
             }
-//            printf("%s", buf);
-//            printf("%s", buf);
         }
         c = getch();
         n = write(fd, &c, 1);
