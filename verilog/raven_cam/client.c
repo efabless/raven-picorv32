@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <sys/select.h>
 
 
@@ -14,7 +15,7 @@ int set_interface_attribs (int fd, int speed, int parity)
         memset (&tty, 0, sizeof tty);
         if (tcgetattr (fd, &tty) != 0)
         {
-                error_message ("error %d from tcgetattr", errno);
+                printf("error %d from tcgetattr", errno);
                 return -1;
         }
 
@@ -42,7 +43,7 @@ int set_interface_attribs (int fd, int speed, int parity)
 
         if (tcsetattr (fd, TCSANOW, &tty) != 0)
         {
-                error_message ("error %d from tcsetattr", errno);
+                printf("error %d from tcsetattr", errno);
                 return -1;
         }
         return 0;
@@ -54,7 +55,7 @@ void set_blocking (int fd, int should_block)
         memset (&tty, 0, sizeof tty);
         if (tcgetattr (fd, &tty) != 0)
         {
-                error_message ("error %d from tggetattr", errno);
+                printf("error %d from tggetattr", errno);
                 return;
         }
 
@@ -62,7 +63,7 @@ void set_blocking (int fd, int should_block)
         tty.c_cc[VTIME] = 5;            // 0.5 seconds read timeout
 
         if (tcsetattr (fd, TCSANOW, &tty) != 0)
-                error_message ("error %d setting term attributes", errno);
+                printf("error %d setting term attributes", errno);
 }
 
 struct termios orig_termios;
@@ -95,7 +96,7 @@ int kbhit()
     return select(1, &fds, NULL, NULL, &tv);
 }
 
-int getch()
+char getch()
 {
     int r;
     unsigned char c;
@@ -111,11 +112,17 @@ int main()
 
     char *portname = "/dev/ttyUSB1";
     unsigned char buf[80];
-    int c, n;
-    int fd = open (portname, O_RDWR | O_NOCTTY | O_SYNC);
+    char c = ' ';
+    int n, i;
+    int fd = 0;
+
+    set_conio_terminal_mode();
+
+    fd = open (portname, O_RDWR | O_NOCTTY | O_SYNC);
+
     if (fd < 0)
     {
-            error_message ("error %d opening %s: %s", errno, portname, strerror (errno));
+            printf("error %d opening %s: %s", errno, portname, strerror (errno));
             return 1;
     }
 
@@ -124,16 +131,24 @@ int main()
 
 
     do {
-
         while (!kbhit()) {
-
-            if (read(fd, buf, sizeof(buf)))
-                printf(buf);
-
+            if (n = read(fd, buf, sizeof(buf)))
+            {
+                buf[n] = '\0';
+                i = 0;
+                while (buf[i] != '\0')
+                {
+                    if (buf[i] == '\r')
+                        printf("\r");
+                    else
+                        putchar(buf[i++]);
+                }
+            }
+//            printf("%s", buf);
+//            printf("%s", buf);
         }
-
-        c = getchar();
-        n = write(fd, c, 1);
+        c = getch();
+        n = write(fd, &c, 1);
     } while (c != 'q');
 
 }
