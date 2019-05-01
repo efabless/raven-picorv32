@@ -353,14 +353,14 @@ void main()
     print(")\n");
 
 	// reset CPLD
-	reset_cpld();
+//	reset_cpld();
 
-	init_camera();
-	if (!set_JPEG_size(OV2640_320x240))
-	    print("set_JPEG_size FAILED!\n");
+//	init_camera();
+//	if (!set_JPEG_size(OV2640_320x240))
+//	    print("set_JPEG_size FAILED!\n");
 
-    for (j = 0; j < 170000; j++); // 1 sec delay
-    set_frame_count();
+//    for (j = 0; j < 170000; j++); // 1 sec delay
+//    set_frame_count();
 
 
 
@@ -371,7 +371,10 @@ void main()
         switch(k) {
             case'0':
                 print("initialize camera...\n");
+            	reset_cpld();
                 init_camera();
+                for (j = 0; j < 170000; j++); // 1 sec delay
+                set_frame_count();
                 break;
             case'1':
                 print("clear FIFO...\n");
@@ -394,12 +397,12 @@ void main()
                 while (i < 100) {
                     data = read_spi_slave_byte(0x41);
                     if (data & 0x08) {
-                        i = 100;
+                        break;
                     }
                     i++;
-                    print(" 0x"); print_hex(data, 2);
+                  if (i == 100)
+                        print("Error - capture flag not found.\n");
                 };
-                print("\n");
 
                 flash_led(led_a, false); flash_led(led_b, true);
                 break;
@@ -452,6 +455,7 @@ void main()
                 reset_fifo_read_ptr();
                 break;
             case '7':
+                reset_fifo_read_ptr();
                 fifo_size = read_fifo_length();
                 data = read_spi_slave_byte(FIFO_SIZE1); putchar(data);
                 data = read_spi_slave_byte(FIFO_SIZE2); putchar(data);

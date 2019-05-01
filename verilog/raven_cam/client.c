@@ -187,6 +187,8 @@ int main()
             }
             fclose(fptr);
             printf("File written successfully.\n\r");
+        } else if (c == 'v') {
+            system("eog photo.jpg");
         }
     } while (c != 'q');
 

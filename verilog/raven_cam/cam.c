@@ -133,10 +133,10 @@ bool read_sensor_reg_list(const struct sensor_reg reglist[]) {
         reg_val = next->val;
         read_sensor_reg(reg_addr, &data);
         if (data != reg_val) {
-            print("compare error: addr = 0x"); print_hex(reg_addr, 2);
-            print(" value = 0x"); print_hex(reg_val, 2);
-            print(" data = 0x"); print_hex(data, 2);
-            print("\n");
+            print("error @ 0x"); print_hex(reg_addr, 2);
+            print(" : 0x"); print_hex(reg_val, 2);
+            print(" ( 0x"); print_hex(data, 2);
+            print(" )\n");
             status = false;
          }
         next++;
