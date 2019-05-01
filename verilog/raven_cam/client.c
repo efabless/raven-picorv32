@@ -111,10 +111,12 @@ int main()
 {
 
     char *portname = "/dev/ttyUSB1";
-    unsigned char buf[80];
+    unsigned char buf[80], data;
     char c = ' ';
     int n, i;
     int fd = 0;
+    unsigned int len1, len2, len3, length;
+    FILE *fptr;
 
     set_conio_terminal_mode();
 
@@ -146,6 +148,28 @@ int main()
         }
         c = getch();
         n = write(fd, &c, 1);
+        if c == '7' {
+            if ((fptr = fopen("photo.jpg", "wb+")) == NULL) {
+                printf("Error opening file\n");
+                exit(1);
+            }
+            read(fd, len1, 1);
+            read(fd, len2, 1);
+            read(fd, len3, 1);
+            length = ((len3 << 16) | (len2 << 8) | len1) & 0x07fffff;
+            read(fd, data, 1);
+            if (data != 0xff) {
+                printf("Error transferring data\n");
+            }
+            i = length;
+            while(i > 0) {
+                read(fd, data, 1);
+                fwrite(&data, sizeof(data),1,fptr);
+            }
+            fclose(fptr);
+            printf("File written successfully.\n")
+
+        }
     } while (c != 'q');
 
 }
