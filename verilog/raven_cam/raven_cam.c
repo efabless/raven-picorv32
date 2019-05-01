@@ -290,8 +290,9 @@ void main()
 	uint32_t i, j, m, r, mode;
 	uint32_t adcval;
 	uint32_t dacval;
-	uint32_t data, data2, fifo_size;
+	uint32_t data, data2, fifo_size, length, last_data;
 	char k;
+	bool is_header;
 
 	/* Note that it definitely does not work in simulation because	*/
 	/* the behavioral verilog for the SPI flash does not support	*/
@@ -398,7 +399,7 @@ void main()
                     i++;
                     print(" 0x"); print_hex(data, 2);
                 };
-                print("\n\n0x"); print_hex(data, 2);
+                print("\n");
 
                 flash_led(led_a, false); flash_led(led_b, true);
                 break;
@@ -451,15 +452,27 @@ void main()
                 reset_fifo_read_ptr();
                 break;
             case '7':
-                print("transfer FIFO data...\n");
                 fifo_size = read_fifo_length();
-                putchar(fifo_size & 0xff);
-                putchar((fifo_size >> 8) & 0xff);
-                putchar((fifo_size >> 16) & 0xff);
+                data = read_spi_slave_byte(FIFO_SIZE1); putchar(data);
+                data = read_spi_slave_byte(FIFO_SIZE2); putchar(data);
+                data = read_spi_slave_byte(FIFO_SIZE3); putchar(data);
                 putchar(0xff);
-                while (fifo_size--) {
+                length = fifo_size;
+                is_header = false;
+                data = read_spi_slave_byte(0x3D);
+                length--;
+                while (length--) {
+                    last_data = data;
                     data = read_spi_slave_byte(0x3D);
-                    putchar(data);
+                    if (is_header == true)
+                        putchar(data);
+                    else if ((data == 0xd8) && (last_data == 0xff)) {
+                        is_header = true;
+                        putchar(last_data);
+                        putchar(data);
+                    }
+                    if ((data == 0xd9) && (last_data == 0xff))
+                        break;
                 }
                 print("transfer complete.\n");
                 break;
