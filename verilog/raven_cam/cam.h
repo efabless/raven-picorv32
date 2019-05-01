@@ -220,7 +220,7 @@ uint8_t read_reg(uint32_t addr);
 void write_reg(uint32_t addr, uint32_t data);
 
 void write_sensor_reg(uint32_t addr, uint32_t data);
-void write_sensor_reg_list(const struct sensor_reg reglist[], bool verify);
+bool write_sensor_reg_list(const struct sensor_reg reglist[], bool verify);
 
 void read_sensor_reg(uint32_t addr, uint32_t* data);
 
