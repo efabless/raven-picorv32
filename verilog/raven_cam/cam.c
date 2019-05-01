@@ -45,15 +45,15 @@ void init_camera() {
     write_sensor_reg(0x12, 0x80);
     _delay_ms(1000);
 
-    print("jpeg init");
+    print("jpeg init\n");
     write_sensor_reg_list(OV2640_JPEG_INIT);
     read_sensor_reg_list(OV2640_JPEG_INIT);
 
-    print("yuv422");
+    print("yuv422\n");
     write_sensor_reg_list(OV2640_YUV422);
     read_sensor_reg_list(OV2640_YUV422);
 
-    print("ov2640 jpeg");
+    print("ov2640 jpeg\n");
     write_sensor_reg_list(OV2640_JPEG);
     read_sensor_reg_list(OV2640_JPEG);
 
@@ -140,7 +140,7 @@ bool read_sensor_reg_list(const struct sensor_reg reglist[]) {
 }
 
 void read_sensor_reg(uint32_t addr, uint32_t* data) {
-    *data = read_i2c_slave_byte(SENSOR_ADDR, addr) & 0xff;
+    *data = read_i2c_slave_byte(SENSOR_ADDR, addr) & (uint32_t) 0x00ff;
 }
 
 uint32_t read_fifo_length()

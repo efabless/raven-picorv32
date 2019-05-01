@@ -370,75 +370,82 @@ void main()
 
         k = getchar();
 
-        // spacebar to trigger camera via SPI
-        if (k == ' ') {
-            flash_led(led_a, true); flash_led(led_b, false);
+        switch(k) {
+            case'1':
+                print("triggering capture...\n");
+                flash_led(led_a, true); flash_led(led_b, false);
 
-            // reset FIFO and flag
-            flush_fifo();
-            clear_fifo_flag();
+                // reset FIFO and flag
+                flush_fifo();
+                clear_fifo_flag();
 
-            // trigger capture
-            start_capture();
+                // trigger capture
+                start_capture();
 
-            // wait for status
-            i = 0;
-            while (i < 100) {
-                data = read_spi_slave_byte(0x41);
-                if (data & 0x08) {
-                    i = 100;
+                // wait for status
+                i = 0;
+                while (i < 100) {
+                    data = read_spi_slave_byte(0x41);
+                    if (data & 0x08) {
+                        i = 100;
+                    }
+                    i++;
+                    print(" 0x"); print_hex(data, 2);
+                };
+                print("\n\n0x"); print_hex(data, 2);
+
+                flash_led(led_a, false); flash_led(led_b, true);
+                break;
+            case '2':
+                print("reading FIFO register length...\n");
+                fifo_size = read_fifo_length();
+                print("   ");
+                print("0x"); print_hex(fifo_size, 6);
+                print("\n");
+                break;
+            case '3':
+                print("reading registers...\n");
+
+                data = read_spi_slave_byte(0x01);
+                print("   ");
+                print("0x"); print_hex(data, 2);
+
+                data = read_spi_slave_byte(0x40);
+                print("   ");
+                print("0x"); print_hex(data, 2);
+
+                data = read_spi_slave_byte(0x42);
+                print("   ");
+                print("0x"); print_hex(data, 2);
+
+                data = read_spi_slave_byte(0x43);
+                print("   ");
+                print("0x"); print_hex(data, 2);
+
+                data = read_spi_slave_byte(0x44);
+                print("   ");
+                print("0x"); print_hex(data, 2);
+
+                print("\n");
+                break;
+            case '4':
+                print("display FIFO data (single read)...\n");
+
+                for (i=0; i<20; i++) {
+                    data = read_spi_slave_byte(0x3D);
+                    print("   ");
+                    print("0x"); print_hex(data, 2);
                 }
-                i++;
-                print(" 0x"); print_hex(data, 2);
-            };
-            print("\n\n0x"); print_hex(data, 2);
-
-            // read registers
-            data = read_spi_slave_byte(0x01);
-            print("   ");
-            print("0x"); print_hex(data, 2);
-
-            data = read_spi_slave_byte(0x40);
-            print("   ");
-            print("0x"); print_hex(data, 2);
-
-            data = read_spi_slave_byte(0x42);
-            print("   ");
-            print("0x"); print_hex(data, 2);
-
-            data = read_spi_slave_byte(0x43);
-            print("   ");
-            print("0x"); print_hex(data, 2);
-
-            data = read_spi_slave_byte(0x44);
-            print("   ");
-            print("0x"); print_hex(data, 2);
-
-            fifo_size = read_fifo_length();
-            print("   ");
-            print("0x"); print_hex(fifo_size, 6);
-
-            print("\n");
-
-            flash_led(led_a, false); flash_led(led_b, true);
-        }
-
-        // 'i' to trigger camera via I2C
-        if (k == 'i') {
-            flash_led(led_a, true); flash_led(led_b, false);
-
-            // set register bank 2
-            write_i2c_slave(0x60, 0xff, 0x01);
-
-            // read register
-            data = read_i2c_slave_byte(0x60, 0x0A);
-            data2 = read_i2c_slave_byte(0x60, 0x0B);
-            print("0x"); print_hex(data, 2);
-            print("   ");
-            print("0x"); print_hex(data2, 2);
-            print("\n");
-
-            flash_led(led_a, false); flash_led(led_b, true);
+                print("\n");
+                break;
+            default:
+                print("menu:\n");
+                print("[1] trigger capture\n");
+                print("[2] read FIFO length registers\n");
+                print("[3] read registers\n");
+                print("[4] display FIFO data (first 20 values)\n");
+                print("[q] quit serial client\n");
+                break;
         }
 
         for (j = 0; j < 170000; j++); // 1 sec delay
