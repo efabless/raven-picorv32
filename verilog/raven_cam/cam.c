@@ -46,16 +46,13 @@ void init_camera() {
     _delay_ms(1000);
 
     print("jpeg init\n");
-    write_sensor_reg_list(OV2640_JPEG_INIT);
-    read_sensor_reg_list(OV2640_JPEG_INIT);
+    write_sensor_reg_list(OV2640_JPEG_INIT, true);
 
     print("yuv422\n");
-    write_sensor_reg_list(OV2640_YUV422);
-    read_sensor_reg_list(OV2640_YUV422);
+    write_sensor_reg_list(OV2640_YUV422, true);
 
     print("ov2640 jpeg\n");
-    write_sensor_reg_list(OV2640_JPEG);
-    read_sensor_reg_list(OV2640_JPEG);
+    write_sensor_reg_list(OV2640_JPEG, true);
 
     write_sensor_reg(0xff, 0x01);
     write_sensor_reg(0x15, 0x00);
