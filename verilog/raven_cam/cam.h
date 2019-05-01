@@ -211,6 +211,7 @@ void reset_cpld();
 void init_camera();
 
 void flush_fifo(void);
+void reset_fifo_read_ptr(void);
 void start_capture(void);
 void clear_fifo_flag(void);
 uint8_t read_fifo(void);

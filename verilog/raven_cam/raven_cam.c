@@ -253,7 +253,7 @@ void read_rtc()
     data[1] &= (uint32_t) 0x007F;
     data[2] &= (uint32_t) 0x003F;
 
-    print("\r");
+//    print("\r");
     print("Time = ");
     print_digit(BCD_DIGIT1(data[2]));
     print_digit(BCD_DIGIT0(data[2]));
@@ -326,7 +326,6 @@ void main()
     while (getchar() != '\r') {}
 
     print("\n\n");
-    print("Starting main loop...\n");
 
 	int led_a = 6;
 	int led_b = 7;
@@ -365,13 +364,19 @@ void main()
 
 	while (1) {
 
-        // read and display real-time clock
-//        read_rtc();
-
         k = getchar();
 
         switch(k) {
+            case'0':
+                print("initialize camera...\n");
+                init_camera();
+                break;
             case'1':
+                print("clear FIFO...\n");
+                flush_fifo();
+                clear_fifo_flag();
+                break;
+            case'2':
                 print("triggering capture...\n");
                 flash_led(led_a, true); flash_led(led_b, false);
 
@@ -396,14 +401,14 @@ void main()
 
                 flash_led(led_a, false); flash_led(led_b, true);
                 break;
-            case '2':
+            case '3':
                 print("reading FIFO register length...\n");
                 fifo_size = read_fifo_length();
                 print("   ");
                 print("0x"); print_hex(fifo_size, 6);
                 print("\n");
                 break;
-            case '3':
+            case '4':
                 print("reading registers...\n");
 
                 data = read_spi_slave_byte(0x01);
@@ -428,22 +433,50 @@ void main()
 
                 print("\n");
                 break;
-            case '4':
-                print("display FIFO data (single read)...\n");
+            case '5':
+                print("display FIFO data (next 80 values)...\n");
 
                 for (i=0; i<20; i++) {
-                    data = read_spi_slave_byte(0x3D);
-                    print("   ");
-                    print("0x"); print_hex(data, 2);
+                    for (j=0; j<20; j++ {
+                        data = read_spi_slave_byte(0x3D);
+                        print("  ");
+                        print_hex(data, 2);
+                    }
+                    print("\n");
                 }
-                print("\n");
+                break;
+            case '6':
+                print("resetting FIFO read pointer\n");
+                reset_fifo_read_ptr();
+                break;
+            case '7':
+                print("transfer FIFO data...\n");
+                fifo_size = read_fifo_length();
+                putchar(fifo_size & 0xff);
+                putchar((fifo_size >> 8) & 0xff);
+                putchar((fifo_size >> 16) & 0xff);
+                putchar(0xff);
+                while (fifo_size--) {
+                    data = read_spi_slave_byte(0x3D);
+                    putchar(data);
+                }
+                print("transfer complete.\n");
+                break;
+            case '9':
+                print("read real-time clock...\n");
+                read_rtc();
                 break;
             default:
                 print("menu:\n");
-                print("[1] trigger capture\n");
-                print("[2] read FIFO length registers\n");
-                print("[3] read registers\n");
-                print("[4] display FIFO data (first 20 values)\n");
+                print("[0] initialize camera\n");
+                print("[1] clear FIFO\n");
+                print("[2] trigger capture\n");
+                print("[3] read FIFO length registers\n");
+                print("[4] read registers\n");
+                print("[5] display FIFO data (next 80 values)\n");
+                print("[6] reset FIFO read pointer\n");
+                print("[7] transfer FIFO data\n");
+                print("[9] read real-time clock\n");
                 print("[q] quit serial client\n");
                 break;
         }

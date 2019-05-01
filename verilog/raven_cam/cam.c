@@ -81,6 +81,11 @@ void flush_fifo(void) {
 //	write_reg(ARDUCHIP_FIFO, FIFO_RDPTR_RST_MASK | FIFO_WRPTR_RST_MASK);
 }
 
+void reset_fifo_read_ptr(void) {
+	write_reg(ARDUCHIP_FIFO, FIFO_RDPTR_RST_MASK);
+//	write_reg(ARDUCHIP_FIFO, FIFO_RDPTR_RST_MASK | FIFO_WRPTR_RST_MASK);
+}
+
 void start_capture(void) {
 	write_reg(ARDUCHIP_FIFO, FIFO_START_MASK);
 }
