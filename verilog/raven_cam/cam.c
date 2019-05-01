@@ -112,7 +112,7 @@ void read_sensor_reg(uint32_t addr, uint32_t* data) {
     *data = read_i2c_slave_byte(SENSOR_ADDR, addr) & (uint32_t) 0x00ff;
 }
 
-void write_sensor_reg_list(const struct sensor_reg reglist[], bool verify) {
+bool write_sensor_reg_list(const struct sensor_reg reglist[], bool verify) {
     uint32_t reg_addr = 0;
     uint32_t reg_val = 0, data;
     const struct sensor_reg *next = reglist;
