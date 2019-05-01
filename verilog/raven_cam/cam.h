@@ -239,6 +239,8 @@ extern const struct sensor_reg OV2640_JPEG[];
 extern const struct sensor_reg OV2640_YUV422[];
 extern const struct sensor_reg OV2640_160x120_JPEG[];
 extern const struct sensor_reg OV2640_320x240_JPEG[];
+extern const struct sensor_reg OV2640_640x480_JPEG[];
+extern const struct sensor_reg OV2640_800x600_JPEG[];
 extern const struct sensor_reg OV2640_QVGA[];
 
 #endif // CAM_H
