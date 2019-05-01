@@ -66,6 +66,11 @@ void putchar(char c)
 	reg_uart_data = c;
 }
 
+void send_serial(uint32_t c)
+{
+	reg_uart_data = c;
+}
+
 void print(const char *p)
 {
 	while (*p)
@@ -457,10 +462,10 @@ void main()
             case '7':
                 reset_fifo_read_ptr();
                 fifo_size = read_fifo_length();
-                data = read_spi_slave_byte(FIFO_SIZE1); putchar(data);
-                data = read_spi_slave_byte(FIFO_SIZE2); putchar(data);
-                data = read_spi_slave_byte(FIFO_SIZE3); putchar(data);
-                putchar(0xff);
+                data = read_spi_slave_byte(FIFO_SIZE1); send_serial(data);
+                data = read_spi_slave_byte(FIFO_SIZE2); send_serial(data);
+                data = read_spi_slave_byte(FIFO_SIZE3); send_serial(data);
+                send_serial(0xff);
                 length = fifo_size;
                 is_header = false;
                 data = read_spi_slave_byte(0x3D);
@@ -469,11 +474,11 @@ void main()
                     last_data = data;
                     data = read_spi_slave_byte(0x3D);
                     if (is_header == true)
-                        putchar(data);
+                        send_serial(data);
                     else if ((data == 0xd8) && (last_data == 0xff)) {
                         is_header = true;
-                        putchar(last_data);
-                        putchar(data);
+                        send_serial(last_data);
+                        send_serial(data);
                     }
                     if ((data == 0xd9) && (last_data == 0xff))
                         break;

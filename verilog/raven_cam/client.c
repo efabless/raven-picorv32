@@ -172,7 +172,8 @@ int main()
             i--;
             while(i--) {
                 last_data = data;
-                read(fd, &data, sizeof(data));
+                while (read(fd, &data, sizeof(data)) == 0) {};
+                data &= 0xff;
                 if (is_header)
                     fwrite(&data, sizeof(data),1,fptr);
                 else if ((data == 0xd8) && (last_data == 0xff)) {
