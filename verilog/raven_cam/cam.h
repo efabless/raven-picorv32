@@ -62,7 +62,7 @@ struct sensor_reg {
 #define OV2640_1280x1024	7	//1280x1024
 #define OV2640_1600x1200	8	//1600x1200
 
-
+#define BMPIMAGEOFFSET 66
 
 //Light Mode
 
@@ -220,8 +220,7 @@ uint8_t read_reg(uint32_t addr);
 void write_reg(uint32_t addr, uint32_t data);
 
 void write_sensor_reg(uint32_t addr, uint32_t data);
-void write_sensor_reg_list(const struct sensor_reg reglist[]);
-bool read_sensor_reg_list(const struct sensor_reg reglist[]);
+void write_sensor_reg_list(const struct sensor_reg reglist[], bool verify);
 
 void read_sensor_reg(uint32_t addr, uint32_t* data);
 

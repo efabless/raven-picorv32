@@ -27,7 +27,7 @@ bool check_camera(uint32_t *vid, uint32_t *pid) {
     read_sensor_reg(OV2640_CHIPID_LOW, pid);
     *vid &= (uint8_t) 0xff;
     *pid &= (uint8_t) 0xff;
-    if ((*vid == 0x26 ) || (*pid == 0x41 ) || (*pid == 0x42 ))
+    if ((*vid == 0x26 ) && ((*pid == 0x41 ) || (*pid == 0x42 )))
         return true;
     else
         return false;
@@ -108,44 +108,34 @@ void write_sensor_reg(uint32_t addr, uint32_t data) {
     write_i2c_slave(SENSOR_ADDR, addr, data);
 }
 
-void write_sensor_reg_list(const struct sensor_reg reglist[]) {
+void read_sensor_reg(uint32_t addr, uint32_t* data) {
+    *data = read_i2c_slave_byte(SENSOR_ADDR, addr) & (uint32_t) 0x00ff;
+}
+
+void write_sensor_reg_list(const struct sensor_reg reglist[], bool verify) {
     uint32_t reg_addr = 0;
     uint32_t reg_val = 0, data;
     const struct sensor_reg *next = reglist;
-    while ((reg_addr != 0xff) | (reg_val != 0xff))
+    bool status = true;
+    while ((reg_addr != 0xff) || (reg_val != 0xff))
     {
         reg_addr = next->reg;
         reg_val = next->val;
         write_sensor_reg(reg_addr, reg_val);
+        if (verify) {
+            read_sensor_reg(reg_addr, &data);
+            if (data != reg_val) {
+                print("error@0x"); print_hex(reg_addr, 2);
+                print("=0x"); print_hex(data, 2);
+                print(" ( 0x"); print_hex(reg_val, 2);
+                print(" )\n");
+                status = false;
+            }
+        }
         next++;
     }
     _delay_ms(1000);
-}
-
-bool read_sensor_reg_list(const struct sensor_reg reglist[]) {
-    uint32_t reg_addr = 0;
-    uint32_t reg_val = 0, data;
-    bool status = true;
-    const struct sensor_reg *next = reglist;
-    while ((reg_addr != 0xff) | (reg_val != 0xff))
-    {
-        reg_addr = next->reg;
-        reg_val = next->val;
-        read_sensor_reg(reg_addr, &data);
-        if (data != reg_val) {
-            print("error @ 0x"); print_hex(reg_addr, 2);
-            print(" : 0x"); print_hex(reg_val, 2);
-            print(" ( 0x"); print_hex(data, 2);
-            print(" )\n");
-            status = false;
-         }
-        next++;
-    }
     return status;
-}
-
-void read_sensor_reg(uint32_t addr, uint32_t* data) {
-    *data = read_i2c_slave_byte(SENSOR_ADDR, addr) & (uint32_t) 0x00ff;
 }
 
 uint32_t read_fifo_length()
@@ -161,14 +151,14 @@ uint32_t read_fifo_length()
 bool set_JPEG_size(uint8_t size) {
     switch(size) {
         case OV2640_160x120:
-            write_sensor_reg_list(OV2640_160x120_JPEG);
-            _delay_ms(1000);
-            return read_sensor_reg_list(OV2640_160x120_JPEG);
+            return write_sensor_reg_list(OV2640_160x120_JPEG, true);
+        case OV2640_640x480:
+            return write_sensor_reg_list(OV2640_640x480_JPEG, true);
+        case OV2640_800x600:
+            return write_sensor_reg_list(OV2640_800x600_JPEG, true);
         case OV2640_320x240:
         default:
-            write_sensor_reg_list(OV2640_320x240_JPEG);
-            _delay_ms(1000);
-            return read_sensor_reg_list(OV2640_320x240_JPEG);
+            return write_sensor_reg_list(OV2640_320x240_JPEG, true);
     }
 
 }
@@ -178,6 +168,15 @@ void set_Color_Saturation(uint8_t Color_Saturation) {}
 void set_Brightness(uint8_t Brightness) {}
 void set_Contrast(uint8_t Contrast) {}
 void set_Special_effects(uint8_t Special_effect) {}
+
+const char bmp_header[BMPIMAGEOFFSET] PROGMEM =
+{
+  0x42, 0x4D, 0x36, 0x58, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, 0x00, 0x00, 0x00, 0x28, 0x00,
+  0x00, 0x00, 0x40, 0x01, 0x00, 0x00, 0xF0, 0x00, 0x00, 0x00, 0x01, 0x00, 0x10, 0x00, 0x03, 0x00,
+  0x00, 0x00, 0x00, 0x58, 0x02, 0x00, 0xC4, 0x0E, 0x00, 0x00, 0xC4, 0x0E, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0xE0, 0x07, 0x00, 0x00, 0x1F, 0x00,
+  0x00, 0x00
+};
 
 const struct sensor_reg OV2640_JPEG_INIT[] PROGMEM =
 {
@@ -698,4 +697,98 @@ const struct sensor_reg OV2640_QVGA[] PROGMEM =
 
 
 	{0xff,0xff},
+};
+
+const struct sensor_reg OV2640_640x480_JPEG[] PROGMEM =
+{
+	{0xff, 0x01},
+	{0x11, 0x01},
+	{0x12, 0x00}, // Bit[6:4]: Resolution selection//0x02Ϊ����
+	{0x17, 0x11}, // HREFST[10:3]
+	{0x18, 0x75}, // HREFEND[10:3]
+	{0x32, 0x36}, // Bit[5:3]: HREFEND[2:0]; Bit[2:0]: HREFST[2:0]
+	{0x19, 0x01}, // VSTRT[9:2]
+	{0x1a, 0x97}, // VEND[9:2]
+	{0x03, 0x0f}, // Bit[3:2]: VEND[1:0]; Bit[1:0]: VSTRT[1:0]
+	{0x37, 0x40},
+	{0x4f, 0xbb},
+	{0x50, 0x9c},
+	{0x5a, 0x57},
+	{0x6d, 0x80},
+	{0x3d, 0x34},
+	{0x39, 0x02},
+	{0x35, 0x88},
+	{0x22, 0x0a},
+	{0x37, 0x40},
+	{0x34, 0xa0},
+	{0x06, 0x02},
+	{0x0d, 0xb7},
+	{0x0e, 0x01},
+
+	{0xff, 0x00},
+	{0xe0, 0x04},
+	{0xc0, 0xc8},
+	{0xc1, 0x96},
+	{0x86, 0x3d},
+	{0x50, 0x89},
+	{0x51, 0x90},
+	{0x52, 0x2c},
+	{0x53, 0x00},
+	{0x54, 0x00},
+	{0x55, 0x88},
+	{0x57, 0x00},
+	{0x5a, 0xa0},
+	{0x5b, 0x78},
+	{0x5c, 0x00},
+	{0xd3, 0x04},
+	{0xe0, 0x00},
+
+  	{0xff, 0xff},
+};
+
+const struct sensor_reg OV2640_800x600_JPEG[] PROGMEM =
+{
+	{0xff, 0x01},
+	{0x11, 0x01},
+	{0x12, 0x00}, // Bit[6:4]: Resolution selection//0x02Ϊ����
+	{0x17, 0x11}, // HREFST[10:3]
+	{0x18, 0x75}, // HREFEND[10:3]
+	{0x32, 0x36}, // Bit[5:3]: HREFEND[2:0]; Bit[2:0]: HREFST[2:0]
+	{0x19, 0x01}, // VSTRT[9:2]
+	{0x1a, 0x97}, // VEND[9:2]
+	{0x03, 0x0f}, // Bit[3:2]: VEND[1:0]; Bit[1:0]: VSTRT[1:0]
+	{0x37, 0x40},
+	{0x4f, 0xbb},
+	{0x50, 0x9c},
+	{0x5a, 0x57},
+	{0x6d, 0x80},
+	{0x3d, 0x34},
+	{0x39, 0x02},
+	{0x35, 0x88},
+	{0x22, 0x0a},
+	{0x37, 0x40},
+	{0x34, 0xa0},
+	{0x06, 0x02},
+	{0x0d, 0xb7},
+	{0x0e, 0x01},
+
+	{0xff, 0x00},
+	{0xe0, 0x04},
+	{0xc0, 0xc8},
+	{0xc1, 0x96},
+	{0x86, 0x35},
+	{0x50, 0x89},
+	{0x51, 0x90},
+	{0x52, 0x2c},
+	{0x53, 0x00},
+	{0x54, 0x00},
+	{0x55, 0x88},
+	{0x57, 0x00},
+	{0x5a, 0xc8},
+	{0x5b, 0x96},
+	{0x5c, 0x00},
+	{0xd3, 0x02},
+	{0xe0, 0x00},
+
+  	{0xff, 0xff},
 };
