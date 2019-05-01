@@ -437,7 +437,7 @@ void main()
                 print("display FIFO data (next 80 values)...\n");
 
                 for (i=0; i<20; i++) {
-                    for (j=0; j<20; j++ {
+                    for (j=0; j<20; j++) {
                         data = read_spi_slave_byte(0x3D);
                         print("  ");
                         print_hex(data, 2);
