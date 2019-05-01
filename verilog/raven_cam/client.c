@@ -115,7 +115,8 @@ int main()
     char c = ' ';
     int n, i;
     int fd = 0;
-    unsigned int len1, len2, len3, length;
+    unsigned char len1, len2, len3;
+    unsigned int length;
     FILE *fptr;
 
     set_conio_terminal_mode();
@@ -148,27 +149,27 @@ int main()
         }
         c = getch();
         n = write(fd, &c, 1);
-        if c == '7' {
+        if (c == '7') {
             if ((fptr = fopen("photo.jpg", "wb+")) == NULL) {
                 printf("Error opening file\n");
                 exit(1);
             }
-            read(fd, len1, 1);
-            read(fd, len2, 1);
-            read(fd, len3, 1);
+            read(fd, &len1, sizeof(len1));
+            read(fd, &len2, sizeof(len2));
+            read(fd, &len3, sizeof(len3));
             length = ((len3 << 16) | (len2 << 8) | len1) & 0x07fffff;
-            read(fd, data, 1);
+            read(fd, &data, sizeof(data));
             if (data != 0xff) {
-                printf("Error transferring data\n");
+                printf("Error transferring data - length = 0x%06x\n", length);
+                while (read(fd, buf, sizeof(buf))) {};
             }
             i = length;
             while(i > 0) {
-                read(fd, data, 1);
+                read(fd, &data, sizeof(data));
                 fwrite(&data, sizeof(data),1,fptr);
             }
             fclose(fptr);
-            printf("File written successfully.\n")
-
+            printf("File written successfully.\n");
         }
     } while (c != 'q');
 

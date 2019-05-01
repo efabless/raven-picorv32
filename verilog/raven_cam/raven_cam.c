@@ -264,6 +264,7 @@ void read_rtc()
     print_digit(BCD_DIGIT1(data[0]));
     print_digit(BCD_DIGIT0(data[0]));
     print("     ");
+    print("\n\n");
 
 }
 
