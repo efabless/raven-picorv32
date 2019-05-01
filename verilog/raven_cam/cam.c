@@ -159,10 +159,18 @@ uint32_t read_fifo_length()
 }
 
 bool set_JPEG_size(uint8_t size) {
-//    write_sensor_reg_list(OV2640_160x120_JPEG);
-    write_sensor_reg_list(OV2640_320x240_JPEG);
-    _delay_ms(1000);
-    return read_sensor_reg_list(OV2640_320x240_JPEG);
+    switch(size) {
+        case OV2640_160x120:
+            write_sensor_reg_list(OV2640_160x120_JPEG);
+            _delay_ms(1000);
+            return read_sensor_reg_list(OV2640_160x120_JPEG);
+        case OV2640_320x240:
+        default:
+            write_sensor_reg_list(OV2640_320x240_JPEG);
+            _delay_ms(1000);
+            return read_sensor_reg_list(OV2640_320x240_JPEG);
+    }
+
 }
 
 void set_Light_Mode(uint8_t Light_Mode) {}

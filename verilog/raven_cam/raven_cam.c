@@ -356,7 +356,7 @@ void main()
 	reset_cpld();
 
 	init_camera();
-	if (!set_JPEG_size(0))
+	if (!set_JPEG_size(OV2640_320x240))
 	    print("set_JPEG_size FAILED!\n");
 
     for (j = 0; j < 170000; j++); // 1 sec delay
@@ -476,7 +476,17 @@ void main()
                 }
                 print("transfer complete.\n");
                 break;
+            case '8':
+                print("setting JPEG size to 160x120\n");
+                if (!set_JPEG_size(OV2640_160x120))
+	                print("set_JPEG_size FAILED!\n");
+                break;
             case '9':
+                print("setting JPEG size to 320x240\n");
+                if (!set_JPEG_size(OV2640_320x240))
+	                print("set_JPEG_size FAILED!\n");
+                break;
+            case 'c':
                 print("read real-time clock...\n");
                 read_rtc();
                 break;
@@ -490,7 +500,9 @@ void main()
                 print("[5] display FIFO data (next 80 values)\n");
                 print("[6] reset FIFO read pointer\n");
                 print("[7] transfer FIFO data\n");
-                print("[9] read real-time clock\n");
+                print("[8] set JPEG size to 160x120\n");
+                print("[9] set JPEG size to 320x240\n");
+                print("[c] read real-time clock\n");
                 print("[q] quit serial client\n");
                 break;
         }
