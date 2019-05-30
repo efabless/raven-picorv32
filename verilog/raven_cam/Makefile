@@ -19,8 +19,8 @@ hex:  ${PATTERN:=.hex}
 %.vcd: %.vvp
 	vvp $<
 
-%.elf: %.c ../sections.lds ../start.s i2c_io.c i2c_io.h spi_io.c spi_io.h cam.c cam.h
-	$(TOOLCHAIN_PATH)riscv32-unknown-elf-gcc -march=rv32imc -Wl,-Bstatic,-T,../sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../start.s i2c_io.c spi_io.c cam.c $<
+%.elf: %.c sections.lds ../start.s i2c_io.c i2c_io.h spi_io.c spi_io.h cam.c cam.h
+	$(TOOLCHAIN_PATH)riscv32-unknown-elf-gcc -march=rv32imc -Wl,-Bstatic,-T,sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ ../start.s i2c_io.c spi_io.c cam.c $<
 
 %.hex: %.elf
 	$(TOOLCHAIN_PATH)riscv32-unknown-elf-objcopy -O verilog $< /dev/stdout | sed -e '1 s/@00000000/@00100000/; 2,65537 d;' > $@
