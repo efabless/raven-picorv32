@@ -7,6 +7,9 @@
 #define BCD_DIGIT0(x) (x & (uint32_t)0x000F)
 #define BCD_DIGIT1(x) ((x >> 4) & (uint32_t)0x000F)
 
+volatile uint32_t counter;
+volatile uint32_t counter2 = 100;
+
 
 // --------------------------------------------------------
 // Firmware routines
@@ -273,6 +276,17 @@ void read_rtc()
 
 }
 
+void display_counter()
+{
+    print("counter = ");
+    print_dec(counter);
+    print("\n");
+
+    print("counter2 = ");
+    print_dec(counter2);
+    print("\n");
+}
+
 // ----------------------------------------------------------------------
 // Raven demo:  Demonstrate various capabilities of the Raven testboard.
 //
@@ -298,6 +312,8 @@ void main()
 	uint32_t data, data2, fifo_size, length, last_data;
 	char k;
 	bool is_header;
+
+	counter = 0;
 
 	/* Note that it definitely does not work in simulation because	*/
 	/* the behavioral verilog for the SPI flash does not support	*/
@@ -373,13 +389,16 @@ void main()
 
         k = getchar();
 
+        counter++;
+        counter2++;
+
         switch(k) {
             case'0':
                 print("initialize camera...\n");
             	reset_cpld();
                 init_camera();
                 for (j = 0; j < 170000; j++); // 1 sec delay
-                set_frame_count();
+//                set_frame_count();
                 break;
             case'1':
                 print("clear FIFO...\n");
@@ -499,6 +518,11 @@ void main()
                 print("read real-time clock...\n");
                 read_rtc();
                 break;
+            case 'g':
+                print("display loop counter...\n");
+                display_counter();
+                break;
+
             default:
                 print("menu:\n");
                 print("[0] initialize camera\n");
@@ -512,6 +536,7 @@ void main()
                 print("[8] set JPEG size to 160x120\n");
                 print("[9] set JPEG size to 320x240\n");
                 print("[c] read real-time clock\n");
+                print("[g] display loop counter\n");
                 print("[q] quit serial client\n");
                 break;
         }

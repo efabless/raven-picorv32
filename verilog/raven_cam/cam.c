@@ -56,10 +56,10 @@ void init_camera() {
 
     write_sensor_reg(0xff, 0x01);
     write_sensor_reg(0x15, 0x00);
-//    write_sensor_reg_list(OV2640_160x120_JPEG);
-//    write_sensor_reg_list(OV2640_320x240_JPEG);
-    //write_sensor_reg(0xff, 0x00);
-    //write_sensor_reg(0x44, 0x32);
+    write_sensor_reg_list(OV2640_160x120_JPEG, true);
+//    write_sensor_reg_list(OV2640_320x240_JPEG, true);
+    write_sensor_reg(0xff, 0x00);
+    write_sensor_reg(0x44, 0x32);
 
 //    write_sensor_reg_list(OV2640_QVGA);
     _delay_ms(1000);

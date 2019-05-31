@@ -36,21 +36,21 @@ addi x30, zero, 0
 addi x31, zero, 0
 
 # Update LEDs
-li a0, 0x03000000
-li a1, 1
-sw a1, 0(a0)
+# li a0, 0x03000000
+# li a1, 1
+# sw a1, 0(a0)
 
 # zero initialize entire scratchpad memory
-li a0, 0x00000000
-setmemloop:
-sw a0, 0(a0)
-addi a0, a0, 4
-blt a0, sp, setmemloop
+# li a0, 0x00000000
+# setmemloop:
+# sw zero, 0(a0)
+# addi a0, a0, 4
+# blt a0, sp, setmemloop
 
 # Update LEDs
-li a0, 0x03000000
-li a1, 3
-sw a1, 0(a0)
+# li a0, 0x03000000
+# li a1, 3
+# sw a1, 0(a0)
 
 # copy data section
 la a0, _sidata
@@ -66,24 +66,24 @@ blt a1, a2, loop_init_data
 end_init_data:
 
 # Update LEDs
-li a0, 0x03000000
-li a1, 7
-sw a1, 0(a0)
+# li a0, 0x03000000
+# li a1, 7
+# sw a1, 0(a0)
 
 # zero-init bss section
-la a0, _sbss
-la a1, _ebss
-bge a0, a1, end_init_bss
-loop_init_bss:
-sw zero, 0(a0)
-addi a0, a0, 4
-blt a0, a1, loop_init_bss
-end_init_bss:
+# la a0, _sbss
+# la a1, _ebss
+# bge a0, a1, end_init_bss
+# loop_init_bss:
+# sw zero, 0(a0)
+# addi a0, a0, 4
+# blt a0, a1, loop_init_bss
+# end_init_bss:
 
 # Update LEDs
-li a0, 0x03000000
-li a1, 15
-sw a1, 0(a0)
+# li a0, 0x03000000
+# li a1, 15
+# sw a1, 0(a0)
 
 # call main
 call main
