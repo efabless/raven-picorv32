@@ -298,11 +298,13 @@ proc ftdi::write_flash {device hexfile {doerase true} {debug false}} {
     # Read in the hex file, convert address blocks, and write them to
     # the SPI flash
     set datavec {}
+    set cmdword 0
+    set address 0
     while {[gets $hf line] >= 0} {
         if {[string first @ $line] == 0} {
 
 	    # Program the previously read data block (if any)
-	    ftdi::slow_program $datavec $cmdword $device $address
+	    ftdi::slow_program $datavec $cmdword $device $address $debug
 	    set datavec {}
 
 	    # Set the address line (24 bit address)
@@ -319,7 +321,7 @@ proc ftdi::write_flash {device hexfile {doerase true} {debug false}} {
     }
 
     # Final block
-    ftdi::slow_program $datavec $cmdword $device $address
+    ftdi::slow_program $datavec $cmdword $device $address $debug
     close $hf
 }
 
@@ -361,7 +363,7 @@ proc ftdi::fast_program {datavec cmdword device address } {
 # if write enable/disable is applied between bytes. . . it's very slow,
 # but it does work.
 
-proc ftdi::slow_program {datavec cmdword device address} {
+proc ftdi::slow_program {datavec cmdword device address debug} {
 
     set dlen [llength $datavec]
     if {$dlen == 0} {return}
