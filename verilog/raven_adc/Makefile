@@ -2,7 +2,7 @@
 
 .SUFFIXES:
 
-PATTERN = raven_adc
+PATTERN = raven_adc raven_adc2
 
 all:  ${PATTERN:=.vcd}
 
