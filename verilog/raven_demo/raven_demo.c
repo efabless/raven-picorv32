@@ -1,3 +1,5 @@
+#define RAVEN2_BOARD  // comment is using Raven version 1 testboard
+
 #include "../raven_defs.h"
 
 // --------------------------------------------------------
@@ -203,7 +205,11 @@ void main()
 	// So at this crystal rate, use clkdiv = 10417 for 9600 baud.
 
 	// Set UART clock to 9600 baud
-	reg_uart_clkdiv = 10417;
+    #ifdef RAVEN2_BOARD
+        reg_uart_clkdiv = 8333;
+    #else
+        reg_uart_clkdiv = 10417;
+    #endif
 
 	// Need boot-up time for the display;  give it 2 seconds
 	for (j = 0; j < 350000 * m; j++);
