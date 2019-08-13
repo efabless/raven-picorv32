@@ -1,16 +1,18 @@
 #include "../raven_defs.h"
+#include "i2c_io.h"
 
-extern void write_i2c_slave(uint32_t slave_addr, uint32_t word_addr, uint32_t data);
-extern uint32_t read_i2c_slave_byte(uint32_t slave_addr, uint32_t word_addr);
-extern void read_i2c_slave_bytes(uint32_t slave_addr, uint32_t word_addr, uint32_t *data, int len);
-extern void i2c_init();
-extern void i2c_start();
-extern void i2c_stop();
-extern uint32_t i2c_write(volatile uint32_t data);
-extern uint32_t i2c_read(bool ack);
+//extern void write_i2c_slave(uint32_t slave_addr, uint32_t word_addr, uint32_t data);
+//extern uint32_t read_i2c_slave_byte(uint32_t slave_addr, uint32_t word_addr);
+//extern void read_i2c_slave_bytes(uint32_t slave_addr, uint32_t word_addr, uint32_t *data, int len);
+//extern void i2c_init();
+//extern void i2c_start();
+//extern void i2c_stop();
+//extern uint32_t i2c_write(volatile uint32_t data);
+//extern uint32_t i2c_read(bool ack);
 
-#define RTC_I2C_ADDR (uint32_t) 0xA2 // RTC PCF8563
+//#define RTC_I2C_ADDR (uint32_t) 0xA2 // RTC PCF8563
 //#define RTC_I2C_ADDR (uint32_t)0xD0 // RTC DS3231
+
 #define BCD_DIGIT0(x) (x & (uint32_t)0x000F)
 #define BCD_DIGIT1(x) ((x >> 4) & (uint32_t)0x000F)
 
@@ -305,44 +307,14 @@ void main()
 	mode = 1;
 	m = 1;
 
-	// Enable GPIO (all output, ena = 0)
-	// reg_gpio_ena = 0x0000;
-    // reg_gpio_data = 0x1111;
-
-	// Enable the 100MHz RC oscillator on gpio[4] (overrides LED function)
-	// reg_rcosc_enable = 1;
-	// reg_rcosc_out_dest = 3;
-
-	// Enable the analog output
-	// reg_analog_out_bias_ena = 1;
-	// reg_analog_out_ena = 1;
-
-	// Enable the DAC and link to the analog output
-	// reg_analog_out_sel = 1;
-	// reg_dac_ena = 1;
-	// dacval = 0;
-
-	// Enable the bandgap and link to the analog output
-	// reg_analog_out_sel = 0;
-	// reg_bandgap_ena = 1;
-
-	// Configure the ADC0
-	// reg_adc0_clk_source = 0;	// RC oscillator drives ADC clock
-	// reg_adc0_input_source = 2;	// Feed DAC output to ADC input
-	// reg_adc0_ena = 1;
-
-	// Configure the ADC1
-	// reg_adc1_clk_source = 0;	// RC oscillator drives ADC clock
-	// reg_adc1_input_source = 2;	// Feed bandgap output to ADC input
-	// reg_adc1_ena = 1;
-
 	// NOTE: Crystal on testboard running at 12.5MHz
 	// Internal clock is 8x crystal, or 100MHz
 	// Divided by clkdiv is 9.6 kHz
 	// So at this crystal rate, use clkdiv = 10417 for 9600 baud.
 
 	// Set UART clock to 9600 baud
-	reg_uart_clkdiv = 10417;
+//	reg_uart_clkdiv = 10417;
+	reg_uart_clkdiv = 8333;
 
 //	rtc_run();
 
@@ -356,150 +328,17 @@ void main()
     print("Press ENTER to continue..\n");
     while (getchar() != '\r') {}
 
-    cmd_echo();
+//    cmd_echo();
 
     print("\n\n");
 
-//	reg_gpio_data = 0x2222;
-//	for (j = 0; j < 50000 * m; j++);
-//        print("Clifford Wolf       ");
-//	reg_gpio_data = 0x4444;
-//	for (j = 0; j < 50000 * m; j++);
-//        print("Raven PicoSoc       ");
-//	reg_gpio_data = 0x8888;
-//	for (j = 0; j < 50000 * m; j++);
-//        print("Tim Edwards/efabless");
-
-	// Follow this with an LED pattern
-//	reg_gpio_ena = 0x0000;		// 1 = input, 0 = output
-
-	// Delay 1 second, print registers, delay another second
-//	for (j = 0; j < 170000 * m; j++);
-//	cmd_read_flash_regs();
-//	for (j = 0; j < 170000 * m; j++);
-
 	while (1) {
-//	    // Increment the DAC every full cycle
-//	    dacval += 5;
-//	    dacval &= 1023;
-//	    reg_dac_data = dacval;
-//
-//	    // Update LEDs
-//	    r = m >> 1;
-//	    while (1) {
-//	        reg_gpio_data = 0x0001;
-//	        for (i = 0; i < 16; i++) {
-//		    reg_gpio_data <<= 1;
-//		    for (j = 0; j < 17000; j++);
-//	        }
-//
-//	        reg_gpio_data = 0x8000;
-//	        for (i = 0; i < 16; i++) {
-//		    reg_gpio_data >>= 1;
-//		    for (j = 0; j < 17000; j++);
-//		}
-//		r >>= 1;
-//		if (r == 0) break;
-//	    }
-//
-//	    // Perform an ADC0 conversion every full cycle
-//	    reg_adc0_convert = 1;
-//	    for (i = 0; i < 100 * m; i++);
-//	    reg_adc0_convert = 0;
-//	    while (1) {
-//		if (reg_adc0_done != 0) break;	/* Wait for EOC */
-//	    }
-//
-//	    // Print ADC0 output in decimal
-//	    print("ADC0 In=");
-//	    print_dec(dacval);
-//	    print("Out=");
-//	    adcval = reg_adc0_data;
-//	    print_dec(adcval);
 
         // read and display real-time clock
         read_rtc();
 
-//        i2c_start();
-//        i2c_write(0xA2);
-//        i2c_write(0x02);
-//        i2c_start();
-//        i2c_write(0xA3);
-//        data = i2c_read(false);
-//        i2c_stop();
-//        print("Data    = ");
-//        print_hex(data,4);
-//        print("      ");
-
         for (j = 0; j < 350000 * m; j++); // 2 sec
 
-	    // Update LEDs.  Run longer in quad and ddr modes.
-//	    r = m >> 1;
-//	    while (1) {
-//	    	reg_gpio_data = 0x0101;
-//	    	for (i = 0; i < 16; i++) {
-//		        reg_gpio_data <<= 1;
-//		        if (reg_gpio_data == 0x0100) reg_gpio_data = 0x0101;
-//		        for (j = 0; j < 17000; j++);
-//	        }
-//	        reg_gpio_data = 0x8080;
-//	        for (i = 0; i < 16; i++) {
-//		        reg_gpio_data >>= 1;
-//		        if (reg_gpio_data == 0x0080) reg_gpio_data = 0x8080;
-//		        for (j = 0; j < 17000; j++);
-//	        }
-//		    r >>= 1;
-//		    if (r == 0) break;
-//	    }
-
-	    // Perform an ADC1 conversion every full cycle
-//	    reg_adc1_convert = 1;
-//	    for (i = 0; i < 100 * m; i++);
-//	    reg_adc1_convert = 0;
-//	    while (1) {
-//		if (reg_adc1_done != 0) break;	/* Wait for EOC */
-//	    }
-//
-//	    // Prepare binary string for printing
-//	    print("ADC1: ");
-//	    adcval = reg_adc1_data;
-//	    print_dec(adcval);
-//	    print("          ");
-
-	    // Bump up speed factor.
-
-//	    mode++;
-
-	    // Enable fast quad DDR access on the SPI flash (8 dummy cycles)
-	    // NOTE: QSPI modes only work if enabled in the flash's config register 
-            // (set config register 1 to value 2.  This is done in set_flash_latency())
-
-	    if (mode == 5) {
-		print("mode = DSPI spd = 2x");
-		reg_spictrl = 0x80480000;	// DSPI (DDR bit only)
-		m = 2;
-	    }
-	    else if (mode == 15) {
-		print("mode = DSPI + CRM   ");
-		reg_spictrl = 0x80580000;	// DSPI + CRM
-		m = 2;
-	    }
-	    else if (mode == 20) {
-		print("mode = Latency 4    ");
-		set_flash_latency(4);
-		reg_spictrl = 0x80540000;	// DSPI + CRM + latency
-		m = 2;
-	    }
-	    else if (mode == 25) {
-		print("mode = Single       ");
-		set_flash_latency(8);
-		reg_spictrl = 0x80080000;	// Standard 1x speed mode
-		m = 1;
-	    }
-	    else if (mode == 30) {
-		cmd_read_flash_regs();
-		mode = 0;
-	    }
 	}
 }
 

@@ -1,4 +1,5 @@
 #include "../raven_defs.h"
+#include "i2c_io.h"
 
 #define SDA_PIN (uint32_t) (1 << 14) // bit 14
 #define SCL_PIN (uint32_t) (1 << 15) // bit 15
@@ -15,9 +16,6 @@
 #define SDA_LOW SDA_OUT; (volatile uint32_t) ((reg_gpio_data) &= ~(SDA_PIN))
 #define SDA_READ (volatile uint32_t) ((reg_gpio_data) & (SDA_PIN))
 
-extern void print_ln(const char *p);
-extern void putchar(char c);
-
 void i2c_delay()
 {
 
@@ -31,6 +29,10 @@ void i2c_delay()
 
 void i2c_init()
 {
+    // enable internal pull-up and disable internal pull-down resistors
+    reg_gpio_pu &= ~(SCL_PIN & SDA_PIN);
+    reg_gpio_pd |= SCL_PIN & SDA_PIN;
+
     SDA_HIGH;
     SCL_HIGH;
     i2c_delay();
