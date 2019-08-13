@@ -116,21 +116,25 @@ void print_dec(uint32_t v)
 void main()
 {
 	int i;
-    uint32_t adcval;
+    uint32_t adcval, v, x;
 
     set_flash_latency(8);  // Single speed mode
 
     // Set UART clock to 9600 baud
-	reg_uart_clkdiv = 10417;
+//	reg_uart_clkdiv = 10417;
+	reg_uart_clkdiv = 8333;
 
 	// Enable the 100MHz RC oscillator on gpio[4] (overrides LED function)
 	reg_rcosc_enable = 1;
-	reg_rcosc_out_dest = 3;
 
 	// Configure the ADC0
 	reg_adc0_clk_source = 0;	// RC oscillator drives ADC clock
 	reg_adc0_input_source = 0;	// external
 	reg_adc0_ena = 1;
+
+	// Enable GPIO (all output, ena = 0)
+	reg_gpio_ena = 0x0000;
+	reg_gpio_data = 0x0001;
 
 	while (1) {
         reg_adc0_convert = 1;		    /* Start conversion */
@@ -141,10 +145,24 @@ void main()
         }
         adcval = reg_adc0_data;
 
-        clear();
+//        clear();
         print_dec(adcval);
-//        print("\n");
-        for (i = 0; i < 170000; i++) {}
+        print("\n");
+
+        v = adcval;
+        x = 1;
+        while (1) {
+            if (v > 64) {
+                v = v - 64;
+                x = x << 1;
+                x = x | 1;
+            } else {
+                break;
+            }
+        }
+        reg_gpio_data = x;
+
+        for (i = 0; i < 80000; i++) {}
     }
 }
 
