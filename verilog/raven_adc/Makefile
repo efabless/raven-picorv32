@@ -2,7 +2,7 @@
 
 .SUFFIXES:
 
-PATTERN = raven_adc raven_adc2
+PATTERN = raven_adc raven_adc2 client
 
 all:  ${PATTERN:=.vcd}
 
@@ -22,6 +22,10 @@ hex:  ${PATTERN:=.hex}
 
 %.bin: %.elf
 	/ef/apps/bin/riscv32-unknown-elf-objcopy -O binary $< /dev/stdout | tail -c +1048577 > $@
+
+
+client: client.c
+	gcc client.c -o client
 
 # ---- Clean ----
 
