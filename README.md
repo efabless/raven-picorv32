@@ -48,6 +48,7 @@ RAVEN Block Diagram
 -------------------
 
 ![RAVEN-PICORV32](doc/raven_block_diagram.png)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fefabless%2Fraven-picorv32.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fefabless%2Fraven-picorv32?ref=badge_shield)
 
 
 Key Features
@@ -76,3 +77,7 @@ Short Video showing initial wakeup
 
 
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fefabless%2Fraven-picorv32.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fefabless%2Fraven-picorv32?ref=badge_large)
